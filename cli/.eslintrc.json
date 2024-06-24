@@ -1,0 +1,21 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+     "parser": "@typescript-eslint/parser",
+       "plugins": [
+         "@typescript-eslint"
+     ],
+    "extends": "eslint-config-standard",
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+         "project": ["./tsconfig.json"]
+    },
+    "rules": {
+    }
+}

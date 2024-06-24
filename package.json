@@ -1,0 +1,25 @@
+{
+  "name": "uuice",
+  "version": "1.0.0",
+  "description": "uuice`s blog",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uuice/blog.git"
+  },
+  "homepage": "https://uuice.com",
+  "keywords": [
+    "website",
+    "blog"
+  ],
+  "author": "UUICE <admin@uuice.com> (https://uuice.com)",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9"
+  }
+}
