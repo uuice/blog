@@ -2,23 +2,56 @@ import { glob } from 'glob'
 import { POST } from '../types/post'
 import { PAGE } from '../types/page'
 import { JSON_OBJ } from '../types/json'
-import { readFile } from 'node:fs/promises'
+import { TAG } from '../types/tag'
+import { CATEGORY } from '../types/category'
+import { POST_TAG } from '../types/post_tag'
+import { POST_CATEGORY } from '../types/post_category'
+import { readFile, writeFile } from 'node:fs/promises'
 import matter from 'gray-matter'
-import { parse } from 'node:path'
+import { join, parse } from 'node:path'
 import { markdownToHtml, markdownToToc } from './markdown'
 import * as yaml from 'js-yaml'
+import { generateUUID, generateUUID2 } from './uuid'
 
-export const generatePages = async (path: string): Promise<PAGE[]> => {
-  const jsonList = await getFileJsonList(path)
-  return jsonList
+export const generate = async (postDirPath:string, pageDirPath: string, jsonDirPath: string, systemConfigPath: string, dataBasePath: string) => {
+  const postPattern = join(postDirPath, '/**/*.md')
+  const postList = await generatePosts(postPattern)
+
+  const pagePattern = join(pageDirPath, '/**/*.md')
+  const pageList = await generatePages(pagePattern)
+
+  const jsonPattern = join(jsonDirPath, '/**/*.json')
+  const jsonList = await generateJsons(jsonPattern)
+
+  const systemConfig = await generateSystemConfig(systemConfigPath)
+  console.log(systemConfig)
+
+  const categoryTag = await generateCategoriesTags(postList, pageList)
+
+  const data = {
+    posts: postList,
+    pages: pageList,
+    ...jsonList,
+    systemConfig,
+    tags: categoryTag.tags,
+    categories: categoryTag.categories,
+    postCategories: categoryTag.postCategories,
+    postTags: categoryTag.postTags
+  }
+
+  // write to database file
+  await writeFile(dataBasePath, JSON.stringify(data, null, 2), 'utf8')
 }
 
-export const generatePosts = async (path: string): Promise<POST[]> => {
-  const jsonList = await getFileJsonList(path)
-  return jsonList
+async function generatePages (path: string): Promise<PAGE[]> {
+  return await getFileJsonList(path)
 }
 
-export const generateJsons = async (path: string): Promise<JSON_OBJ> => {
+async function generatePosts (path: string): Promise<POST[]> {
+  return await getFileJsonList(path)
+}
+
+async function generateJsons (path: string): Promise<JSON_OBJ> {
   const jsonFileList: string[] = await glob(path, { ignore: 'node_modules/**' })
   const result: {
       [key:string]: any
@@ -75,9 +108,77 @@ async function getContentToc (content: string): Promise<{ _content: string; _toc
   }
 }
 
-export async function generateSystemConfig (path: string): Promise<JSON_OBJ> {
+async function generateSystemConfig (path: string): Promise<JSON_OBJ> {
   // Get document, or throw exception on error
   const doc: JSON_OBJ = (yaml.load(await readFile(path, 'utf8')) as JSON_OBJ)
   console.log(doc)
   return doc
+}
+
+async function generateCategoriesTags (posts: POST[], pages: PAGE[]): Promise<{
+    tags: TAG[], categories: CATEGORY[], postCategories: POST_CATEGORY[], postTags: POST_TAG[]
+}> {
+  const tags:TAG[] = []
+  const categories:CATEGORY[] = []
+  const postCategories:POST_CATEGORY[] = []
+  const postTags: POST_TAG[] = []
+
+  // !pages 需不需要支持 tag 和 category 暂时不需要， 后续再定
+  // !Does pages need to support tag and category? No for now. We will decide later
+  posts.forEach((post) => {
+    if (post.tags && post.tags.length) {
+      post.tags.forEach((tag) => {
+        const index = tags.findIndex(t => t.title === tag)
+        if (index !== -1) {
+          postTags.push({
+            postId: post.id,
+            tagId: tags[index].id,
+            id: generateUUID2()
+          })
+        } else {
+          const id = generateUUID(tag)
+          tags.push({
+            id,
+            title: tag,
+            description: tag
+          })
+          postTags.push({
+            postId: post.id,
+            tagId: id,
+            id: generateUUID2()
+          })
+        }
+      })
+    }
+    if (post.categories && post.categories.length) {
+      post.categories.forEach((category) => {
+        const index = categories.findIndex(t => t.title === category)
+        if (index !== -1) {
+          postCategories.push({
+            postId: post.id,
+            categoryId: categories[index].id,
+            id: generateUUID2()
+          })
+        } else {
+          const id = generateUUID(category)
+          categories.push({
+            id,
+            title: category,
+            description: category
+          })
+          postCategories.push({
+            postId: post.id,
+            categoryId: id,
+            id: generateUUID2()
+          })
+        }
+      })
+    }
+  })
+  return {
+    tags,
+    categories,
+    postCategories,
+    postTags
+  }
 }

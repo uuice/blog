@@ -2,7 +2,7 @@ import pkg from '../package.json'
 import { Command } from 'commander'
 import { join } from 'node:path'
 
-import { generatePosts, generatePages, generateJsons, generateSystemConfig } from './utils/generate'
+import { generate } from './utils/generate'
 
 import { JSONFilePreset } from 'lowdb/node'
 
@@ -42,25 +42,7 @@ export default function (cwd = process.cwd()): void {
   program.command('gen')
     .description('generate data json')
     .action(async (options) => {
-      const postPattern = join(postDirPath, '/**/*.md')
-      const postList = await generatePosts(postPattern)
-
-      const pagePattern = join(pageDirPath, '/**/*.md')
-      const pageList = await generatePages(pagePattern)
-
-      const jsonPattern = join(jsonDirPath, '/**/*.json')
-      const jsonList = await generateJsons(jsonPattern)
-
-      const systemConfig = await generateSystemConfig(systemConfigPath)
-      console.log(systemConfig)
-
-      const data = {
-        postList,
-        pageList,
-        jsonList,
-        systemConfig
-      }
-      console.log(data)
+      await generate(postDirPath, pageDirPath, jsonDirPath, systemConfigPath, dataBasePath)
     })
   program.parse()
 }

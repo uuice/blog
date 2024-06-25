@@ -17,11 +17,11 @@ export const markdownToToc = async (content: string): Promise<string> => {
    * markdown to html
    * @return {} []
    */
-export const markdownToHtml = async (content: string) => {
+export const markdownToHtml = async (content: string): Promise<string> => {
   const markedContent = (await marked(content)).replace(/<h(\d)[^<>]*>(.*?)<\/h\1>/g, (a, b, c) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    if (b | (0 === 2)) {
+    if (b | 0 === 2) {
       return `<h${b} id="${generateTocName(c)}">${c}</h${b}>`
     }
     return `<h${b} id="${generateTocName(c)}"><a class="anchor" href="#${generateTocName(
@@ -31,7 +31,6 @@ export const markdownToHtml = async (content: string) => {
   return markedContent.replace(
     /<pre><code\s*(?:class="lang-(\w+)")?>([\s\S]+?)<\/code><\/pre>/gm,
     (a, language, text) => {
-      // prettier-ignore
       text = text
         .replace(/&#39;/g, '\'')
         .replace(/&gt;/g, '>')
@@ -45,11 +44,11 @@ export const markdownToHtml = async (content: string) => {
 }
 
 /**
-   * generate toc name
-   * @param  {String} name []
-   * @return {String}      []
-   */
-export const generateTocName = (name:string) => {
+ * generate toc name
+ * @return {String}      []
+ * @param name
+ */
+export const generateTocName = (name:string): string => {
   name = name.trim().replace(/\s+/g, '').replace(/\)/g, '').replace(/[(,]/g, '-').toLowerCase()
   if (/^[\w-]+$/.test(name)) {
     return name
