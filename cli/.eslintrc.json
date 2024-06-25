@@ -1,5 +1,9 @@
 {
     "root": true,
+     "ignorePatterns": [
+      "projects/**/*",
+      "bin/uuice"
+    ],
     "env": {
         "browser": true,
         "es2021": true
