@@ -5,16 +5,14 @@ import { join } from 'node:path'
 import { generate } from './utils/generate'
 
 import { JSONFilePreset } from 'lowdb/node'
+import { bootstrap } from './server/main'
 
 const defaultData = { posts: [], pages: [], tags: [], categories: [] }
 
 export default function (cwd = process.cwd()): void {
   const sourcePath = join(cwd, 'source')
-
   const systemConfigPath = join(cwd, 'config.yml')
-
   const dataBasePath = join(cwd, 'data.json')
-
   const pageDirPath = join(sourcePath, '_pages')
   const postDirPath = join(sourcePath, '_posts')
   const jsonDirPath = join(sourcePath, '_jsons')
@@ -44,5 +42,15 @@ export default function (cwd = process.cwd()): void {
     .action(async (options) => {
       await generate(postDirPath, pageDirPath, jsonDirPath, systemConfigPath, dataBasePath)
     })
+
+  program.command('server')
+    .description('koa server').option('-p, --port <port>', '指定端口号', '3000')
+    .action(async (options) => {
+      console.log(options)
+      await bootstrap(options.port).then(() => {
+        console.log('server started')
+      })
+    })
+
   program.parse()
 }

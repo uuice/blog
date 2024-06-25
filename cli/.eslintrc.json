@@ -17,5 +17,8 @@
          "project": ["./tsconfig.json"]
     },
     "rules": {
+      "no-undef": "off",
+      "no-useless-constructor": "off",
+      "@typescript-eslint/no-this-alias": "off"
     }
 }
