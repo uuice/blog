@@ -4,10 +4,7 @@ import { join } from 'node:path'
 
 import { generate } from './utils/generate'
 
-import { JSONFilePreset } from 'lowdb/node'
 import { bootstrap } from './server/main'
-
-const defaultData = { posts: [], pages: [], tags: [], categories: [] }
 
 export default function (cwd = process.cwd()): void {
   const sourcePath = join(cwd, 'source')
@@ -47,7 +44,11 @@ export default function (cwd = process.cwd()): void {
     .description('koa server').option('-p, --port <port>', '指定端口号', '3000')
     .action(async (options) => {
       console.log(options)
-      await bootstrap(options.port).then(() => {
+      await bootstrap({
+        port: options.port,
+        cwd,
+        dbPath: dataBasePath
+      }).then(() => {
         console.log('server started')
       })
     })

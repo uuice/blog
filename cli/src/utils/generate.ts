@@ -86,6 +86,7 @@ async function getFileJsonList (path: string): Promise<PAGE[] | POST[]> {
       ...json.data,
       id: json.data.id || '',
       title: json.data.title || '',
+      alias: json.data.alias || '',
       cover: json.data.cover || '',
       created_time: json.data.created_time || '',
       updated_time: json.data.updated_time || '',

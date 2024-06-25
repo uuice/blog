@@ -58,7 +58,7 @@
     "highlight.js": "^11.9.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
-    "lowdb": "^7.0.1",
+    "lowdb": "^1.0.0",
     "markdown-toc": "^1.2.0",
     "marked": "^13.0.0",
     "md5": "^2.3.0",
