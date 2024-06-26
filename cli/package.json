@@ -1,10 +1,10 @@
 {
   "name": "uuice-cli",
-  "version": "1.0.0",
-  "description": "uuice`s blog cli",
+  "version": "0.0.2",
+  "description": "uuice`s blog cli, developing...",
   "main": "dist/index",
   "bin": {
-    "uuice": "./bin/index"
+    "uuice": "bin/uuice"
   },
   "scripts": {
     "dev": "tsc --watch",
