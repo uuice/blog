@@ -3,15 +3,21 @@ import { DbService } from './db.service'
 import { POST } from '../../../types/post'
 import { POST_CATEGORY } from '../../../types/post_category'
 import { POST_TAG } from '../../../types/post_tag'
-import { mapValues, sortBy, groupBy } from 'lodash'
+import { mapValues, sortBy, groupBy, omit } from 'lodash'
+import { CategoryService } from './category.service'
+import { TagService } from './tag.service'
 
 interface ARCHIVES_DATE {
-  [date: string]: POST[]
+  [date: string]: Omit<POST, 'content' | '_content'>[]
 }
 
 @Injectable()
 export class PostService {
-  constructor(private dbService: DbService) {}
+  constructor(
+    private dbService: DbService,
+    private categoryService: CategoryService,
+    private tagService: TagService
+  ) {}
 
   getPostById(id: string): POST {
     return this.dbService
@@ -34,15 +40,22 @@ export class PostService {
   }
 
   getRecentPosts(num: number = 5): POST[] {
-    return this.dbService.getInstance().get('posts').sortBy('created_time').take(num).value()
+    return this.dbService
+      .getInstance()
+      .get('posts')
+      .map((item: POST) => omit(item, ['content', '_content']))
+      .sortBy('created_time')
+      .take(num)
+      .value()
   }
 
-  getPageListByCategoryId(categoryId: string) {
+  getPostListByCategoryIdOrTitle(categoryIdOrTitle: string) {
+    const category = this.categoryService.getCategoryByIdOrTitle(categoryIdOrTitle)
     const postCategories = this.dbService
       .getInstance()
       .get('postCategories')
       .filter({
-        categoryId
+        categoryId: category.id
       })
       .value()
     const postIdArray = postCategories.map((item: POST_CATEGORY) => item.postId)
@@ -50,16 +63,18 @@ export class PostService {
       .getInstance()
       .get('posts')
       .filter((post: POST) => postIdArray.includes(post.id))
+      .map((item: POST) => omit(item, ['content', '_content']))
       .sortBy('created_time')
       .value()
   }
 
-  getPageListByTagId(tagId: string) {
+  getPostListByTagIdOrTitle(tagIdOrTitle: string): Omit<POST, 'content' | '_content'>[] {
+    const tag = this.tagService.getTagByIdOrTitle(tagIdOrTitle)
     const postTags = this.dbService
       .getInstance()
       .get('postTags')
       .filter({
-        tagId
+        tagId: tag.id
       })
       .value()
     const postIdArray = postTags.map((item: POST_TAG) => item.postId)
@@ -67,12 +82,17 @@ export class PostService {
       .getInstance()
       .get('posts')
       .filter((post: POST) => postIdArray.includes(post.id))
+      .map((item: POST) => omit(item, ['content', '_content']))
       .sortBy('created_time')
       .value()
   }
 
-  getArchivesByDate(): ARCHIVES_DATE {
-    const postList = this.dbService.getInstance().get('posts').value()
+  getArchivesByDateYear(): ARCHIVES_DATE {
+    const postList = this.dbService
+      .getInstance()
+      .get('posts')
+      .map((item: POST) => omit(item, ['content', '_content']))
+      .value()
 
     const groupedByYear = groupBy(postList, (item: POST) => {
       const date = new Date(item.created_time)

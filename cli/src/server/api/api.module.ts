@@ -6,11 +6,13 @@ import { CategoryController } from './controller/category.controller'
 import { SysConfigController } from './controller/sys-config.controller'
 import { JsonController } from './controller/json.controller'
 import { CoreModule } from '../core/core.module'
+import { PageController } from './controller/page.controller'
 
 @SetMetadata(MODULE_PATH, '/api')
 @Module({
   imports: [CoreModule],
   controllers: [
+    PageController,
     PostController,
     TagController,
     CategoryController,

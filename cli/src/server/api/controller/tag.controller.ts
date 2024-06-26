@@ -20,6 +20,6 @@ export class TagController {
 
   @Get(':idOrTitle')
   query(@Param('idOrTitle') idOrTitle: string): TAG {
-    return this.tagService.getTagByTitle(idOrTitle)
+    return this.tagService.getTagByIdOrTitle(idOrTitle)
   }
 }

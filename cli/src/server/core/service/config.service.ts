@@ -20,9 +20,4 @@ export class ConfigService {
   setItem(key: string, value: string | number | boolean | object) {
     this.config[key] = value
   }
-
-  // getSysConfig (key?: string) {
-  //   const config = this.dbService.getInstance().get('systemConfig').value()
-  //   return key ? config[key] : config
-  // }
 }

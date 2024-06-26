@@ -15,18 +15,18 @@ export class TagService {
     return this.dbService.getInstance().get('tags').value()
   }
 
-  getTagByTitle(idOrTitle: string): TAG {
+  getTagByIdOrTitle(idOrTitle: string): TAG {
     return this.dbService
       .getInstance()
       .get('tags')
-      .find((item) => isEqual(item.id, idOrTitle) || isEqual(item.title, idOrTitle))
+      .find((item: TAG) => isEqual(item.id, idOrTitle) || isEqual(item.title, idOrTitle))
       .value()
   }
 
   getTagListWidthPostNum(): TAG_WITH_POST_NUM[] {
     const list = this.dbService.getInstance().get('tags').value()
     return list.map((item: TAG) => {
-      const post = this.dbService
+      const postTagList = this.dbService
         .getInstance()
         .get('postTags')
         .filter({
@@ -35,7 +35,7 @@ export class TagService {
         .value()
       return {
         ...item,
-        postNum: post.length
+        postNum: postTagList.length
       }
     })
   }
