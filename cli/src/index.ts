@@ -19,12 +19,10 @@ export default function (cwd = process.cwd()): void {
 
   const program = new Command()
 
-  program
-    .name('uuice-cli')
-    .description('CLI to uuice`s blog')
-    .version(pkg.version)
+  program.name('uuice-cli').description('CLI to uuice`s blog').version(pkg.version)
 
-  program.command('test')
+  program
+    .command('test')
     .description('test')
     .argument('<string>', 'string to split')
     .option('--p', 'display just the first substring')
@@ -34,14 +32,17 @@ export default function (cwd = process.cwd()): void {
       console.log(options)
     })
 
-  program.command('gen')
+  program
+    .command('gen')
     .description('generate data json')
     .action(async (options) => {
       await generate(postDirPath, pageDirPath, jsonDirPath, systemConfigPath, dataBasePath)
     })
 
-  program.command('server')
-    .description('koa server').option('-p, --port <port>', '指定端口号', '3000')
+  program
+    .command('server')
+    .description('koa server')
+    .option('-p, --port <port>', '指定端口号', '3000')
     .action(async (options) => {
       console.log(options)
       await bootstrap({

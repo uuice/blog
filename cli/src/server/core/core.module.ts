@@ -9,7 +9,25 @@ import { SysConfigService } from './service/sysConfig.service'
 import { JsonService } from './service/json.service'
 
 @Module({
-  providers: [DbService, PostService, TagService, CategoryService, ConfigService, PageService, SysConfigService, JsonService],
-  exports: [DbService, PostService, TagService, CategoryService, ConfigService, PageService, SysConfigService, JsonService]
+  providers: [
+    DbService,
+    PostService,
+    TagService,
+    CategoryService,
+    ConfigService,
+    PageService,
+    SysConfigService,
+    JsonService
+  ],
+  exports: [
+    DbService,
+    PostService,
+    TagService,
+    CategoryService,
+    ConfigService,
+    PageService,
+    SysConfigService,
+    JsonService
+  ]
 })
 export class CoreModule {}

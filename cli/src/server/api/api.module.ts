@@ -10,6 +10,12 @@ import { CoreModule } from '../core/core.module'
 @SetMetadata(MODULE_PATH, '/api')
 @Module({
   imports: [CoreModule],
-  controllers: [PostController, TagController, CategoryController, SysConfigController, JsonController]
+  controllers: [
+    PostController,
+    TagController,
+    CategoryController,
+    SysConfigController,
+    JsonController
+  ]
 })
 export class ApiModule {}

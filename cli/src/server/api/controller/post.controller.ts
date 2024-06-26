@@ -3,5 +3,4 @@ import { ApiTags } from '@nestjs/swagger'
 
 @ApiTags('post')
 @Controller('post')
-export class PostController {
-}
+export class PostController {}

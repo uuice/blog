@@ -1,3 +1,3 @@
 export interface JSON_OBJ {
-    [key: string]: any
+  [key: string]: any
 }

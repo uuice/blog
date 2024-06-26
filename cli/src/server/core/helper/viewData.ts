@@ -1,6 +1,6 @@
 export class ViewData {
   private readonly viewData = {}
-  constructor () {
+  constructor() {
     this.viewData = {}
   }
 
@@ -9,7 +9,7 @@ export class ViewData {
    * @param name
    * @param value
    */
-  assign (name?: string | undefined | object, value?: object | string | number | undefined) {
+  assign(name?: string | undefined | object, value?: object | string | number | undefined) {
     if (name === undefined) {
       return this.viewData
     } else if (value === undefined) {

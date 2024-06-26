@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 // import { UserService } from '@core/service/db/user/user.service'
 import { Logger } from '@nestjs/common'
 
-export function TagTest2 (app: NestExpressApplication): void {
+export function TagTest2(app: NestExpressApplication): void {
   console.log(app)
   // tag标签测试
   this.tags = ['TagTest2']

@@ -8,14 +8,13 @@ import low from 'lowdb'
 export class DbService {
   private db: any
 
-  constructor (private configService: ConfigService) {
-  }
+  constructor(private configService: ConfigService) {}
 
-  getInstance () {
+  getInstance() {
     return this.db
   }
 
-  initDb () {
+  initDb() {
     this.db = low(new FileSync(this.configService.getItem(DB_PATH) as string))
   }
 }

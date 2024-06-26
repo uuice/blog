@@ -6,11 +6,7 @@ import { CWD, ConfigService, DB_PATH } from './core/service/config.service'
 import { DbService } from './core/service/db.service'
 import { initSwagger } from './initSwagger'
 
-export async function bootstrap (options: {
-  port: number
-  cwd: string,
-  dbPath: string,
-}) {
+export async function bootstrap(options: { port: number; cwd: string; dbPath: string }) {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
   app.set('trust proxy', 1)

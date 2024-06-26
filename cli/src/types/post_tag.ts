@@ -1,5 +1,5 @@
 export interface POST_TAG {
-    postId: string
-    tagId: string
-    id: string
+  postId: string
+  tagId: string
+  id: string
 }

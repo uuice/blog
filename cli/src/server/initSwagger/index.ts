@@ -2,7 +2,7 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ApiModule } from '../api/api.module'
 
-export function initSwagger (app: NestExpressApplication) {
+export function initSwagger(app: NestExpressApplication) {
   const apiConfig = new DocumentBuilder()
     .setTitle('Api')
     .setDescription('The API description')

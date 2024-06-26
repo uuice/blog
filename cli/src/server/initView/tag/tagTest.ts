@@ -1,7 +1,7 @@
 import * as nunjucks from 'nunjucks'
 import { NestExpressApplication } from '@nestjs/platform-express'
 
-export function TagTest (app: NestExpressApplication): void {
+export function TagTest(app: NestExpressApplication): void {
   // tag标签测试
   this.tags = ['TagTest']
   this.parse = function (parser, nodes) {

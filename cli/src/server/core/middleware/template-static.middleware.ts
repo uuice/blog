@@ -7,12 +7,15 @@ import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class TemplateStaticMiddleware implements NestMiddleware {
-  constructor (private readonly configService: ConfigService) {}
-  async use (req: Request, res: Response, next: NextFunction) {
+  constructor(private readonly configService: ConfigService) {}
+  async use(req: Request, res: Response, next: NextFunction) {
     const template = 'default'
     const rule = new RegExp(`^/template/${template}`)
     if (rule.test(req.baseUrl)) {
-      const filePath = resolve(this.configService.get('TEMP_VIEW_PATH'), req.baseUrl.replace('/template/', ''))
+      const filePath = resolve(
+        this.configService.get('TEMP_VIEW_PATH'),
+        req.baseUrl.replace('/template/', '')
+      )
       const isExist = await stat(filePath)
       if (isExist) {
         const _stat = await stat(filePath)

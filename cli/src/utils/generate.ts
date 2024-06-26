@@ -13,7 +13,13 @@ import { markdownToHtml, markdownToToc } from './markdown'
 import * as yaml from 'js-yaml'
 import { generateUUID, generateUUID2 } from './uuid'
 
-export const generate = async (postDirPath:string, pageDirPath: string, jsonDirPath: string, systemConfigPath: string, dataBasePath: string) => {
+export const generate = async (
+  postDirPath: string,
+  pageDirPath: string,
+  jsonDirPath: string,
+  systemConfigPath: string,
+  dataBasePath: string
+) => {
   const postPattern = join(postDirPath, '/**/*.md')
   const postList = await generatePosts(postPattern)
 
@@ -43,18 +49,18 @@ export const generate = async (postDirPath:string, pageDirPath: string, jsonDirP
   await writeFile(dataBasePath, JSON.stringify(data, null, 2), 'utf8')
 }
 
-async function generatePages (path: string): Promise<PAGE[]> {
+async function generatePages(path: string): Promise<PAGE[]> {
   return await getFileJsonList(path)
 }
 
-async function generatePosts (path: string): Promise<POST[]> {
+async function generatePosts(path: string): Promise<POST[]> {
   return await getFileJsonList(path)
 }
 
-async function generateJsons (path: string): Promise<JSON_OBJ> {
+async function generateJsons(path: string): Promise<JSON_OBJ> {
   const jsonFileList: string[] = await glob(path, { ignore: 'node_modules/**' })
   const result: {
-      [key:string]: any
+    [key: string]: any
   } = {}
 
   for (const jsonFile of jsonFileList) {
@@ -68,7 +74,7 @@ async function generateJsons (path: string): Promise<JSON_OBJ> {
   return result
 }
 
-async function getFileJsonList (path: string): Promise<PAGE[] | POST[]> {
+async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
   const mdFileList: string[] = await glob(path, { ignore: 'node_modules/**' })
   const promiseList: Promise<string>[] = []
   mdFileList.forEach((file: string) => {
@@ -102,26 +108,32 @@ async function getFileJsonList (path: string): Promise<PAGE[] | POST[]> {
   return result
 }
 
-async function getContentToc (content: string): Promise<{ _content: string; _toc: string }> {
+async function getContentToc(content: string): Promise<{ _content: string; _toc: string }> {
   return {
     _content: await markdownToHtml(content),
     _toc: await markdownToToc(content)
   }
 }
 
-async function generateSystemConfig (path: string): Promise<JSON_OBJ> {
+async function generateSystemConfig(path: string): Promise<JSON_OBJ> {
   // Get document, or throw exception on error
-  const doc: JSON_OBJ = (yaml.load(await readFile(path, 'utf8')) as JSON_OBJ)
+  const doc: JSON_OBJ = yaml.load(await readFile(path, 'utf8')) as JSON_OBJ
   console.log(doc)
   return doc
 }
 
-async function generateCategoriesTags (posts: POST[], pages: PAGE[]): Promise<{
-    tags: TAG[], categories: CATEGORY[], postCategories: POST_CATEGORY[], postTags: POST_TAG[]
+async function generateCategoriesTags(
+  posts: POST[],
+  pages: PAGE[]
+): Promise<{
+  tags: TAG[]
+  categories: CATEGORY[]
+  postCategories: POST_CATEGORY[]
+  postTags: POST_TAG[]
 }> {
-  const tags:TAG[] = []
-  const categories:CATEGORY[] = []
-  const postCategories:POST_CATEGORY[] = []
+  const tags: TAG[] = []
+  const categories: CATEGORY[] = []
+  const postCategories: POST_CATEGORY[] = []
   const postTags: POST_TAG[] = []
 
   // !pages 需不需要支持 tag 和 category 暂时不需要， 后续再定
@@ -129,7 +141,7 @@ async function generateCategoriesTags (posts: POST[], pages: PAGE[]): Promise<{
   posts.forEach((post) => {
     if (post.tags && post.tags.length) {
       post.tags.forEach((tag) => {
-        const index = tags.findIndex(t => t.title === tag)
+        const index = tags.findIndex((t) => t.title === tag)
         if (index !== -1) {
           postTags.push({
             postId: post.id,
@@ -153,7 +165,7 @@ async function generateCategoriesTags (posts: POST[], pages: PAGE[]): Promise<{
     }
     if (post.categories && post.categories.length) {
       post.categories.forEach((category) => {
-        const index = categories.findIndex(t => t.title === category)
+        const index = categories.findIndex((t) => t.title === category)
         if (index !== -1) {
           postCategories.push({
             postId: post.id,

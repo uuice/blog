@@ -9,25 +9,30 @@ type TAG_WITH_POST_NUM = TAG & {
 
 @Injectable()
 export class TagService {
-  constructor (private dbService: DbService) {
-  }
+  constructor(private dbService: DbService) {}
 
-  getTagList (): TAG[] {
+  getTagList(): TAG[] {
     return this.dbService.getInstance().get('tags').value()
   }
 
-  getTagByTitle (idOrTitle: string): TAG {
-    return this.dbService.getInstance().get('tags')
-      .find(item => isEqual(item.id, idOrTitle) || isEqual(item.title, idOrTitle))
+  getTagByTitle(idOrTitle: string): TAG {
+    return this.dbService
+      .getInstance()
+      .get('tags')
+      .find((item) => isEqual(item.id, idOrTitle) || isEqual(item.title, idOrTitle))
       .value()
   }
 
-  getTagListWidthPostNum (): TAG_WITH_POST_NUM[] {
+  getTagListWidthPostNum(): TAG_WITH_POST_NUM[] {
     const list = this.dbService.getInstance().get('tags').value()
     return list.map((item: TAG) => {
-      const post = this.dbService.getInstance().get('postTags').filter({
-        tagId: item.id
-      }).value()
+      const post = this.dbService
+        .getInstance()
+        .get('postTags')
+        .filter({
+          tagId: item.id
+        })
+        .value()
       return {
         ...item,
         postNum: post.length

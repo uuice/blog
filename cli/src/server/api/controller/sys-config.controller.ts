@@ -6,15 +6,15 @@ import { ApiTags } from '@nestjs/swagger'
 @ApiTags('sysConfig')
 @Controller('sys-config')
 export class SysConfigController {
-  constructor (private sysConfigService: SysConfigService) { }
+  constructor(private sysConfigService: SysConfigService) {}
 
   @Get('')
-  query (): JSON_OBJ {
+  query(): JSON_OBJ {
     return this.sysConfigService.getSysConfig()
   }
 
   @Get(':path')
-  queryWithPath (@Param('path') path: string): JSON_OBJ {
+  queryWithPath(@Param('path') path: string): JSON_OBJ {
     return this.sysConfigService.getSysConfig(path)
   }
 }

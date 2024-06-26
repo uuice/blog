@@ -8,19 +8,22 @@ type CATEGORY_WITH_POST_NUM = CATEGORY & {
 
 @Injectable()
 export class CategoryService {
-  constructor (private dbService: DbService) {
-  }
+  constructor(private dbService: DbService) {}
 
-  getCategoryList (): CATEGORY[] {
+  getCategoryList(): CATEGORY[] {
     return this.dbService.getInstance().get('categories').value()
   }
 
-  getCategoryListWidthPostNum (): CATEGORY_WITH_POST_NUM[] {
+  getCategoryListWidthPostNum(): CATEGORY_WITH_POST_NUM[] {
     const list = this.dbService.getInstance().get('categories').value()
     return list.map((item: CATEGORY) => {
-      const post = this.dbService.getInstance().get('postCategories').filter({
-        categoryId: item.id
-      }).value()
+      const post = this.dbService
+        .getInstance()
+        .get('postCategories')
+        .filter({
+          categoryId: item.id
+        })
+        .value()
       return {
         ...item,
         postNum: post.length
