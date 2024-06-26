@@ -13,5 +13,5 @@ export function initSwagger (app: NestExpressApplication) {
   const apiDocument = SwaggerModule.createDocument(app, apiConfig, {
     include: [ApiModule]
   })
-  SwaggerModule.setup('api', app, apiDocument)
+  SwaggerModule.setup('doc/api', app, apiDocument)
 }

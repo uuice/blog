@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { TAG } from '../../../types/tag'
 import { DbService } from './db.service'
+import { isEqual } from 'lodash'
 
 type TAG_WITH_POST_NUM = TAG & {
   postNum: number
@@ -15,10 +16,16 @@ export class TagService {
     return this.dbService.getInstance().get('tags').value()
   }
 
+  getTagByTitle (idOrTitle: string): TAG {
+    return this.dbService.getInstance().get('tags')
+      .find(item => isEqual(item.id, idOrTitle) || isEqual(item.title, idOrTitle))
+      .value()
+  }
+
   getTagListWidthPostNum (): TAG_WITH_POST_NUM[] {
     const list = this.dbService.getInstance().get('tags').value()
     return list.map((item: TAG) => {
-      const post = this.dbService.getInstance().get('postTags').filters({
+      const post = this.dbService.getInstance().get('postTags').filter({
         tagId: item.id
       }).value()
       return {

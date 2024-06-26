@@ -15,13 +15,13 @@ export class PostService {
   }
 
   getPostById (id: string): POST {
-    return this.dbService.getInstance().get('posts').filters({
+    return this.dbService.getInstance().get('posts').filter({
       id
     }).value()
   }
 
   getPostByAlias (alias: string): POST {
-    return this.dbService.getInstance().get('posts').filters({
+    return this.dbService.getInstance().get('posts').filter({
       alias
     }).value()
   }

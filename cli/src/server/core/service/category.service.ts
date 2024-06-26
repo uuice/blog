@@ -18,7 +18,7 @@ export class CategoryService {
   getCategoryListWidthPostNum (): CATEGORY_WITH_POST_NUM[] {
     const list = this.dbService.getInstance().get('categories').value()
     return list.map((item: CATEGORY) => {
-      const post = this.dbService.getInstance().get('postCategories').filters({
+      const post = this.dbService.getInstance().get('postCategories').filter({
         categoryId: item.id
       }).value()
       return {
