@@ -8,7 +8,7 @@ export class PageService {
   constructor(private dbService: DbService) {}
 
   getPageByAlias(alias: string): PAGE {
-    return this.dbService.getInstance().get('pages').filter({ alias }).value()
+    return this.dbService.getInstance().get('pages').find({ alias }).value()
   }
 
   getPageByIdOrTitle(idOrTitle: string): PAGE {

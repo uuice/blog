@@ -30,8 +30,6 @@ export const generate = async (
   const jsonList = await generateJsons(jsonPattern)
 
   const systemConfig = await generateSystemConfig(systemConfigPath)
-  console.log(systemConfig)
-
   const categoryTag = await generateCategoriesTags(postList, pageList)
 
   const data = {
@@ -65,8 +63,6 @@ async function generateJsons(path: string): Promise<JSON_OBJ> {
 
   for (const jsonFile of jsonFileList) {
     const fileName = parse(jsonFile).name
-    console.log()
-
     const content = await readFile(jsonFile, 'utf-8')
     result[fileName + 'Config'] = JSON.parse(content.toString())
   }
@@ -117,9 +113,7 @@ async function getContentToc(content: string): Promise<{ _content: string; _toc:
 
 async function generateSystemConfig(path: string): Promise<JSON_OBJ> {
   // Get document, or throw exception on error
-  const doc: JSON_OBJ = yaml.load(await readFile(path, 'utf8')) as JSON_OBJ
-  console.log(doc)
-  return doc
+  return yaml.load(await readFile(path, 'utf8')) as JSON_OBJ
 }
 
 async function generateCategoriesTags(

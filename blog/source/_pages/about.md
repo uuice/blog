@@ -1,3 +1,4 @@
 ---
 id: tester
+alias: about
 ---

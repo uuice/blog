@@ -36,7 +36,11 @@ export default function (cwd = process.cwd()): void {
     .command('gen')
     .description('generate data json')
     .action(async (options) => {
+      console.info('start generating')
+      console.time('generate data json')
       await generate(postDirPath, pageDirPath, jsonDirPath, systemConfigPath, dataBasePath)
+      console.timeEnd('generate data json')
+      console.info('end generating')
     })
 
   program
@@ -44,7 +48,6 @@ export default function (cwd = process.cwd()): void {
     .description('koa server')
     .option('-p, --port <port>', '指定端口号', '3000')
     .action(async (options) => {
-      console.log(options)
       await bootstrap({
         port: options.port,
         cwd,
