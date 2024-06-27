@@ -30,6 +30,7 @@
     "@types/jest": "^29.5.12",
     "@types/js-yaml": "^4.0.9",
     "@types/lodash": "^4.17.5",
+    "@types/lowdb": "^1.0.15",
     "@types/md5": "^2.3.5",
     "@types/mocha": "^10.0.7",
     "@types/node": "^20.14.8",

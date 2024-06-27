@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common'
-
-interface CONFIG {
-  [key: string]: string | number | boolean | object
-}
+import { CONFIG } from '../../../types/config'
 
 export const CWD = 'cwd'
 export const DB_PATH = 'db_path'

@@ -4,7 +4,9 @@ export interface PAGE {
   alias: string
   cover: string
   created_time: string
+  date?: string
   updated_time: string
+  updated?: string
   categories: Array<string>
   tags: Array<string>
   excerpt: string

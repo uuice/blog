@@ -7,7 +7,10 @@ import { DbService } from './core/service/db.service'
 import { initSwagger } from './initSwagger'
 
 export async function bootstrap(options: { port: number; cwd: string; dbPath: string }) {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: ['log', 'error', 'warn'],
+    bufferLogs: true
+  })
 
   app.set('trust proxy', 1)
   app.use(

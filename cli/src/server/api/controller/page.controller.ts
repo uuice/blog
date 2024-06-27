@@ -1,25 +1,40 @@
-import { Controller, Get, Param } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { PageService } from '../../core/service/page.service'
 import { PAGE } from '../../../types/page'
+import { LowdbUndefinedInterceptor } from '../interceptor/lowdb-undefined.interceptor'
 
 @ApiTags('page')
+@UseInterceptors(LowdbUndefinedInterceptor)
 @Controller('page')
 export class PageController {
   constructor(private pageService: PageService) {}
 
-  @Get('/list')
-  list(): Omit<PAGE, 'content' | '_content'>[] {
+  @Get('queryList')
+  @ApiOperation({
+    summary: "Get the page list without 'content' | '_content' | '_toc'",
+    description: ''
+  })
+  queryList(): Omit<PAGE, 'content' | '_content' | '_toc'>[] {
     return this.pageService.getPageList()
   }
 
-  @Get(':idOrTitle')
-  query(@Param('idOrTitle') idOrTitle: string): PAGE {
-    return this.pageService.getPageByIdOrTitle(idOrTitle)
+  @Get('queryByAlias/:alias')
+  @ApiOperation({
+    summary: 'Get page by alias',
+    description: ''
+  })
+  queryByAlias(@Param('alias') alias: string): PAGE {
+    console.log(this.pageService.getPageByAlias(alias))
+    return this.pageService.getPageByAlias(alias)
   }
 
-  @Get('/alias/:alias')
-  queryByAlias(@Param('alias') alias: string): PAGE {
-    return this.pageService.getPageByAlias(alias)
+  @Get('query/:idOrTitle')
+  @ApiOperation({
+    summary: 'Get page by id or title',
+    description: ''
+  })
+  query(@Param('idOrTitle') idOrTitle: string): PAGE {
+    return this.pageService.getPageByIdOrTitle(idOrTitle)
   }
 }

@@ -19,11 +19,13 @@ export class PageService {
       .value()
   }
 
-  getPageList(): Omit<PAGE, 'content' | '_content'>[] {
-    return this.dbService
-      .getInstance()
-      .get('pages')
-      .map((item: PAGE) => omit(item, ['content', '_content']))
-      .value()
+  getPageList(): Omit<PAGE, 'content' | '_content' | '_toc'>[] {
+    return (
+      this.dbService
+        .getInstance()
+        .get('pages')
+        .map((item: PAGE) => omit(item, ['content', '_content', '_toc']))
+        .value() || []
+    )
   }
 }

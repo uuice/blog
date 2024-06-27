@@ -1,19 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
-import { CATEGORY } from '../../../types/category'
-import { TAG } from '../../../types/tag'
+import { CATEGORY, CATEGORY_WITH_POST_NUM } from '../../../types/category'
 import { isEqual } from 'lodash'
-
-type CATEGORY_WITH_POST_NUM = CATEGORY & {
-  postNum: number
-}
 
 @Injectable()
 export class CategoryService {
   constructor(private dbService: DbService) {}
 
   getCategoryList(): CATEGORY[] {
-    return this.dbService.getInstance().get('categories').value()
+    return this.dbService.getInstance().get('categories').value() || []
   }
 
   getCategoryByIdOrTitle(idOrTitle: string): CATEGORY {
@@ -25,15 +20,16 @@ export class CategoryService {
   }
 
   getCategoryListWidthPostNum(): CATEGORY_WITH_POST_NUM[] {
-    const list = this.dbService.getInstance().get('categories').value()
+    const list = this.dbService.getInstance().get('categories').value() || []
     return list.map((item: CATEGORY) => {
-      const postCategoryList = this.dbService
-        .getInstance()
-        .get('postCategories')
-        .filter({
-          categoryId: item.id
-        })
-        .value()
+      const postCategoryList =
+        this.dbService
+          .getInstance()
+          .get('postCategories')
+          .filter({
+            categoryId: item.id
+          })
+          .value() || []
       return {
         ...item,
         postNum: postCategoryList.length

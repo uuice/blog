@@ -91,6 +91,9 @@ devDependencies:
   '@types/lodash':
     specifier: ^4.17.5
     version: 4.17.5
+  '@types/lowdb':
+    specifier: ^1.0.15
+    version: 1.0.15
   '@types/md5':
     specifier: ^2.3.5
     version: 2.3.5
@@ -527,6 +530,12 @@ packages:
 
   /@types/lodash@4.17.5:
     resolution: {integrity: sha512-MBIOHVZqVqgfro1euRDWX7OO0fBVUUMrN6Pwm8LQsz8cWhEpihlvR70ENj3f40j58TNxZaWv2ndSkInykNBBJw==}
+    dev: true
+
+  /@types/lowdb@1.0.15:
+    resolution: {integrity: sha512-xaMNIveDCryK4UvnUJOc2BCOH0lPivdvWHrutsLryo9r9Id3RqZq2RDmT4eddiEPYzu7nJMw6nFIcVifcqjWqg==}
+    dependencies:
+      '@types/lodash': 4.17.5
     dev: true
 
   /@types/md5@2.3.5:
