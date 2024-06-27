@@ -14,7 +14,9 @@ export interface POST {
   content: string
   _content: string
   _toc: string
-  [key: string]: string | Array<string> | boolean
+  _created_timestamp: number
+  _updated_timestamp: number
+  [key: string]: string | Array<string> | boolean | number
 }
 
 export type LIST_POST_ITEM = Omit<POST, 'content' | '_content' | '_toc'>

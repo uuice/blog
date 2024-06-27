@@ -1,6 +1,6 @@
 import { Controller, Get, Param, UseInterceptors } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { CATEGORY } from '../../../types/category'
+import { CATEGORY, CATEGORY_WITH_POST_NUM } from '../../../types/category'
 import { CategoryService } from '../../core/service/category.service'
 import { TAG } from '../../../types/tag'
 import { LowdbUndefinedInterceptor } from '../interceptor/lowdb-undefined.interceptor'
@@ -25,7 +25,7 @@ export class CategoryController {
     summary: 'Get all categories and count the number of articles in each category',
     description: ''
   })
-  queryListWithPostNum(): TAG[] {
+  queryListWithPostNum(): CATEGORY_WITH_POST_NUM[] {
     return this.categoryService.getCategoryListWidthPostNum()
   }
 
@@ -34,7 +34,7 @@ export class CategoryController {
     summary: 'Get category by id or title',
     description: ''
   })
-  query(@Param('idOrTitle') idOrTitle: string): TAG {
+  query(@Param('idOrTitle') idOrTitle: string): CATEGORY | undefined {
     return this.categoryService.getCategoryByIdOrTitle(idOrTitle)
   }
 }

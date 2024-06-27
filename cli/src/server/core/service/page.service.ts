@@ -7,11 +7,11 @@ import { isEqual, omit } from 'lodash'
 export class PageService {
   constructor(private dbService: DbService) {}
 
-  getPageByAlias(alias: string): PAGE {
+  getPageByAlias(alias: string): PAGE | undefined {
     return this.dbService.getInstance().get('pages').find({ alias }).value()
   }
 
-  getPageByIdOrTitle(idOrTitle: string): PAGE {
+  getPageByIdOrTitle(idOrTitle: string): PAGE | undefined {
     return this.dbService
       .getInstance()
       .get('pages')

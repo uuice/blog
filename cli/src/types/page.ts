@@ -14,5 +14,7 @@ export interface PAGE {
   content: string
   _content: string
   _toc: string
-  [key: string]: string | Array<string> | boolean
+  _created_timestamp: number
+  _updated_timestamp: number
+  [key: string]: string | Array<string> | boolean | number
 }

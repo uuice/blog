@@ -17,7 +17,7 @@ export class PostService {
 
   private readonly logger = new Logger(PostService.name)
 
-  getPostByIdOrTitle(idOrTitle: string): POST {
+  getPostByIdOrTitle(idOrTitle: string): POST | undefined {
     return this.dbService
       .getInstance()
       .get('posts')
@@ -25,7 +25,7 @@ export class PostService {
       .value()
   }
 
-  getPostByAlias(alias: string): POST {
+  getPostByAlias(alias: string): POST | undefined {
     return this.dbService
       .getInstance()
       .get('posts')
@@ -41,7 +41,7 @@ export class PostService {
         .getInstance()
         .get('posts')
         .map((item: POST) => omit(item, ['content', '_content', '_toc']))
-        .sortBy('created_time')
+        .sortBy('_created_timestamp')
         .take(num)
         .value() || []
     )
@@ -65,7 +65,7 @@ export class PostService {
         .get('posts')
         .filter((post: POST) => postIdArray.includes(post.id))
         .map((item: POST) => omit(item, ['content', '_content', '_toc']))
-        .sortBy('created_time')
+        .sortBy('_created_timestamp')
         .value() || []
     )
   }
@@ -88,7 +88,7 @@ export class PostService {
         .get('posts')
         .filter((post: POST) => postIdArray.includes(post.id))
         .map((item: POST) => omit(item, ['content', '_content', '_toc']))
-        .sortBy('created_time')
+        .sortBy('_created_timestamp')
         .value() || []
     )
   }
@@ -106,6 +106,6 @@ export class PostService {
       return date.getFullYear()
     })
 
-    return mapValues(groupedByYear, (items) => sortBy(items, 'created_time'))
+    return mapValues(groupedByYear, (items) => sortBy(items, '_created_timestamp'))
   }
 }

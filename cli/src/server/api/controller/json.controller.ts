@@ -20,7 +20,7 @@ export class JsonController {
     description: 'The name of json file',
     type: 'string'
   })
-  query(@Param('alias') alias: string): JSON_OBJ {
+  query(@Param('alias') alias: string): JSON_OBJ | undefined {
     return this.jsonService.getJsonByAlias(alias)
   }
 }

@@ -33,7 +33,7 @@ export class TagController {
     summary: 'Get tag by id or title',
     description: ''
   })
-  query(@Param('idOrTitle') idOrTitle: string): TAG {
+  query(@Param('idOrTitle') idOrTitle: string): TAG | undefined {
     return this.tagService.getTagByIdOrTitle(idOrTitle)
   }
 }

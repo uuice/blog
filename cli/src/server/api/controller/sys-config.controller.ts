@@ -30,7 +30,7 @@ export class SysConfigController {
     description:
       'Gets the value at path of object. If the resolved value is undefined, the defaultValue is returned in its place'
   })
-  queryWithPath(@Param('path') path: string): JSON_OBJ {
+  queryWithPath(@Param('path') path: string): string | boolean | object | undefined {
     return this.sysConfigService.getSysConfig(path)
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
+import { JSON_OBJ } from '../../../types/json'
 
 @Injectable()
 export class JsonService {
@@ -9,7 +10,7 @@ export class JsonService {
    * alias is the json file name
    * @param alias
    */
-  getJsonByAlias(alias: string) {
+  getJsonByAlias(alias: string): JSON_OBJ | undefined {
     return this.dbService.getInstance().get(`${alias}Config`).value()
   }
 }

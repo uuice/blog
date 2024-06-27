@@ -12,6 +12,7 @@ import { join, parse } from 'node:path'
 import { markdownToHtml, markdownToToc } from './markdown'
 import * as yaml from 'js-yaml'
 import { generateUUID, generateUUID2 } from './uuid'
+import moment from 'moment'
 
 export const generate = async (
   postDirPath: string,
@@ -96,9 +97,17 @@ async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
       tags: json.data.tags || [],
       excerpt: json.data.excerpt || '',
       published: json.data.published || '',
-      content: json.data.content || '',
+      content: json.content || '',
       _content: contentToc._content || '',
-      _toc: contentToc._toc || ''
+      _toc: contentToc._toc || '',
+      _created_timestamp:
+        json.data.created_time || json.data.date
+          ? moment(json.data.created_time || json.data.date).valueOf()
+          : 0,
+      _updated_timestamp:
+        json.data.updated_time || json.data.updated
+          ? moment(json.data.updated_time || json.data.updated).valueOf()
+          : 0
     })
   }
   return result

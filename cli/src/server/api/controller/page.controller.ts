@@ -24,8 +24,7 @@ export class PageController {
     summary: 'Get page by alias',
     description: ''
   })
-  queryByAlias(@Param('alias') alias: string): PAGE {
-    console.log(this.pageService.getPageByAlias(alias))
+  queryByAlias(@Param('alias') alias: string): PAGE | undefined {
     return this.pageService.getPageByAlias(alias)
   }
 
@@ -34,7 +33,7 @@ export class PageController {
     summary: 'Get page by id or title',
     description: ''
   })
-  query(@Param('idOrTitle') idOrTitle: string): PAGE {
+  query(@Param('idOrTitle') idOrTitle: string): PAGE | undefined {
     return this.pageService.getPageByIdOrTitle(idOrTitle)
   }
 }

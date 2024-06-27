@@ -11,7 +11,7 @@ export class TagService {
     return this.dbService.getInstance().get('tags').value() || []
   }
 
-  getTagByIdOrTitle(idOrTitle: string): TAG {
+  getTagByIdOrTitle(idOrTitle: string): TAG | undefined {
     return this.dbService
       .getInstance()
       .get('tags')

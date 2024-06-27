@@ -11,7 +11,7 @@ export class CategoryService {
     return this.dbService.getInstance().get('categories').value() || []
   }
 
-  getCategoryByIdOrTitle(idOrTitle: string): CATEGORY {
+  getCategoryByIdOrTitle(idOrTitle: string): CATEGORY | undefined {
     return this.dbService
       .getInstance()
       .get('categories')
