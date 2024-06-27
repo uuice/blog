@@ -1,3 +1,5 @@
+import { PAGE } from './page'
+
 export interface POST {
   id: string
   title: string
@@ -21,6 +23,15 @@ export interface POST {
 
 export type LIST_POST_ITEM = Omit<POST, 'content' | '_content' | '_toc'>
 
-export interface ARCHIVES_DATE {
-  [date: string]: LIST_POST_ITEM[]
+export type ARCHIVES_DATE_YEAR = { [date: string]: LIST_POST_ITEM[] }[]
+
+export type ARCHIVES_DATE_YEAR_MONTH = { [date: string]: ARCHIVES_DATE_YEAR }[]
+
+export type POST_PAGE_QUERY = {
+  pageIndex: number
+  pageCount: number
+  prevPage: number
+  nextPage: number
+  pageSize: number
+  dataList: Omit<PAGE, 'content' | '_content' | '_toc'>[]
 }

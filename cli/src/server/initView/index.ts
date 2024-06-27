@@ -1,5 +1,4 @@
 import { NestExpressApplication } from '@nestjs/platform-express'
-import * as nunjucks from 'nunjucks'
 import { shorten } from './filter/shorten'
 import { console as Console } from './filter/console'
 import { TagTest } from './tag/tagTest'

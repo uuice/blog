@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import helmet from 'helmet'
-import { CWD, ConfigService, DB_PATH } from './core/service/config.service'
+import { ConfigService, CWD, DB_PATH } from './core/service/config.service'
 import { DbService } from './core/service/db.service'
 import { initSwagger } from './initSwagger'
 
@@ -49,5 +49,7 @@ export async function bootstrap(options: { port: number; cwd: string; dbPath: st
   configService.setItem(DB_PATH, options.dbPath)
   const dbService = app.get(DbService)
   dbService.initDb()
+
+  // TODO：Initialize flexsearch,  the Next-Generation full text search library
   await app.listen(options.port)
 }

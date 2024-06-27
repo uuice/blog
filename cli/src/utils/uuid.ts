@@ -1,4 +1,4 @@
-import { v5 as uuidV5, v4 as uuidV4 } from 'uuid'
+import { v4 as uuidV4, v5 as uuidV5 } from 'uuid'
 
 const nameSpace = '377b7945-cda0-4fc1-bf13-8fcf4256afdc'
 

@@ -3,6 +3,7 @@ import { marked } from 'marked'
 import markToc from 'markdown-toc'
 import highlight from 'highlight.js'
 import md5 from 'md5'
+
 /**
  * markdown to toc
  * @return {} []

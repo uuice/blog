@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware, NotFoundException } from '@nestjs/common'
-import { Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { resolve } from 'node:path'
 import { readFile, stat } from 'node:fs/promises'
 import { fileTypeFromFile } from 'file-type'

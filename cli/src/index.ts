@@ -33,6 +33,17 @@ export default function (cwd = process.cwd()): void {
     })
 
   program
+    .command('new')
+    .description('generate new post or page')
+    .argument('<type>', 'type')
+    .argument('<title>', 'title')
+    .option('-p, --path <port>', '指定路径', '')
+    .action(async (type, title, options) => {
+      // TODO: new page or post
+      console.info(type, title, options)
+    })
+
+  program
     .command('gen')
     .description('generate data json')
     .action(async (options) => {

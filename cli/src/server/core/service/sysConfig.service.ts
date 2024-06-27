@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
 import { get } from 'lodash'
-import { JSON_OBJ } from '../../../types/json'
 
 export const CWD = 'cwd'
 export const DB_PATH = 'db_path'
