@@ -1,6 +1,6 @@
 {
   "name": "uuice-cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "uuice`s blog cli, developing...",
   "main": "dist/index",
   "bin": {
@@ -53,6 +53,7 @@
     "@nestjs/platform-express": "^10.3.9",
     "@nestjs/swagger": "^7.3.1",
     "@nestjs/testing": "^10.3.9",
+    "chokidar": "^3.6.0",
     "commander": "^12.1.0",
     "eslint-config-prettier": "^9.1.0",
     "file-type": "^19.0.0",

@@ -1,0 +1,26 @@
+
+<h2>TagTest</h2>
+{% TagTest key1=1,key2=2,key3=3,key4=4 %}
+  <ul>
+    {% for val in list %}
+      <li>
+        {{ val.id }}:{{ val.city}}
+      </li>
+    {% endfor %}
+  </ul>
+  {{ list | dump | console('result', 'table') | safe}}
+{% endTagTest %}
+
+
+{% TagTest list="key1=1,key2=2,key3=3,key4=4" %}
+  <ul>
+    {% for val in list %}
+      <li>
+        {{ val.id }}:{{ val.city}}
+      </li>
+    {% endfor %}
+  </ul>
+{% endTagTest %}
+
+<h2>TagTest2</h2>
+{% TagTest2 name="ddd" %}

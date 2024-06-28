@@ -11,13 +11,14 @@ import matter from 'gray-matter'
 import { join, parse } from 'node:path'
 import { markdownToHtml, markdownToToc } from './markdown'
 import * as yaml from 'js-yaml'
-import { generateUUID, generateUUID2 } from './uuid'
+import { generateUUID } from './uuid'
 import moment from 'moment'
 
 export const generate = async (
   postDirPath: string,
   pageDirPath: string,
   jsonDirPath: string,
+  ymlDirPath: string,
   systemConfigPath: string,
   dataBasePath: string
 ) => {
@@ -30,6 +31,9 @@ export const generate = async (
   const jsonPattern = join(jsonDirPath, '/**/*.json')
   const jsonList = await generateJsons(jsonPattern)
 
+  const ymlPattern = join(ymlDirPath, '/**/*.yml')
+  const ymlList = await generateYmls(ymlPattern)
+
   const systemConfig = await generateSystemConfig(systemConfigPath)
   const categoryTag = await generateCategoriesTags(postList, pageList)
 
@@ -37,6 +41,7 @@ export const generate = async (
     posts: postList,
     pages: pageList,
     ...jsonList,
+    ...ymlList,
     systemConfig,
     tags: categoryTag.tags,
     categories: categoryTag.categories,
@@ -66,6 +71,20 @@ async function generateJsons(path: string): Promise<JSON_OBJ> {
     const fileName = parse(jsonFile).name
     const content = await readFile(jsonFile, 'utf-8')
     result[fileName + 'Config'] = JSON.parse(content.toString())
+  }
+
+  return result
+}
+
+async function generateYmls(path: string): Promise<JSON_OBJ> {
+  const ymlFileList: string[] = await glob(path, { ignore: 'node_modules/**' })
+  const result: {
+    [key: string]: any
+  } = {}
+
+  for (const jsonFile of ymlFileList) {
+    const fileName = parse(jsonFile).name
+    result[fileName + 'YmlConfig'] = yaml.load(await readFile(jsonFile, 'utf8')) as JSON_OBJ
   }
 
   return result
@@ -149,7 +168,7 @@ async function generateCategoriesTags(
           postTags.push({
             postId: post.id,
             tagId: tags[index].id,
-            id: generateUUID2()
+            id: generateUUID(post.id + tags[index].id)
           })
         } else {
           const id = generateUUID(tag)
@@ -161,7 +180,7 @@ async function generateCategoriesTags(
           postTags.push({
             postId: post.id,
             tagId: id,
-            id: generateUUID2()
+            id: generateUUID(post.id + id)
           })
         }
       })
@@ -173,7 +192,7 @@ async function generateCategoriesTags(
           postCategories.push({
             postId: post.id,
             categoryId: categories[index].id,
-            id: generateUUID2()
+            id: generateUUID(post.id + categories[index].id)
           })
         } else {
           const id = generateUUID(category)
@@ -185,7 +204,7 @@ async function generateCategoriesTags(
           postCategories.push({
             postId: post.id,
             categoryId: id,
-            id: generateUUID2()
+            id: generateUUID(post.id + id)
           })
         }
       })

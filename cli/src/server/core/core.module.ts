@@ -7,6 +7,7 @@ import { ConfigService } from './service/config.service'
 import { PageService } from './service/page.service'
 import { SysConfigService } from './service/sysConfig.service'
 import { JsonService } from './service/json.service'
+import { YmlService } from './service/yml.service'
 
 @Module({
   providers: [
@@ -17,7 +18,8 @@ import { JsonService } from './service/json.service'
     ConfigService,
     PageService,
     SysConfigService,
-    JsonService
+    JsonService,
+    YmlService
   ],
   exports: [
     DbService,
@@ -27,7 +29,8 @@ import { JsonService } from './service/json.service'
     ConfigService,
     PageService,
     SysConfigService,
-    JsonService
+    JsonService,
+    YmlService
   ]
 })
 export class CoreModule {}

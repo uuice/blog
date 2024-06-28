@@ -8,3 +8,6 @@ favicon:
 
 # URL
 url: http://example.com
+
+# Theme
+theme: default

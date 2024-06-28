@@ -2,7 +2,7 @@ import * as nunjucks from 'nunjucks'
 import { NestExpressApplication } from '@nestjs/platform-express'
 
 export function TagTest(app: NestExpressApplication): void {
-  // tag标签测试
+  // tag with endpoint test
   this.tags = ['TagTest']
   this.parse = function (parser, nodes) {
     const tok = parser.nextToken()
@@ -60,7 +60,7 @@ export function TagTest(app: NestExpressApplication): void {
         short: 'H'
       }
     ] // return
-    const result = new nunjucks.runtime.SafeString('dddd' + body() + '---------')
+    const result = new nunjucks.runtime.SafeString(body())
     return callback(null, result)
   }
 }

@@ -13,6 +13,7 @@ export default function (cwd = process.cwd()): void {
   const pageDirPath = join(sourcePath, '_pages')
   const postDirPath = join(sourcePath, '_posts')
   const jsonDirPath = join(sourcePath, '_jsons')
+  const ymlDirPath = join(sourcePath, '_ymls')
 
   const pageTemplatePath = join(cwd, 'templates', 'page.ng')
   const postTemplatePath = join(cwd, 'templates', 'post.ng')
@@ -20,17 +21,6 @@ export default function (cwd = process.cwd()): void {
   const program = new Command()
 
   program.name('uuice-cli').description('CLI to uuice`s blog').version(pkg.version)
-
-  program
-    .command('test')
-    .description('test')
-    .argument('<string>', 'string to split')
-    .option('--p', 'display just the first substring')
-    .option('-s, --separator <char>', 'separator character', ',')
-    .action((str, options) => {
-      console.log(str)
-      console.log(options)
-    })
 
   program
     .command('new')
@@ -49,7 +39,14 @@ export default function (cwd = process.cwd()): void {
     .action(async (options) => {
       console.info('start generating')
       console.time('generate data json')
-      await generate(postDirPath, pageDirPath, jsonDirPath, systemConfigPath, dataBasePath)
+      await generate(
+        postDirPath,
+        pageDirPath,
+        jsonDirPath,
+        ymlDirPath,
+        systemConfigPath,
+        dataBasePath
+      )
       console.timeEnd('generate data json')
       console.info('end generating')
     })
@@ -59,13 +56,17 @@ export default function (cwd = process.cwd()): void {
     .description('koa server')
     .option('-p, --port <port>', '指定端口号', '3000')
     .action(async (options) => {
-      await bootstrap({
-        port: options.port,
-        cwd,
-        dbPath: dataBasePath
-      }).then(() => {
-        console.log('server started')
-      })
+      try {
+        await bootstrap({
+          port: options.port,
+          cwd,
+          dbPath: dataBasePath
+        }).then(() => {
+          console.log('server started')
+        })
+      } catch (err) {
+        console.error(err)
+      }
     })
 
   program.parse()
