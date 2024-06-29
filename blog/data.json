@@ -21,12 +21,12 @@
       "content": "",
       "_content": "",
       "_toc": "",
-      "_created_timestamp": 1719504000000,
+      "_created_timestamp": 1719590400000,
       "_updated_timestamp": 0
     },
     {
       "title": "pnpm install报错",
-      "id": 98,
+      "id": "98",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "excerpt": "在使用pnpm 安装依赖的时候有时候会出现lock文件损坏等情况解决方法安装重试失败， 可以先删除 pnpm本地store- 执行-  执行 rm -rf $(pnpm store path)-  重新安装目前个人碰到的几种失败情况， 都能解决， 以后碰到更多的情况再补充",
@@ -47,7 +47,7 @@
     },
     {
       "title": "koa2 + redis使用笔记",
-      "id": 48,
+      "id": "48",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "cover": "https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0028.jpg?imageMogr2/thumbnail/640x/interlace/1",
@@ -68,7 +68,7 @@
     },
     {
       "title": "javascript观察者模式的简单实现",
-      "id": 33,
+      "id": "33",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "cover": "https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0854.jpg?imageMogr2/thumbnail/640x/interlace/1",
@@ -89,7 +89,7 @@
     },
     {
       "title": "javascript 函数式编程之柯里化(currying)",
-      "id": 45,
+      "id": "45",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "categories": [
@@ -110,7 +110,7 @@
     },
     {
       "title": "jQuery 省市三级联动",
-      "id": 39,
+      "id": "39",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "categories": [
@@ -131,7 +131,7 @@
     },
     {
       "title": "HTML5 Canvas手机九宫格手势密码解锁 ，支持N*N个点",
-      "id": 43,
+      "id": "43",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "cover": "https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0894.jpg?imageMogr2/thumbnail/640x/interlace/1",
@@ -169,7 +169,7 @@
     },
     {
       "title": "express实践",
-      "id": 38,
+      "id": "38",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "excerpt": "Node.js 7.0发布之前，写一篇关于express的文章项目创建使用express-generator使用npm install express-generator -g代码修改自动重启使用nodemonnodemon ./bin/www全局设置//加载配置项global.Config = r",
@@ -209,7 +209,7 @@
     },
     {
       "title": "Yarn && npm设置镜像源",
-      "id": 34,
+      "id": "34",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "excerpt": "安装yarnnpm i -g yarnyarnyarn config set registry https//registry.npm.taobao.org --global  &amp;&amp; \\yarn config set disturl https//npm.taobao.org/d",
@@ -230,7 +230,7 @@
     },
     {
       "title": "X-Frame-Options 响应头",
-      "id": 44,
+      "id": "44",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "excerpt": "做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display ‘XXXX’ in a frame because it set ‘X-Frame-Options’ to ‘de",
@@ -251,7 +251,7 @@
     },
     {
       "title": "Web动画优化--requestAnimationFrame",
-      "id": 42,
+      "id": "42",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "cover": "https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0748.jpg?imageMogr2/thumbnail/640x/interlace/1",
@@ -272,7 +272,7 @@
     },
     {
       "title": "NODE.JS采集练手",
-      "id": 46,
+      "id": "46",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "cover": "https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0883.jpg?imageMogr2/thumbnail/640x/interlace/1",
@@ -293,7 +293,7 @@
     },
     {
       "title": "Linux npm -g 全局安装的命令找不到",
-      "id": 97,
+      "id": "97",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "excerpt": "在Linux 上通过npm -g全局安装 pm2、yarn、pnpm 等命令找不到的解决方法修改 ~/.bash_profile vim ~/.bash_profile新增环境变量export PATH=$(npm prefix -g)/bin$PATH在宝塔面板中export PATH=$PAT",
@@ -315,7 +315,7 @@
     },
     {
       "title": "通过视频url，获取缩略图",
-      "id": 35,
+      "id": "35",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "cover": "https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0979.jpg?imageMogr2/thumbnail/640x/interlace/1",
@@ -336,7 +336,7 @@
     },
     {
       "title": "让浏览器兼容placeholder",
-      "id": 40,
+      "id": "40",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "excerpt": "什么是placeholderplaceholder 属性提供可描述输入字段预期值的提示信息（hint）。该提示会在输入字段为空时显示，并会在字段获得焦点时消失。placeholder兼容性解决$(function(){    if(!placeholderSupport()){   // 判断浏览器",
@@ -357,7 +357,7 @@
     },
     {
       "title": "短 URL 系统设计",
-      "id": 37,
+      "id": "37",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "excerpt": "原理通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。实现方式将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面通过访问短连接获取到62进制字符串",
@@ -378,7 +378,7 @@
     },
     {
       "title": "深入分析css中单位px和em,rem的区别",
-      "id": 47,
+      "id": "47",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "excerpt": "PX特点IE无法调整那些使用px作为单位的字体大小;EM特点em的值并不是固定的;em会继承父级元素的字体大小。比如父元素设置了1.2em,子元素也设置了1.2em 那么事实上子元素设置的是1.2*1.2 emrem特点rem是CSS3新增的一个相对单位(root em，根em)。这个单位与em有什",
@@ -399,7 +399,7 @@
     },
     {
       "title": "浏览器指定内核访问",
-      "id": 41,
+      "id": "41",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "excerpt": "360页面默认使用极速内核&lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;页面默认使用ie兼容内核&lt;meta name=&quot;renderer&quot; content=&quot;ie-comp&quo",
@@ -420,7 +420,7 @@
     },
     {
       "title": "将布尔表达式转成json格式",
-      "id": 129,
+      "id": "129",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "excerpt": "简单的词法分析和推栈的应用",
@@ -441,7 +441,7 @@
     },
     {
       "title": "在Directive中获取组件DOM以及实例",
-      "id": 71,
+      "id": "71",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "excerpt": "在Directive中获取组件DOM以及实例",
@@ -465,7 +465,7 @@
     },
     {
       "title": "“被污染”的 canvas",
-      "id": 36,
+      "id": "36",
       "date": "2023-11-24T21:10:41.000Z",
       "auther": "nginx",
       "cover": "https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0037.jpg?imageMogr2/thumbnail/640x/interlace/1",
@@ -486,7 +486,7 @@
     },
     {
       "title": "canvas实现圆形进度条",
-      "id": 49,
+      "id": "49",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "categories": [
@@ -507,7 +507,7 @@
     },
     {
       "title": "通过takeUntil取消订阅可观察对象 / Angular Observable destroy with takeUntil",
-      "id": 161,
+      "id": "161",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "excerpt": "Angular 中的单例 Service通过@NgModule()装饰器来声明一个service时， 会与整个应用的生命周期保持一致， 属于单利service （单例模式）。Angular 中的非单例 Service通过@Component()装饰器来声明一个service时，会成为一个非单例的se",
@@ -531,7 +531,8 @@
   "pages": [
     {
       "title": "在Directive中获取组件DOM以及实例",
-      "id": 71,
+      "alias": "alias11",
+      "id": "71",
       "date": "2023-11-24T21:10:42.000Z",
       "auther": "nginx",
       "excerpt": "在Directive中获取组件DOM以及实例",
@@ -542,14 +543,13 @@
         "angular",
         "directive"
       ],
-      "alias": "",
       "cover": "",
       "created_time": "2023-11-24T21:10:42.000Z",
       "updated_time": "",
       "published": "",
-      "content": "\n### 获取DOM\n\n从 `@angular/core` 导入 `ElementRef`。`ElementRef` 的 `nativeElement `属性会提供对宿主 DOM 元素的直接访问权限。\n\n```javascript\nimport { Directive, ElementRef } from '@angular/core';\n\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private el: ElementRef,\n  ) {\n    el.nativeElement.style.backgroundColor = 'yellow';\n  }\n}\n```\n\n### 获取组件实例\n\n> 组件已知的情况下，在自定义指令中获取组件实例\n\n直接在`constructor`中注入对应组件就可以\n\n如下面代码，通过 `this.com` 就可以调用组件的属性和事件\n\n```javascript\nimport { Directive } from '@angular/core';\nimport { comTest } from 'comTest';\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private com: comTest\n  ) {\n    console.log(this.com)\n  }\n}\n\n```",
-      "_content": "<h3 id=\"toc-291011\">获取DOM</h3>\n<p>从 <code>@angular/core</code> 导入 <code>ElementRef</code>。<code>ElementRef</code> 的 <code>nativeElement </code>属性会提供对宿主 DOM 元素的直接访问权限。</p>\n<pre><code class=\"language-javascript\">import { Directive, ElementRef } from &#39;@angular/core&#39;;\n\n@Directive({\n  selector: &#39;[appTest]&#39;\n})\nexport class TestDirective {\n  constructor(\n    private el: ElementRef,\n  ) {\n    el.nativeElement.style.backgroundColor = &#39;yellow&#39;;\n  }\n}\n</code></pre>\n<h3 id=\"toc-fd30cc\">获取组件实例</h3>\n<blockquote>\n<p>组件已知的情况下，在自定义指令中获取组件实例</p>\n</blockquote>\n<p>直接在<code>constructor</code>中注入对应组件就可以</p>\n<p>如下面代码，通过 <code>this.com</code> 就可以调用组件的属性和事件</p>\n<pre><code class=\"language-javascript\">import { Directive } from &#39;@angular/core&#39;;\nimport { comTest } from &#39;comTest&#39;;\n@Directive({\n  selector: &#39;[appTest]&#39;\n})\nexport class TestDirective {\n  constructor(\n    private com: comTest\n  ) {\n    console.log(this.com)\n  }\n}\n</code></pre>\n",
-      "_toc": "<ul>\n<li><a href=\"#toc-291011\">获取DOM</a></li>\n<li><a href=\"#toc-fd30cc\">获取组件实例</a></li>\n</ul>\n",
+      "content": "\n### 获取 DOM\n\n从 `@angular/core` 导入 `ElementRef`。`ElementRef` 的 `nativeElement `属性会提供对宿主 DOM 元素的直接访问权限。\n\n```javascript\nimport { Directive, ElementRef } from '@angular/core';\n\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private el: ElementRef,\n  ) {\n    el.nativeElement.style.backgroundColor = 'yellow';\n  }\n}\n```\n\n### 获取组件实例\n\n> 组件已知的情况下，在自定义指令中获取组件实例\n\n直接在`constructor`中注入对应组件就可以\n\n如下面代码，通过 `this.com` 就可以调用组件的属性和事件\n\n```javascript\nimport { Directive } from '@angular/core';\nimport { comTest } from 'comTest';\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private com: comTest\n  ) {\n    console.log(this.com)\n  }\n}\n\n```\n",
+      "_content": "<h3 id=\"toc-291011\">获取 DOM</h3>\n<p>从 <code>@angular/core</code> 导入 <code>ElementRef</code>。<code>ElementRef</code> 的 <code>nativeElement </code>属性会提供对宿主 DOM 元素的直接访问权限。</p>\n<pre><code class=\"language-javascript\">import { Directive, ElementRef } from &#39;@angular/core&#39;;\n\n@Directive({\n  selector: &#39;[appTest]&#39;\n})\nexport class TestDirective {\n  constructor(\n    private el: ElementRef,\n  ) {\n    el.nativeElement.style.backgroundColor = &#39;yellow&#39;;\n  }\n}\n</code></pre>\n<h3 id=\"toc-fd30cc\">获取组件实例</h3>\n<blockquote>\n<p>组件已知的情况下，在自定义指令中获取组件实例</p>\n</blockquote>\n<p>直接在<code>constructor</code>中注入对应组件就可以</p>\n<p>如下面代码，通过 <code>this.com</code> 就可以调用组件的属性和事件</p>\n<pre><code class=\"language-javascript\">import { Directive } from &#39;@angular/core&#39;;\nimport { comTest } from &#39;comTest&#39;;\n@Directive({\n  selector: &#39;[appTest]&#39;\n})\nexport class TestDirective {\n  constructor(\n    private com: comTest\n  ) {\n    console.log(this.com)\n  }\n}\n</code></pre>\n",
+      "_toc": "<ul>\n<li><a href=\"#toc-291011\">获取 DOM</a></li>\n<li><a href=\"#toc-fd30cc\">获取组件实例</a></li>\n</ul>\n",
       "_created_timestamp": 1700860242000,
       "_updated_timestamp": 0
     },
@@ -569,6 +569,44 @@
       "_toc": "",
       "_created_timestamp": 0,
       "_updated_timestamp": 0
+    }
+  ],
+  "menuConfig": [
+    {
+      "title": "首页",
+      "icon": "",
+      "url": "/",
+      "target": "_self"
+    },
+    {
+      "title": "归档",
+      "icon": "",
+      "url": "/archives",
+      "target": "_self"
+    },
+    {
+      "title": "日志",
+      "icon": "",
+      "url": "/moments",
+      "target": "_self"
+    },
+    {
+      "title": "友情链接",
+      "icon": "",
+      "url": "/links",
+      "target": "_self"
+    },
+    {
+      "title": "留言区",
+      "icon": "",
+      "url": "/comment",
+      "target": "_self"
+    },
+    {
+      "title": "关于博主",
+      "icon": "",
+      "url": "/about",
+      "target": "_self"
     }
   ],
   "linkConfig": [
@@ -660,134 +698,134 @@
   ],
   "postCategories": [
     {
-      "postId": 98,
+      "postId": "98",
       "categoryId": "80d82b70-8dd1-5b0e-a576-6d05686610f9",
       "id": "9c6571a6-fd33-527f-b735-117e4ab46dab"
     },
     {
-      "postId": 48,
+      "postId": "48",
       "categoryId": "80d82b70-8dd1-5b0e-a576-6d05686610f9",
       "id": "1037805a-fb86-5a10-a79c-3bf1a89352fe"
     },
     {
-      "postId": 33,
+      "postId": "33",
       "categoryId": "0a347cfa-d40a-5cde-816b-6899edf5386f",
       "id": "bf98aaab-ddab-5625-b27f-d463f0e9a14d"
     },
     {
-      "postId": 45,
+      "postId": "45",
       "categoryId": "0a347cfa-d40a-5cde-816b-6899edf5386f",
       "id": "75e176ef-06f3-55a6-a52a-ac0c023cfd37"
     },
     {
-      "postId": 39,
+      "postId": "39",
       "categoryId": "0a347cfa-d40a-5cde-816b-6899edf5386f",
       "id": "4c93560e-158a-516d-a317-c5e603b06b94"
     },
     {
-      "postId": 43,
+      "postId": "43",
       "categoryId": "6bd59eb3-0b90-5a8a-9138-24dd6bf586b7",
       "id": "2a72436f-147b-524f-ace1-21a0bee694a3"
     },
     {
-      "postId": 38,
+      "postId": "38",
       "categoryId": "80d82b70-8dd1-5b0e-a576-6d05686610f9",
       "id": "68230379-a108-5106-82e8-9a0eda767fd0"
     },
     {
-      "postId": 34,
+      "postId": "34",
       "categoryId": "80d82b70-8dd1-5b0e-a576-6d05686610f9",
       "id": "daa610dc-499f-5a30-aef4-9ca47ad7fb06"
     },
     {
-      "postId": 44,
+      "postId": "44",
       "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
       "id": "53fc9ffc-cd28-58ae-ba1e-061cb97e9b44"
     },
     {
-      "postId": 42,
+      "postId": "42",
       "categoryId": "6bd59eb3-0b90-5a8a-9138-24dd6bf586b7",
       "id": "b2223c0b-dea0-55dc-895d-e7d05dd580c5"
     },
     {
-      "postId": 46,
+      "postId": "46",
       "categoryId": "80d82b70-8dd1-5b0e-a576-6d05686610f9",
       "id": "013c3da2-d409-5baa-b8dd-dc4225370394"
     },
     {
-      "postId": 97,
+      "postId": "97",
       "categoryId": "487c96eb-1cad-5636-be91-f57aff09f227",
       "id": "9d59b07c-6ff8-5913-bde8-74a0f074cba4"
     },
     {
-      "postId": 97,
+      "postId": "97",
       "categoryId": "80d82b70-8dd1-5b0e-a576-6d05686610f9",
       "id": "91d2189c-eaaf-5e10-9ddb-55be0a578250"
     },
     {
-      "postId": 35,
+      "postId": "35",
       "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
       "id": "561bf817-9962-5bbc-aa45-033efab122a4"
     },
     {
-      "postId": 40,
+      "postId": "40",
       "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
       "id": "6b553647-8e39-5425-87c2-9abb9e633815"
     },
     {
-      "postId": 37,
+      "postId": "37",
       "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
       "id": "bdeefebe-aeeb-585d-b395-021f813b60c6"
     },
     {
-      "postId": 47,
+      "postId": "47",
       "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
       "id": "10477865-2a16-55c3-874f-598d48f02ba5"
     },
     {
-      "postId": 41,
+      "postId": "41",
       "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
       "id": "a10318c7-b56c-5d82-97ea-5da020b0d1b0"
     },
     {
-      "postId": 129,
+      "postId": "129",
       "categoryId": "0a347cfa-d40a-5cde-816b-6899edf5386f",
       "id": "c5c29c29-44a0-5151-a802-39b349d069de"
     },
     {
-      "postId": 71,
+      "postId": "71",
       "categoryId": "d22b62a2-d564-576e-96dd-0b8433662e2d",
       "id": "8b8a5075-8b4b-540a-8243-5751b813464a"
     },
     {
-      "postId": 36,
+      "postId": "36",
       "categoryId": "6bd59eb3-0b90-5a8a-9138-24dd6bf586b7",
       "id": "73b54816-6bad-5c64-a077-738ab2abfe40"
     },
     {
-      "postId": 49,
+      "postId": "49",
       "categoryId": "6bd59eb3-0b90-5a8a-9138-24dd6bf586b7",
       "id": "f5765a95-95d7-5a98-a3dc-747acaaa55eb"
     },
     {
-      "postId": 161,
+      "postId": "161",
       "categoryId": "42eca871-e020-58fd-8cf9-a043af638c39",
       "id": "ab801324-d70a-524f-bbb8-213ed31f908d"
     },
     {
-      "postId": 161,
+      "postId": "161",
       "categoryId": "d22b62a2-d564-576e-96dd-0b8433662e2d",
       "id": "f3a3b0f1-0f12-5a5a-8e95-87fa402018ed"
     }
   ],
   "postTags": [
     {
-      "postId": 71,
+      "postId": "71",
       "tagId": "d22b62a2-d564-576e-96dd-0b8433662e2d",
       "id": "8b8a5075-8b4b-540a-8243-5751b813464a"
     },
     {
-      "postId": 71,
+      "postId": "71",
       "tagId": "c04ca4e2-f311-5a59-b10a-17ca8db6524e",
       "id": "473e3466-acba-565b-8ea0-804db3ae5d7e"
     }

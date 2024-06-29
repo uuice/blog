@@ -41,7 +41,7 @@ export class PostController {
     description: ''
   })
   archivesByDateYearAndMonth(): ARCHIVES_DATE_YEAR_MONTH {
-    return this.postService.archivesByDateYearAndMonth()
+    return this.postService.getArchivesByDateYearAndMonth()
   }
 
   @Get('archivesByCategory')
@@ -50,7 +50,7 @@ export class PostController {
     description: ''
   })
   archivesByCategory(): ARCHIVES_DATE_YEAR {
-    return this.postService.archivesByCategory()
+    return this.postService.getArchivesByCategory()
   }
 
   @Get('archivesByTag')
@@ -59,7 +59,7 @@ export class PostController {
     description: ''
   })
   archivesByTag(): ARCHIVES_DATE_YEAR {
-    return this.postService.archivesByTag()
+    return this.postService.getArchivesByTag()
   }
 
   @Get('query/:idOrTitle')

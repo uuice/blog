@@ -106,7 +106,7 @@ async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
     const contentToc = await getContentToc(json.content)
     result.push({
       ...json.data,
-      id: json.data.id || '',
+      id: json.data.id ? json.data.id.toString() : '',
       title: json.data.title || '',
       alias: json.data.alias || '',
       cover: json.data.cover || '',

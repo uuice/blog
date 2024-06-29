@@ -3,10 +3,24 @@ import { shorten } from './filter/shorten'
 import { console as Console } from './filter/console'
 import { TagTest } from './tag/tagTest'
 import { TagTest2 } from './tag/tagTest2'
+import { SysConfig, SysConfigItem } from './tag/sysConfig'
 import { SysConfigService } from '../core/service/sysConfig.service'
 import { ConfigService, CWD } from '../core/service/config.service'
 import { join } from 'node:path'
 import * as nunjucks from 'nunjucks'
+import { PageItem, PageList } from './tag/page'
+import { CategoryItem, CategoryList } from './tag/category'
+import { TagItem, TagList } from './tag/tag'
+import { YmlConfig } from './tag/ymlConfig'
+import { JsonConfig } from './tag/jsonConfig'
+import {
+  PostArchive,
+  PostItem,
+  PostListByCategory,
+  PostListByTag,
+  PostPageList,
+  PostRecent
+} from './tag/post'
 
 export function initView(app: NestExpressApplication): void {
   const sysConfigService = app.get(SysConfigService)
@@ -41,4 +55,28 @@ function initTmpExtend(env, app) {
   // tags
   env.addExtension('TagTest', new TagTest(app))
   env.addExtension('TagTest2', new TagTest2(app))
+  // sysConfig tags
+  env.addExtension('SysConfig', new SysConfig(app))
+  env.addExtension('SysConfigItem', new SysConfigItem(app))
+  // page tags
+  env.addExtension('PageList', new PageList(app))
+  env.addExtension('PageItem', new PageItem(app))
+  // category tags
+  env.addExtension('CategoryList', new CategoryList(app))
+  env.addExtension('CategoryItem', new CategoryItem(app))
+  // tag tags
+  env.addExtension('TagList', new TagList(app))
+  env.addExtension('TagItem', new TagItem(app))
+  // json tags
+  env.addExtension('JsonConfig', new JsonConfig(app))
+  // yml tags
+  env.addExtension('YmlConfig', new YmlConfig(app))
+
+  // post tags
+  env.addExtension('PostPageList', new PostPageList(app))
+  env.addExtension('PostItem', new PostItem(app))
+  env.addExtension('PostRecent', new PostRecent(app))
+  env.addExtension('PostArchive', new PostArchive(app))
+  env.addExtension('PostListByCategory', new PostListByCategory(app))
+  env.addExtension('PostListByTag', new PostListByTag(app))
 }

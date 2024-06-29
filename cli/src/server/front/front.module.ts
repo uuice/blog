@@ -10,6 +10,7 @@ import { PhotoController } from './controller/photo.controller'
 import { PostController } from './controller/post.controller'
 import { RouteForwardingMiddleware } from './middleware/route-forwarding.middleware'
 import { ArchiveController } from './controller/archive.controller'
+import { TestController } from './controller/test.controller'
 
 @Module({
   imports: [CoreModule],
@@ -22,7 +23,8 @@ import { ArchiveController } from './controller/archive.controller'
     PageController,
     PhotoController,
     PostController,
-    ArchiveController
+    ArchiveController,
+    TestController
   ]
 })
 export class FrontModule {

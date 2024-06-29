@@ -141,7 +141,7 @@ export class PostService {
     return result
   }
 
-  archivesByDateYearAndMonth(): ARCHIVES_DATE_YEAR_MONTH {
+  getArchivesByDateYearAndMonth(): ARCHIVES_DATE_YEAR_MONTH {
     const postList =
       this.dbService
         .getInstance()
@@ -181,7 +181,7 @@ export class PostService {
     return result
   }
 
-  archivesByCategory(): ARCHIVES_DATE_YEAR {
+  getArchivesByCategory(): ARCHIVES_DATE_YEAR {
     const categoryList = this.categoryService.getCategoryList()
     const result: ARCHIVES_DATE_YEAR = []
 
@@ -193,7 +193,7 @@ export class PostService {
     return result
   }
 
-  archivesByTag(): ARCHIVES_DATE_YEAR {
+  getArchivesByTag(): ARCHIVES_DATE_YEAR {
     const tagList = this.tagService.getTagList()
     const result: ARCHIVES_DATE_YEAR = []
 
@@ -234,7 +234,7 @@ export class PostService {
     return {
       pageIndex,
       pageCount,
-      prevPage: pageIndex > 0 ? pageIndex - 1 : null,
+      prevPage: pageIndex > 1 ? pageIndex - 1 : null,
       nextPage: pageIndex < pageCount ? pageIndex + 1 : null,
       pageSize,
       dataList: postList.slice(startIndex, endIndex)

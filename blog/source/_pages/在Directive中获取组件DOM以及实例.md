@@ -1,17 +1,18 @@
 ---
 title: 在Directive中获取组件DOM以及实例
+alias: alias11
 id: 71
 date: 2023-11-24 21:10:42
 auther: nginx
 excerpt: 在Directive中获取组件DOM以及实例
 categories:
- - angular
-tags: 
- - angular
- - directive
+  - angular
+tags:
+  - angular
+  - directive
 ---
 
-### 获取DOM
+### 获取 DOM
 
 从 `@angular/core` 导入 `ElementRef`。`ElementRef` 的 `nativeElement `属性会提供对宿主 DOM 元素的直接访问权限。
 

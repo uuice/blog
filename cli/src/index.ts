@@ -1,9 +1,9 @@
 import pkg from '../package.json'
 import { Command } from 'commander'
 import { join } from 'node:path'
+import { stat } from 'node:fs/promises'
 
 import { generate } from './utils/generate'
-
 import { bootstrap } from './server/main'
 
 export default function (cwd = process.cwd()): void {
@@ -15,8 +15,16 @@ export default function (cwd = process.cwd()): void {
   const jsonDirPath = join(sourcePath, '_jsons')
   const ymlDirPath = join(sourcePath, '_ymls')
 
-  const pageTemplatePath = join(cwd, 'templates', 'page.ng')
-  const postTemplatePath = join(cwd, 'templates', 'post.ng')
+  const pageTemplatePath = join(cwd, 'templates', 'page.njk')
+  const postTemplatePath = join(cwd, 'templates', 'post.njk')
+
+  const pageTemplatePathDefault = join(__dirname, '../templates', 'page.njk')
+  const postTemplatePathDefault = join(__dirname, '../templates', 'post.njk')
+
+  console.log(pageTemplatePath)
+  console.log(postTemplatePath)
+  console.log(pageTemplatePathDefault)
+  console.log(postTemplatePathDefault)
 
   const program = new Command()
 
@@ -25,12 +33,21 @@ export default function (cwd = process.cwd()): void {
   program
     .command('new')
     .description('generate new post or page')
-    .argument('<type>', 'type')
+    .argument('<type>', 'type only support post or page')
     .argument('<title>', 'title')
-    .option('-p, --path <port>', '指定路径', '')
+    .option('-p, --path <port>', 'md file path', '')
     .action(async (type, title, options) => {
       // TODO: new page or post
-      console.info(type, title, options)
+      // check template existed before creating
+      if (type === 'post') {
+        const isExistUserTemplate = await fileExists(postTemplatePath)
+        console.log(isExistUserTemplate)
+      } else if (type === 'page') {
+        const isExistUserTemplate = await fileExists(pageTemplatePath)
+        console.log(isExistUserTemplate)
+      } else {
+        console.error('Unknown type')
+      }
     })
 
   program
@@ -54,7 +71,7 @@ export default function (cwd = process.cwd()): void {
   program
     .command('server')
     .description('koa server')
-    .option('-p, --port <port>', '指定端口号', '3000')
+    .option('-p, --port <port>', 'server port', '3000')
     .action(async (options) => {
       try {
         await bootstrap({
@@ -70,4 +87,13 @@ export default function (cwd = process.cwd()): void {
     })
 
   program.parse()
+}
+
+async function fileExists(filePath: string) {
+  try {
+    await stat(filePath)
+    return true
+  } catch (err) {
+    return false
+  }
 }
