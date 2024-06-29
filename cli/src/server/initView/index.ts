@@ -18,7 +18,9 @@ import {
   PostItem,
   PostListByCategory,
   PostListByTag,
+  PostNext,
   PostPageList,
+  PostPrev,
   PostRecent
 } from './tag/post'
 
@@ -79,4 +81,6 @@ function initTmpExtend(env, app) {
   env.addExtension('PostArchive', new PostArchive(app))
   env.addExtension('PostListByCategory', new PostListByCategory(app))
   env.addExtension('PostListByTag', new PostListByTag(app))
+  env.addExtension('PostPrev', new PostPrev(app))
+  env.addExtension('PostNext', new PostNext(app))
 }

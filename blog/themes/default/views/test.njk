@@ -201,3 +201,15 @@
 {% PostListByTag title="angular" %}
     {{ list | dump }}
 {% endPostListByTag %}
+
+
+<h2>PostPrev</h2>
+{% PostPrev id="48" %}
+    {{ post | dump }}
+{% endPostPrev %}
+
+
+<h2>PostNext</h2>
+{% PostNext id="48" %}
+    {{ post | dump }}
+{% endPostNext %}

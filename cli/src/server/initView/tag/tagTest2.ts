@@ -1,6 +1,5 @@
 import * as nunjucks from 'nunjucks'
 import { NestExpressApplication } from '@nestjs/platform-express'
-import { Logger } from '@nestjs/common'
 
 export function TagTest2(app: NestExpressApplication): void {
   // tag without test
