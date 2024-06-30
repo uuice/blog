@@ -23,6 +23,8 @@ import {
   PostPrev,
   PostRecent
 } from './tag/post'
+import { date } from './filter/date'
+import { symbolsCount } from './filter/symbolsCount'
 
 export function initView(app: NestExpressApplication): void {
   const sysConfigService = app.get(SysConfigService)
@@ -54,6 +56,8 @@ function initTmpExtend(env, app) {
   // filter
   env.addFilter('shorten', shorten)
   env.addFilter('console', Console)
+  env.addFilter('date', date)
+  env.addFilter('symbolsCount', symbolsCount)
   // tags
   env.addExtension('TagTest', new TagTest(app))
   env.addExtension('TagTest2', new TagTest2(app))

@@ -7,6 +7,7 @@ export class IndexController {
   @Render('index')
   index() {
     const viewData = new ViewData()
+    viewData.assign('pageType', 'Index')
     return viewData.assign()
   }
 }

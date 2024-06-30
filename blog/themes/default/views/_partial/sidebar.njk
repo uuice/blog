@@ -1,0 +1,10 @@
+<sidebar id="sidebar">
+  {# <% theme.sidebar.widgets.normal.forEach(function(widget){ %>
+    <%- partial('_widget/' + widget) %>
+  <% }) %> #}
+  <div class="sticky">
+    {% include("_widget/category.njk")%}
+    {% include("_widget/tag.njk")%}
+    {% include("_widget/recent_posts.njk")%}
+  </div>
+</sidebar>

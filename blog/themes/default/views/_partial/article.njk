@@ -1,0 +1,64 @@
+{{ page | dump}}
+{% set class_name = "p-name article-title"%}
+
+  {% set cover = post.cover %}
+  {% set description = post.description and post.description.length %}
+  <article id="{{ post.layout }}-{{ post.slug }}" class="h-entry article article-type-{{ post.layout }}" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  {# {% if is_post() or theme.home.style == 'detail' %}
+    {% include 'post/gallery' %}
+  {% endif %}  #}
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        {% include './post/title.njk'  %}
+        <div class='meta-info-bar'>
+          {% include './post/date.njk' %}
+          <div class="need-seperator meta-info">
+            {% include './post/category.njk' %}  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            {{ post._content | symbolsCount }} 字
+          </div>
+        </div>
+        {% include './post/tag.njk' %}
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+          {{ post._content | safe}}
+      </div>
+
+      {# {% if theme.home.style == 'detail' %}
+        <footer class="article-footer">
+          {% if post.excerpt and index %}
+            <a href="{{ url_for(post.path) }}#more" class="article-more-link">
+              {{ __('read_more') }}<i class="fa-solid fa-angle-right"></i>
+            </a>
+          {% endif %}
+        </footer>
+      {% endif %} #}
+    </div>
+    
+    {# {% if theme.home.style != 'detail' and is_home() %}
+      <a class="right-panel {% if cover %} with-pic {% else %} non-pic {% endif %}"
+        {% if cover %} style="background-image: url({{ url_for(post.photos[0]) }})" {% endif %}
+        href="{{ url_for(post.path) }}" 
+      >
+        {% if cover %}
+          <div class="overlay">
+            <i class="fa-solid fa-angle-right with-pic"></i>
+          </div>
+        {% else %}
+          <i class="fa-solid fa-angle-right non-pic"></i>
+        {% endif %}
+      </a>
+    {% endif %} #}
+  </div>
+  
+  {% include './post/nav.njk' %}
+
+  {# {% if not index %}
+    {% include 'post/nav' %}
+  {% endif %} #}
+</article>
+
+
+

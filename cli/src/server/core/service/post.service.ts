@@ -56,6 +56,16 @@ export class PostService {
       .value()
   }
 
+  getPostByUrl(url: string): POST | undefined {
+    return this.dbService
+      .getInstance()
+      .get('posts')
+      .find({
+        _url: url
+      })
+      .value()
+  }
+
   getRecentPosts(num: number = 5): LIST_POST_ITEM[] {
     return (
       this.dbService
@@ -130,6 +140,38 @@ export class PostService {
 
     postList.forEach((post: POST) => {
       const year = moment(post._created_timestamp).format('YYYY')
+      const index = result.findIndex((obj) => year in obj)
+      if (index < 0) {
+        const obj = { [year]: [post] }
+        result.push(obj)
+      } else {
+        result[index][year].push(post)
+      }
+    })
+    return result
+  }
+
+  getArchivesByCategoryIdDateYear(categoryId: string): ARCHIVES_DATE_YEAR {
+    const postList: LIST_POST_ITEM[] = this.getPostListByCategoryIdOrTitle(categoryId)
+    const result: ARCHIVES_DATE_YEAR = []
+    postList.forEach((post: LIST_POST_ITEM) => {
+      const year = moment(post._created_timestamp as number).format('YYYY')
+      const index = result.findIndex((obj) => year in obj)
+      if (index < 0) {
+        const obj = { [year]: [post] }
+        result.push(obj)
+      } else {
+        result[index][year].push(post)
+      }
+    })
+    return result
+  }
+
+  getArchivesByTagIdDateYear(tagId: string): ARCHIVES_DATE_YEAR {
+    const postList: LIST_POST_ITEM[] = this.getPostListByTagIdOrTitle(tagId)
+    const result: ARCHIVES_DATE_YEAR = []
+    postList.forEach((post: LIST_POST_ITEM) => {
+      const year = moment(post._created_timestamp as number).format('YYYY')
       const index = result.findIndex((obj) => year in obj)
       if (index < 0) {
         const obj = { [year]: [post] }

@@ -1,10 +1,20 @@
-import { Controller, Get, Param } from '@nestjs/common'
+import { Controller, Get, Param, Render } from '@nestjs/common'
+import { ViewData } from '../../core/helper/viewData'
+import { TagService } from '../../core/service/tag.service'
 
-@Controller('tag')
+@Controller('tags')
 export class TagController {
-  @Get(':idOrTitle')
-  index(@Param('idOrTitle') idOrTitle: string) {
-    // default month
-    return `tag  ${idOrTitle}`
+  constructor(private tagService: TagService) {}
+
+  @Get(':url')
+  @Render('tag')
+  index(@Param('url') url: string) {
+    const viewData = new ViewData()
+    viewData.assign('pageType', 'Tag')
+    viewData.assign('url', url)
+    const tag = this.tagService.getTagByUrl(url)
+    viewData.assign('tag', tag)
+    console.log(tag)
+    return viewData.assign()
   }
 }

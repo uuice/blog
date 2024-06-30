@@ -1,0 +1,59 @@
+{% macro build_tags_string(tags) %}
+  {% set str = "" %}
+  {% for tag in tags.data %}
+    {% set str = str + "#" + tag.name + " " %}
+  {% endfor %}
+  {{ str }}
+{% endmacro %}
+
+{% if category and category.id %}
+    {% set categoryId = category.id %}
+    {% set title = category.title %}
+{% elif tag and tag.id %}
+    {% set tagId = tag.id %}
+    {% set title = tag.title %}
+{%  else %}
+    {% set categoryId = "" %}
+    {% set title = "归档" %}
+{% endif%}
+
+
+<div class="archive-main-card">
+  <div class="archive-top">
+    <div class="main-title-bar">
+      <div class="main-title-dot"></div>
+      <h1 class="article-title">{{ title }}</h1>
+    </div>
+  </div>
+
+{% PostArchive type="year",categoryId=categoryId,tagId=tagId %}
+    {% for yearData in archive%}
+        {% for year, postList in yearData %}
+        <div class="year-line">
+            <div class="year-num">{{ year }}</div>
+            <div class="dot-wrapper">
+            <div class="dot"></div>
+            </div>
+            <div class="article-count">{{ postList.length }} 篇文章</div>
+        </div>
+
+            {% for post in postList %}
+             <a class="archive-article-link" href="/post/{{post._url}}" title="{{ post.title }}">
+                <div class="date">{{ post.created_time | date("MM-DD")}}</div>
+                <div class="line">
+                    <div class="dot"></div>
+                </div>
+                <div class="title">
+                    <div class="title-inner">
+                    {{ post.title if post.title else "无标题" }}
+                    </div>
+                </div>
+                <div class="tags">
+                    {{ build_tags_string(post.tags) }}
+                </div>
+                </a>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+{% endPostArchive %}
+</div>

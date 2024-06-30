@@ -180,7 +180,13 @@ export function PostArchive(app: NestExpressApplication): void {
         const result = new nunjucks.runtime.SafeString(body())
         return callback(null, result)
       } else if (args.type === 'year') {
-        context.ctx.archive = await postService.getArchivesByDateYear()
+        if (args.categoryId) {
+          context.ctx.archive = await postService.getArchivesByCategoryIdDateYear(args.categoryId)
+        } else if (args.tagId) {
+          context.ctx.archive = await postService.getArchivesByTagIdDateYear(args.tagId)
+        } else {
+          context.ctx.archive = await postService.getArchivesByDateYear()
+        }
         const result = new nunjucks.runtime.SafeString(body())
         return callback(null, result)
       } else if (args.type === 'month') {

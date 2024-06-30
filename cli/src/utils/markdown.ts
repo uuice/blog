@@ -33,8 +33,8 @@ export const markdownToHtml = async (content: string): Promise<string> => {
     )}"></a>${c}</h${b}>`
   })
   return markedContent.replace(
-    /<pre><code\s*(?:class="lang-(\w+)")?>([\s\S]+?)<\/code><\/pre>/gm,
-    (a, language, text) => {
+    /<pre><code\s*(?:class="(lang|language)-(\w+)")?>([\s\S]+?)<\/code><\/pre>/gm,
+    (a, b, language, text) => {
       text = text
         .replace(/&#39;/g, "'")
         .replace(/&gt;/g, '>')

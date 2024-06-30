@@ -4,27 +4,20 @@
     "icon": "",
     "url": "/",
     "target": "_self"
-  }, {
+  },
+  {
     "title": "归档",
     "icon": "",
     "url": "/archives",
     "target": "_self"
-  }, {
-    "title": "日志",
-    "icon": "",
-    "url": "/moments",
-    "target": "_self"
-  }, {
+  },
+  {
     "title": "友情链接",
     "icon": "",
     "url": "/links",
     "target": "_self"
-  }, {
-    "title": "留言区",
-    "icon": "",
-    "url": "/comment",
-    "target": "_self"
-  }, {
+  },
+  {
     "title": "关于博主",
     "icon": "",
     "url": "/about",

@@ -19,6 +19,16 @@ export class TagService {
       .value()
   }
 
+  getTagByUrl(url: string): TAG | undefined {
+    return this.dbService
+      .getInstance()
+      .get('tags')
+      .find({
+        _url: url
+      })
+      .value()
+  }
+
   getTagListWidthPostNum(): TAG_WITH_POST_NUM[] {
     const list = this.dbService.getInstance().get('tags').value() || []
     return list.map((item: TAG) => {

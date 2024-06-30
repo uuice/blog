@@ -1,0 +1,30 @@
+<!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        {% if theme.logo %}
+          <img src="{{ theme.logo }}" alt="{{ config.title }}" />
+        {% else %}
+          {% SysConfigItem path="title"%}
+        {% endif %}
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        {% JsonConfig alias="menu"%}
+           {% for menu in jsonData %}
+            <li class="navbar-list-item"><a href="{{menu.url}}">{{ menu.title }}</a></li>
+            {% endfor %}
+         {% endJsonConfig %}
+      </ul>
+    </div>
+  </div>
+</nav>

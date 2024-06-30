@@ -1,9 +1,13 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, Render } from '@nestjs/common'
+import { ViewData } from '../../core/helper/viewData'
 
-@Controller('link')
+@Controller('links')
 export class LinkController {
   @Get('')
+  @Render('link')
   index() {
-    return 'link index'
+    const viewData = new ViewData()
+    viewData.assign('pageType', 'Link')
+    return viewData.assign()
   }
 }

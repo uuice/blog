@@ -1,0 +1,33 @@
+{% if prevPost or nextPost %}
+<nav id="article-nav">
+  <a class="article-nav-btn left {% if not prevPost %} disabled {% endif %}"
+    {% if prevPost %}
+      href="/post/{{prevPost._url}}"
+      title="{{ prevPost.title }}"
+    {% endif %}>
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+      {% if prevPost and prevPost.title %}
+        {{ prevPost.title }}
+      {% elif prevPost %}
+        (无标题)
+      {% endif %}
+    </p>
+  </a>
+  <a class="article-nav-btn right {% if not nextPost %} disabled {% endif %}"
+    {% if nextPost %}
+      href="/post/{{nextPost._url}}"
+      title="{{ nextPost.title }}"
+    {% endif %}>
+
+    <p class="title-text">
+      {% if nextPost and nextPost.title %}
+        {{ nextPost.title }}
+      {% elif nextPost %}
+        (无标题)
+      {% endif %}
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+{% endif %}

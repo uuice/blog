@@ -1,0 +1,54 @@
+<navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>{{ sysConfig.title }}</div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    {% JsonConfig alias="menu"%}
+        {% for menu in jsonData %}
+            <a class="main-nav-link" href="{{menu.url}}" target="{{ menu.target }}">{{ menu.title }}</a>
+        {% endfor %}
+    {% endJsonConfig%}
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon">{% include '_icon/wb_sunny.njk' %}</span>
+      <span class="dark-mode-icon">{% include '_icon/dark_mode.njk' %}</span>
+    </a>
+    {% if sysConfig.rss %}
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="" title="">
+        {% include '_icon/rss_feed.njk' %}
+      </a>
+    {% endif %}
+    <div id="nav-menu-btn" class="nav-icon">
+      {% include '_icon/menu.njk' %}
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    {% JsonConfig alias="menu"%}
+        {% for menu in jsonData %}
+            <a class="nav-dropdown-link" href="{{menu.url}}" target="{{ menu.target }}">{{ menu.title }}</a>
+        {% endfor %}
+    {% endJsonConfig%}
+
+    {% if theme.rss %}
+      <a class="nav-dropdown-link" href="" title="">RSS</a>
+    {% endif %}
+  </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>

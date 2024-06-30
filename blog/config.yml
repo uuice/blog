@@ -1,6 +1,6 @@
 # Site
 title: 轻盈的鱼
-subtitle: 幻想变成轻盈的鱼， 畅游在自由的海洋
+subTitle: 幻想变成轻盈的鱼， 畅游在自由的海洋
 description: 
 keywords:
 author: uuice
@@ -11,3 +11,5 @@ url: http://example.com
 
 # Theme
 theme: default
+
+beian: 浙ICP备13002567号-4

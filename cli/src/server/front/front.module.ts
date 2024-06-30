@@ -11,6 +11,10 @@ import { PostController } from './controller/post.controller'
 import { RouteForwardingMiddleware } from './middleware/route-forwarding.middleware'
 import { ArchiveController } from './controller/archive.controller'
 import { TestController } from './controller/test.controller'
+import { CommonDataMiddleware } from './middleware/common-data.middleware'
+import { APP_FILTER } from '@nestjs/core'
+import { NotFoundFilter } from './filter/not-found.filter'
+import { TagController } from './controller/tag.controller'
 
 @Module({
   imports: [CoreModule],
@@ -24,11 +28,18 @@ import { TestController } from './controller/test.controller'
     PhotoController,
     PostController,
     ArchiveController,
+    TagController,
     TestController
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: NotFoundFilter
+    }
   ]
 })
 export class FrontModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(RouteForwardingMiddleware).forRoutes('*')
+    consumer.apply(...[RouteForwardingMiddleware, CommonDataMiddleware]).forRoutes('*')
   }
 }

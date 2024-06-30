@@ -13,6 +13,7 @@ import { markdownToHtml, markdownToToc } from './markdown'
 import * as yaml from 'js-yaml'
 import { generateUUID } from './uuid'
 import moment from 'moment'
+import { titleToUrl } from './titleToUrl'
 
 export const generate = async (
   postDirPath: string,
@@ -119,6 +120,7 @@ async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
       content: json.content || '',
       _content: contentToc._content || '',
       _toc: contentToc._toc || '',
+      _url: titleToUrl(json.data.title || ''),
       _created_timestamp:
         json.data.created_time || json.data.date
           ? moment(json.data.created_time || json.data.date).valueOf()
@@ -175,7 +177,8 @@ async function generateCategoriesTags(
           tags.push({
             id,
             title: tag,
-            description: tag
+            description: tag,
+            _url: titleToUrl(tag || '')
           })
           postTags.push({
             postId: post.id,
@@ -199,7 +202,8 @@ async function generateCategoriesTags(
           categories.push({
             id,
             title: category,
-            description: category
+            description: category,
+            _url: titleToUrl(category || '')
           })
           postCategories.push({
             postId: post.id,

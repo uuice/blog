@@ -16,5 +16,6 @@ export interface PAGE {
   _toc: string
   _created_timestamp: number
   _updated_timestamp: number
+  _url: string
   [key: string]: string | Array<string> | boolean | number
 }

@@ -19,6 +19,16 @@ export class CategoryService {
       .value()
   }
 
+  getCategoryByUrl(url: string): CATEGORY | undefined {
+    return this.dbService
+      .getInstance()
+      .get('categories')
+      .find({
+        _url: url
+      })
+      .value()
+  }
+
   getCategoryListWidthPostNum(): CATEGORY_WITH_POST_NUM[] {
     const list = this.dbService.getInstance().get('categories').value() || []
     return list.map((item: CATEGORY) => {

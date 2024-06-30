@@ -1,0 +1,9 @@
+<div class="meta-cate-flex">
+{% if post.categories and post.categories.length%}
+  {% for cate in post.categories%}
+  <a class="meta-cate-link" href="/categories/{{ cate }}">{{ cate }}</a>
+  {% endfor%}
+{% else %}
+  未分类
+{% endif%}
+</div>
