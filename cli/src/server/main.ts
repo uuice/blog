@@ -66,4 +66,5 @@ export async function bootstrap(options: { port: number; cwd: string; dbPath: st
 
   // TODO：Initialize flexsearch,  the Next-Generation full text search library
   await app.listen(options.port)
+  return app
 }

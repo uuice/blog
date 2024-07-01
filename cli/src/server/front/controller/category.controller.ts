@@ -1,4 +1,3 @@
-import { PostService } from './../../core/service/post.service'
 import { CategoryService } from './../../core/service/category.service'
 import { Controller, Get, Param, Render } from '@nestjs/common'
 import { ViewData } from '../../core/helper/viewData'

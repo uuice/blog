@@ -10,6 +10,8 @@ import { v6 as uuid } from 'uuid'
 import * as nunjucks from 'nunjucks'
 import moment from 'moment'
 import chalk from 'chalk'
+import chokidar from 'chokidar'
+import { DbService } from './server/core/service/db.service'
 
 export default function (cwd = process.cwd()): void {
   const sourcePath = join(cwd, 'source')
@@ -98,6 +100,7 @@ export default function (cwd = process.cwd()): void {
   program
     .command('gen')
     .description('generate data json')
+    .option('-w, --watch', 'Listen to the source file directory')
     .action(async (options) => {
       console.info(`${chalk.cyan('[Info]')}: start generating`)
       console.time(`${chalk.cyan('[Info]')}: generate data json`)
@@ -115,21 +118,39 @@ export default function (cwd = process.cwd()): void {
 
   program
     .command('server')
-    .description('koa server')
+    .description('nestjs server')
     .option('-p, --port <port>', 'server port', '3000')
+    .option('-w --watch', 'Listen to data.json and reload db')
     .action(async (options) => {
+      // TODO: if watch true, Listen to the source folder and regenerate the data.json file
       try {
         await bootstrap({
           port: options.port,
           cwd,
           dbPath: dataBasePath
-        }).then(() => {
+        }).then((app) => {
+          if (options.watch) {
+            console.info(`${chalk.cyan('[Info]')}: start listening on data.json`)
+            const watcher = chokidar.watch(dataBasePath, {
+              ignored: /node_modules/,
+              persistent: true
+            })
+
+            watcher.on('change', async () => {
+              console.info(
+                `${chalk.cyan('[Info]')}: data.json file has been modified, reload the database...`
+              )
+              const dbServer = app.get(DbService)
+              await dbServer.reload()
+              console.info(`${chalk.cyan('[Info]')}: The database is successfully reloaded.`)
+            })
+          }
           console.log(
             `${chalk.green('[Success]')}: server started at ${chalk.magenta(options.port)}`
           )
         })
-      } catch (err) {
-        console.error(err)
+      } catch (err: any) {
+        console.error(`${chalk.red('[Error]')}: ${err?.message || err}`)
       }
     })
 

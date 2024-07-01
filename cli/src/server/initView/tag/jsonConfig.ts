@@ -22,7 +22,7 @@ export function JsonConfig(app: NestExpressApplication): void {
   this.run = async function (context, args, body, callback) {
     const jsonService = app.get(JsonService)
     if (args.alias) {
-      context.ctx.jsonData = jsonService.getJsonByAlias(args.alias)
+      context.ctx.jsonData = await jsonService.getJsonByAlias(args.alias)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else {

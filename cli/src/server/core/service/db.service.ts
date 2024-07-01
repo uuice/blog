@@ -17,4 +17,8 @@ export class DbService {
   initDb() {
     this.db = low(new FileSync(this.configService.getItem(DB_PATH) as string))
   }
+
+  reload() {
+    this.db = low(new FileSync(this.configService.getItem(DB_PATH) as string))
+  }
 }

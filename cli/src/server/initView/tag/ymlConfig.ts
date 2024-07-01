@@ -22,7 +22,7 @@ export function YmlConfig(app: NestExpressApplication): void {
   this.run = async function (context, args, body, callback) {
     const ymlService = app.get(YmlService)
     if (args.alias) {
-      context.ctx.ymlData = ymlService.getYmlByAlias(args.alias)
+      context.ctx.ymlData = await ymlService.getYmlByAlias(args.alias)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else {

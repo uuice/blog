@@ -14,7 +14,6 @@ export class TagController {
     viewData.assign('url', url)
     const tag = this.tagService.getTagByUrl(url)
     viewData.assign('tag', tag)
-    console.log(tag)
     return viewData.assign()
   }
 }

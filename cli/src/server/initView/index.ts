@@ -25,8 +25,11 @@ import {
 } from './tag/post'
 import { date } from './filter/date'
 import { symbolsCount } from './filter/symbolsCount'
+import { dateFormat } from './function/dateFormat'
+import moment from 'moment'
+import * as _ from 'lodash'
 
-export function initView(app: NestExpressApplication): void {
+export async function initView(app: NestExpressApplication): Promise<void> {
   const sysConfigService = app.get(SysConfigService)
   const configService = app.get(ConfigService)
   const theme = sysConfigService.getSysConfig('theme')
@@ -41,7 +44,7 @@ export function initView(app: NestExpressApplication): void {
     express: app
   })
 
-  initTmpExtend(env, app)
+  await initTmpExtend(env, app)
 
   app.useStaticAssets(assetsPath, { prefix: '/assets/' })
   app.setBaseViewsDir(viewsPath)
@@ -52,7 +55,16 @@ export function initView(app: NestExpressApplication): void {
   app.set('viewInstance', env)
 }
 
-function initTmpExtend(env, app) {
+async function initTmpExtend(env, app) {
+  // const sysConfigService = app.get(SysConfigService)
+  // const sysConfig = await sysConfigService.getSysConfig()
+  // add global variables and function
+  // ! Already injected through middleware
+  // env.addGlobal('sysConfig', sysConfig)
+  env.addGlobal('dateFormat', dateFormat)
+  env.addGlobal('moment', moment)
+  env.addGlobal('_', _)
+
   // filter
   env.addFilter('shorten', shorten)
   env.addFilter('console', Console)
