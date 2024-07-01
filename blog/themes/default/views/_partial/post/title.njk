@@ -20,7 +20,14 @@
       </h1>
     {% endif %}
   {% endif %} #}
-   <h1 class="{{ class_name }}" itemprop="headline name">
-        {{ postTitle }}
+
+  {% if pageType == "Index" %}
+    <h1 itemprop="name">
+      <a class="{{ class_name }}" href="/post/{{ post._url }}">{{ postTitle }}</a>
     </h1>
+  {% else %}
+   <h1 class="{{ class_name }}" itemprop="headline name">
+       {{ postTitle }}
+    </h1>
+    {% endif %}
 </div>

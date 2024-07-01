@@ -20,6 +20,7 @@ export interface POST {
   _updated_timestamp: number
   _url: string
   [key: string]: string | Array<string> | boolean | number
+  _symbolsCount: number
 }
 
 export type LIST_POST_ITEM = Omit<POST, 'content' | '_content' | '_toc'>
@@ -34,5 +35,5 @@ export type POST_PAGE_QUERY = {
   prevPage: number
   nextPage: number
   pageSize: number
-  dataList: Omit<PAGE, 'content' | '_content' | '_toc'>[]
+  postList: Omit<PAGE, 'content' | '_content' | '_toc'>[]
 }

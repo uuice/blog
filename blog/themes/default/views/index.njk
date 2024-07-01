@@ -1,7 +1,46 @@
 {% extends "layout.njk" %}
 
 {% block body %}
-index
-{{ moment().valueOf() }}
-{{ _.difference([3, 2, 1], [4, 2]) }}
+{% for post in postList %}
+    {% include "_partial/article.njk"%}
+{% endfor%}
+
+{%if pageCount > 1 %}
+  <nav id="page-nav">
+   {% if prevPage %} 
+        <a id="prev-btn" class="page-nav-btn" href="/page/{{ prevPage }}">
+        <i class="fa-solid fa-angle-left"></i>
+        </a>
+     {% else %}
+        <a id="prev-btn" class="page-nav-btn disabled" href="">
+        <i class="fa-solid fa-angle-left"></i>
+        </a>
+     {% endif%}
+
+    <div id="num-bar">
+      {% if prevPage %}
+      <a class="page-number" href="/page/{{nextPage}}/">{{prevPage}}</a>  
+       {% endif %}
+      <span class="page-number current">{{pageIndex}}</span>
+       {% if nextPage %}
+      <a class="page-number" href="/page/{{nextPage}}/">{{nextPage}}</a>  
+       {% endif %}
+    </div>
+    {% if nextPage %} 
+        <a id="prev-btn" class="page-nav-btn" href="/page/{{ nextPage }}">
+        <i class="fa-solid fa-angle-left"></i>
+        </a>
+     {% else %}
+        <a id="prev-btn" class="page-nav-btn disabled" href="">
+        <i class="fa-solid fa-angle-left"></i>
+        </a>
+     {% endif%}
+  </nav>
+{% endif %}
+
+  {{ pageIndex }}: pageIndex,
+  {{ pageCount }}: pageCount,
+  {{ prevPage }}: prevPage,
+  {{ nextPage }}: nextPage,
+  {{ pageSize }}: pageSize,
 {% endblock %}

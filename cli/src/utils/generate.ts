@@ -105,6 +105,7 @@ async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
   for (const page of pageList) {
     const json = matter(page, { excerpt: true, excerpt_separator: '<!-- more -->' })
     const contentToc = await getContentToc(json.content)
+    const excerpt = json.data.excerpt || (await markdownToHtml(json.excerpt)) || ''
     result.push({
       ...json.data,
       id: json.data.id ? json.data.id.toString() : '',
@@ -115,7 +116,7 @@ async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
       updated_time: json.data.updated_time || json.data.updated || '',
       categories: json.data.categories || [],
       tags: json.data.tags || [],
-      excerpt: json.data.excerpt || '',
+      excerpt,
       published: json.data.published || '',
       content: json.content || '',
       _content: contentToc._content || '',
@@ -128,7 +129,8 @@ async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
       _updated_timestamp:
         json.data.updated_time || json.data.updated
           ? moment(json.data.updated_time || json.data.updated).valueOf()
-          : 0
+          : 0,
+      _symbolsCount: symbolsCount(contentToc._content || '')
     })
   }
   return result
@@ -220,4 +222,12 @@ async function generateCategoriesTags(
     postCategories,
     postTags
   }
+}
+
+function symbolsCount(input: string): number {
+  if (!input) {
+    return 0
+  }
+
+  return input?.trim()?.match(/\S/g)?.length || 0
 }

@@ -28,6 +28,7 @@ import { symbolsCount } from './filter/symbolsCount'
 import { dateFormat } from './function/dateFormat'
 import moment from 'moment'
 import * as _ from 'lodash'
+import { stripHtml } from './filter/stripHtml'
 
 export async function initView(app: NestExpressApplication): Promise<void> {
   const sysConfigService = app.get(SysConfigService)
@@ -70,6 +71,7 @@ async function initTmpExtend(env, app) {
   env.addFilter('console', Console)
   env.addFilter('date', date)
   env.addFilter('symbolsCount', symbolsCount)
+  env.addFilter('stripHtml', stripHtml)
   // tags
   env.addExtension('TagTest', new TagTest(app))
   env.addExtension('TagTest2', new TagTest2(app))

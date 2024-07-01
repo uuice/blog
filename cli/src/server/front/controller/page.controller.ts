@@ -1,5 +1,5 @@
 import { PageService } from './../../core/service/page.service'
-import { Controller, Get, Param } from '@nestjs/common'
+import { Controller, Get, Param, Render } from '@nestjs/common'
 import { ViewData } from '../../core/helper/viewData'
 
 @Controller('page')
@@ -7,6 +7,7 @@ export class PageController {
   constructor(private pageService: PageService) {}
 
   @Get(':alias')
+  @Render('page')
   async index(@Param('alias') alias: string) {
     const viewData = new ViewData()
 

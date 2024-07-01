@@ -279,7 +279,7 @@ export class PostService {
       prevPage: pageIndex > 1 ? pageIndex - 1 : null,
       nextPage: pageIndex < pageCount ? pageIndex + 1 : null,
       pageSize,
-      dataList: postList.slice(startIndex, endIndex)
+      postList: postList.slice(startIndex, endIndex)
     }
   }
 }

@@ -18,4 +18,5 @@ export interface PAGE {
   _updated_timestamp: number
   _url: string
   [key: string]: string | Array<string> | boolean | number
+  _symbolsCount: number
 }

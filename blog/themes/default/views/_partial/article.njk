@@ -1,6 +1,8 @@
-{{ page | dump}}
 {% set class_name = "p-name article-title"%}
 
+{% if page and not post %}
+  {% set post = page %}
+{% endif%}
   {% set cover = post.cover %}
   {% set description = post.description and post.description.length %}
   <article id="{{ post.layout }}-{{ post.slug }}" class="h-entry article article-type-{{ post.layout }}" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
@@ -17,30 +19,34 @@
             {% include './post/category.njk' %}  
           </div>
           <div class="wordcount need-seperator meta-info">
-            {{ post._content | symbolsCount }} 字
+            {{ post._symbolsCount }} 字
           </div>
         </div>
         {% include './post/tag.njk' %}
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
+        {% if pageType == "Index"%}
+            <div class="truncate-text">
+              {{ post.excerpt | stripHtml | shorten(500)}}
+          </div>
+          {% else%}
           {{ post._content | safe}}
+          {% endif%}
       </div>
 
-      {# {% if theme.home.style == 'detail' %}
-        <footer class="article-footer">
+        {# <footer class="article-footer">
           {% if post.excerpt and index %}
-            <a href="{{ url_for(post.path) }}#more" class="article-more-link">
-              {{ __('read_more') }}<i class="fa-solid fa-angle-right"></i>
+            <a href="/post/{{post_url}}#more" class="article-more-link">
+              阅读全文<i class="fa-solid fa-angle-right"></i>
             </a>
           {% endif %}
-        </footer>
-      {% endif %} #}
+        </footer> #}
     </div>
     
-    {# {% if theme.home.style != 'detail' and is_home() %}
+    {% if pageType === "Index" %}
       <a class="right-panel {% if cover %} with-pic {% else %} non-pic {% endif %}"
-        {% if cover %} style="background-image: url({{ url_for(post.photos[0]) }})" {% endif %}
-        href="{{ url_for(post.path) }}" 
+        {% if cover %} style="background-image: url({{ cover }})" {% endif %}
+        href="/post/{{ post._url }}" 
       >
         {% if cover %}
           <div class="overlay">
@@ -50,7 +56,7 @@
           <i class="fa-solid fa-angle-right non-pic"></i>
         {% endif %}
       </a>
-    {% endif %} #}
+    {% endif %}
   </div>
   
   {% include './post/nav.njk' %}
