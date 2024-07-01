@@ -2,17 +2,7 @@ import pkg from '../package.json'
 import { Command } from 'commander'
 import { join } from 'node:path'
 import { stat, readFile, writeFile, mkdir } from 'node:fs/promises'
-
-import { generate } from './utils/generate'
-import { bootstrap } from './server/main'
-
-import { v6 as uuid } from 'uuid'
-import * as nunjucks from 'nunjucks'
-import moment from 'moment'
 import chalk from 'chalk'
-import chokidar from 'chokidar'
-import { DbService } from './server/core/service/db.service'
-
 export default function (cwd = process.cwd()): void {
   const sourcePath = join(cwd, 'source')
   const systemConfigPath = join(cwd, 'config.yml')
@@ -29,9 +19,7 @@ export default function (cwd = process.cwd()): void {
   const postTemplatePathDefault = join(__dirname, '../templates', 'post.njk')
 
   const program = new Command()
-
   program.name('uuice-cli').description('CLI to uuice`s blog').version(pkg.version)
-
   program
     .command('new')
     .description('generate new post or page')
@@ -39,61 +27,67 @@ export default function (cwd = process.cwd()): void {
     .argument('<title>', 'title')
     .option('-p, --path <path>', 'md file path', '')
     .action(async (type, title, options) => {
-      // check template existed before creating
-      if (type === 'post') {
-        const isExistUserTemplate = await fileExists(postTemplatePath)
-        const templatePath = isExistUserTemplate ? postTemplatePath : postTemplatePathDefault
-        const postPath = join(postDirPath, options.path, title + '.md')
-        const templateStr = await readFile(templatePath, 'utf-8')
-        const folderPath = join(postDirPath, options.path)
+      try {
+        // check template existed before creating
+        const { v6: uuid } = await import('uuid')
+        if (type === 'post') {
+          const isExistUserTemplate = await fileExists(postTemplatePath)
+          const templatePath = isExistUserTemplate ? postTemplatePath : postTemplatePathDefault
+          const postPath = join(postDirPath, options.path, title + '.md')
+          const templateStr = await readFile(templatePath, 'utf-8')
+          const folderPath = join(postDirPath, options.path)
 
-        if (await fileExists(postPath)) {
-          console.error(`${chalk.red('[Error]')}: post ${chalk.magenta(title)} already exists`)
-        } else {
-          if (!(await fileExists(folderPath))) {
-            await mkdir(folderPath, { recursive: true })
+          if (await fileExists(postPath)) {
+            console.error(`${chalk.red('[Error]')}: post ${chalk.magenta(title)} already exists`)
+          } else {
+            if (!(await fileExists(folderPath))) {
+              await mkdir(folderPath, { recursive: true })
+            }
+            const nunjucks = await import('nunjucks')
+            const result = nunjucks.renderString(templateStr, {
+              id: uuid(),
+              title,
+              created_time: formatDate(),
+              updated_time: formatDate()
+            })
+
+            await writeFile(postPath, result, 'utf-8')
+            console.log(
+              `${chalk.green('[Success]')}: post ${chalk.magenta(title)} created successfully`
+            )
           }
+        } else if (type === 'page') {
+          const isExistUserTemplate = await fileExists(pageTemplatePath)
+          const templatePath = isExistUserTemplate ? pageTemplatePath : pageTemplatePathDefault
+          const pagePath = join(pageDirPath, options.path, title + '.md')
+          const templateStr = await readFile(templatePath, 'utf-8')
+          const folderPath = join(pageDirPath, options.path)
 
-          const result = nunjucks.renderString(templateStr, {
-            id: uuid(),
-            title,
-            created_time: moment().format('YYYY-MM-DD HH:mm:ss'),
-            updated_time: moment().format('YYYY-MM-DD HH:mm:ss')
-          })
+          if (await fileExists(pagePath)) {
+            console.error(`${chalk.red('[Error]')}: page ${chalk.magenta(title)} already exists`)
+          } else {
+            if (!(await fileExists(folderPath))) {
+              await mkdir(folderPath, { recursive: true })
+            }
 
-          await writeFile(postPath, result, 'utf-8')
-          console.log(
-            `${chalk.green('[Success]')}: post ${chalk.magenta(title)} created successfully`
-          )
-        }
-      } else if (type === 'page') {
-        const isExistUserTemplate = await fileExists(pageTemplatePath)
-        const templatePath = isExistUserTemplate ? pageTemplatePath : pageTemplatePathDefault
-        const pagePath = join(pageDirPath, options.path, title + '.md')
-        const templateStr = await readFile(templatePath, 'utf-8')
-        const folderPath = join(pageDirPath, options.path)
+            const nunjucks = await import('nunjucks')
+            const result = nunjucks.renderString(templateStr, {
+              id: uuid(),
+              title,
+              created_time: formatDate(),
+              updated_time: formatDate()
+            })
 
-        if (await fileExists(pagePath)) {
-          console.error(`${chalk.red('[Error]')}: page ${chalk.magenta(title)} already exists`)
-        } else {
-          if (!(await fileExists(folderPath))) {
-            await mkdir(folderPath, { recursive: true })
+            await writeFile(pagePath, result, 'utf-8')
+            console.log(
+              `${chalk.green('[Success]')}: page ${chalk.magenta(title)} created successfully`
+            )
           }
-
-          const result = nunjucks.renderString(templateStr, {
-            id: uuid(),
-            title,
-            created_time: moment().format('YYYY-MM-DD HH:mm:ss'),
-            updated_time: moment().format('YYYY-MM-DD HH:mm:ss')
-          })
-
-          await writeFile(pagePath, result, 'utf-8')
-          console.log(
-            `${chalk.green('[Success]')}: page ${chalk.magenta(title)} created successfully`
-          )
+        } else {
+          console.error(`${chalk.red('[Error]')}: Unknown type`)
         }
-      } else {
-        console.error(`${chalk.red('[Error]')}: Unknown type`)
+      } catch (err: any) {
+        console.error(`${chalk.red('[Error]')}: ${err?.message || err}`)
       }
     })
 
@@ -102,18 +96,23 @@ export default function (cwd = process.cwd()): void {
     .description('generate data json')
     .option('-w, --watch', 'Listen to the source file directory')
     .action(async (options) => {
-      console.info(`${chalk.cyan('[Info]')}: start generating`)
-      console.time(`${chalk.cyan('[Info]')}: generate data json`)
-      await generate(
-        postDirPath,
-        pageDirPath,
-        jsonDirPath,
-        ymlDirPath,
-        systemConfigPath,
-        dataBasePath
-      )
-      console.timeEnd(`${chalk.cyan('[Info]')}: generate data json`)
-      console.info(`${chalk.green('[Success]')}: end generating`)
+      try {
+        const { generate } = await import('./utils/generate')
+        console.info(`${chalk.cyan('[Info]')}: start generating`)
+        console.time(`${chalk.cyan('[Info]')}: generate data json`)
+        await generate(
+          postDirPath,
+          pageDirPath,
+          jsonDirPath,
+          ymlDirPath,
+          systemConfigPath,
+          dataBasePath
+        )
+        console.timeEnd(`${chalk.cyan('[Info]')}: generate data json`)
+        console.info(`${chalk.green('[Success]')}: end generating`)
+      } catch (err: any) {
+        console.error(`${chalk.red('[Error]')}: ${err?.message || err}`)
+      }
     })
 
   program
@@ -124,12 +123,14 @@ export default function (cwd = process.cwd()): void {
     .action(async (options) => {
       // TODO: if watch true, Listen to the source folder and regenerate the data.json file
       try {
+        const { bootstrap } = await import('./server/main')
         await bootstrap({
           port: options.port,
           cwd,
           dbPath: dataBasePath
-        }).then((app) => {
+        }).then(async (app) => {
           if (options.watch) {
+            const chokidar = await import('chokidar')
             console.info(`${chalk.cyan('[Info]')}: start listening on data.json`)
             const watcher = chokidar.watch(dataBasePath, {
               ignored: /node_modules/,
@@ -140,6 +141,7 @@ export default function (cwd = process.cwd()): void {
               console.info(
                 `${chalk.cyan('[Info]')}: data.json file has been modified, reload the database...`
               )
+              const { DbService } = await import('./server/core/service/db.service')
               const dbServer = app.get(DbService)
               await dbServer.reload()
               console.info(`${chalk.cyan('[Info]')}: The database is successfully reloaded.`)
@@ -164,4 +166,17 @@ async function fileExists(filePath: string) {
   } catch (err) {
     return false
   }
+}
+
+function formatDate(data?: string): string {
+  const now = data ? new Date(data) : new Date()
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  const hours = String(now.getHours()).padStart(2, '0')
+  const minutes = String(now.getMinutes()).padStart(2, '0')
+  const seconds = String(now.getSeconds()).padStart(2, '0')
+
+  const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+  return formattedDate
 }
