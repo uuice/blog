@@ -27,3 +27,21 @@ export class ViewData {
     }
   }
 }
+
+export const mixedDataView = (viewData: ViewData): ViewData => {
+  const pageType = viewData.assign('pageType')
+  const pageIndex = viewData.assign('pageIndex')
+  const typeObj = {
+    isCurrent: true,
+    isIndex: pageType === 'Index',
+    isIndexFirstPage: pageType === 'Index' && pageIndex === 1,
+    isPost: pageType === 'Post',
+    isPage: pageType === 'Page',
+    isTag: pageType === 'Tag',
+    isCategory: pageType === 'Category',
+    isArchive: pageType === 'Archive',
+    isLink: pageType === 'Link'
+  }
+  viewData.assign(typeObj)
+  return viewData
+}

@@ -1,10 +1,14 @@
 import { PageService } from './../../core/service/page.service'
 import { Controller, Get, Param, Render } from '@nestjs/common'
-import { ViewData } from '../../core/helper/viewData'
+import { ViewData, mixedDataView } from '../../core/helper/viewData'
+import { SysConfigService } from '../../core/service/sysConfig.service'
 
 @Controller('page')
 export class PageController {
-  constructor(private pageService: PageService) {}
+  constructor(
+    private readonly pageService: PageService,
+    private readonly sysConfigService: SysConfigService
+  ) {}
 
   @Get(':alias')
   @Render('page')
@@ -14,6 +18,7 @@ export class PageController {
     const page = await this.pageService.getPageByAlias(alias)
     viewData.assign('pageType', 'Page')
     viewData.assign('page', page)
-    return viewData.assign()
+    viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
+    return mixedDataView(viewData).assign()
   }
 }

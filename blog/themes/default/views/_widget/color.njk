@@ -1,5 +1,5 @@
 {% set hueList = [0, 30, 60, 180, 250, 270, 300, 330, 345] %}
-{% set hue = "250" %}
+{% set hue = "180" %}
 <div class="widget color-picker">
   <h3 class="widget-title">Theme Preview</h3>
   <div id="banner-toggle-bar">
@@ -36,7 +36,7 @@
     r.style.setProperty(`--primary-hue`, hue);
   }
 
-  let storedHue = localStorage.getItem('hue');
+  let storedHue = localStorage.getItem('hue') || 180;
   if (storedHue) {
     setHue(storedHue);
   }

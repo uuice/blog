@@ -29,6 +29,7 @@ import { dateFormat } from './function/dateFormat'
 import moment from 'moment'
 import * as _ from 'lodash'
 import { stripHtml } from './filter/stripHtml'
+import { getColor } from './function/getColor'
 
 export async function initView(app: NestExpressApplication): Promise<void> {
   const sysConfigService = app.get(SysConfigService)
@@ -65,15 +66,8 @@ async function initTmpExtend(env: nunjucks.Environment, app: NestExpressApplicat
   env.addGlobal('dateFormat', dateFormat)
   env.addGlobal('moment', moment)
   env.addGlobal('_', _)
+  env.addGlobal('getColor', getColor)
   // Add helper function
-  env.addGlobal('isHome', _)
-  env.addGlobal('isHomeFirstPage', _)
-  env.addGlobal('isPost', _)
-  env.addGlobal('isArchive', _)
-  env.addGlobal('isYear', _)
-  env.addGlobal('isMonth', _)
-  env.addGlobal('isCategory', _)
-  env.addGlobal('isTag', _)
 
   // filter
   env.addFilter('shorten', shorten)

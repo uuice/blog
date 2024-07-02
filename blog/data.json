@@ -664,7 +664,9 @@
     "favicon": null,
     "url": "http://example.com",
     "theme": "default",
-    "beian": "浙ICP备13002567号-4"
+    "beian": "浙ICP备13002567号-4",
+    "banner": "/assets/images/banner.jpg",
+    "avatar": "/assets/images/avatar.jpg"
   },
   "tags": [
     {

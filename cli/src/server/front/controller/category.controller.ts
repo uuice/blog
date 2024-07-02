@@ -1,10 +1,14 @@
 import { CategoryService } from './../../core/service/category.service'
 import { Controller, Get, Param, Render } from '@nestjs/common'
-import { ViewData } from '../../core/helper/viewData'
+import { ViewData, mixedDataView } from '../../core/helper/viewData'
+import { SysConfigService } from '../../core/service/sysConfig.service'
 
 @Controller('categories')
 export class CategoryController {
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly sysConfigService: SysConfigService
+  ) {}
 
   @Get(':url')
   @Render('category')
@@ -17,6 +21,7 @@ export class CategoryController {
     const category = this.categoryService.getCategoryByUrl(url)
 
     viewData.assign('category', category)
-    return viewData.assign()
+    viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
+    return mixedDataView(viewData).assign()
   }
 }

@@ -11,5 +11,8 @@ url: http://example.com
 
 # Theme
 theme: default
-
 beian: 浙ICP备13002567号-4
+banner: /assets/images/banner.jpg
+
+# Profile
+avatar: /assets/images/avatar.jpg

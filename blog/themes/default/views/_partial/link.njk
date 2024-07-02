@@ -1,1 +1,37 @@
 {# Link #}
+ {% set title = "友情链接" %}
+
+<div class="archive-main-card">
+  <div class="archive-top">
+    <div class="main-title-bar">
+      <div class="main-title-dot"></div>
+      <h1 class="article-title">{{ title }}</h1>
+    </div>
+  </div>
+
+    {% for linkData in linkArchive%}
+        {% for key, linkList in linkData %}
+        <div class="year-line">
+            <div class="year-num">{{ key }}</div>
+            <div class="dot-wrapper">
+            <div class="dot"></div>
+            </div>
+            <div class="article-count">{{ linkList.length }} 个友链</div>
+        </div>
+
+            {% for link in linkList %}
+             <a class="archive-article-link" target="_blank" href="{{ link.url }}" title="{{ link.title }}">
+                <div class="date"></div>
+                <div class="line">
+                    <div class="dot"></div>
+                </div>
+                <div class="title">
+                    <div class="title-inner">
+                    {{ link.title if link.title else "无标题" }}
+                    </div>
+                </div>
+                </a>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+</div>

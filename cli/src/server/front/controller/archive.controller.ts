@@ -1,8 +1,12 @@
+import { mixedDataView } from './../../core/helper/viewData'
 import { Controller, Get, Param, Render } from '@nestjs/common'
 import { ViewData } from '../../core/helper/viewData'
+import { SysConfigService } from '../../core/service/sysConfig.service'
 
 @Controller('archives')
 export class ArchiveController {
+  constructor(private readonly sysConfigService: SysConfigService) {}
+
   @Get('')
   @Render('archive')
   index() {
@@ -10,7 +14,8 @@ export class ArchiveController {
     const viewData = new ViewData()
     viewData.assign('pageType', 'Archive')
     viewData.assign('type', 'year')
-    return viewData.assign()
+    viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
+    return mixedDataView(viewData).assign()
   }
 
   @Get(':type')
@@ -20,6 +25,7 @@ export class ArchiveController {
     const viewData = new ViewData()
     viewData.assign('pageType', 'Archive')
     viewData.assign('type', type)
-    return viewData.assign()
+    viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
+    return mixedDataView(viewData).assign()
   }
 }

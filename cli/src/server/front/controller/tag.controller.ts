@@ -1,11 +1,15 @@
 import { Controller, Get, Param, Render, Res } from '@nestjs/common'
-import { ViewData } from '../../core/helper/viewData'
+import { ViewData, mixedDataView } from '../../core/helper/viewData'
 import { TagService } from '../../core/service/tag.service'
 import { Response } from 'express'
+import { SysConfigService } from '../../core/service/sysConfig.service'
 
 @Controller('tags')
 export class TagController {
-  constructor(private tagService: TagService) {}
+  constructor(
+    private readonly tagService: TagService,
+    private readonly sysConfigService: SysConfigService
+  ) {}
 
   @Get(':url')
   @Render('tag')
@@ -16,6 +20,7 @@ export class TagController {
     const tag = this.tagService.getTagByUrl(url)
     viewData.assign('tag', tag)
     viewData.assign(res.locals)
-    return viewData.assign()
+    viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
+    return mixedDataView(viewData).assign()
   }
 }

@@ -7,7 +7,7 @@ import { DbService } from './core/service/db.service'
 import { initSwagger } from './initSwagger'
 import { Logger } from '@nestjs/common'
 import { initView } from './initView'
-// import { initDynamicRouter } from './initDynamicRouter'
+import { initDynamicRouter } from './initDynamicRouter'
 
 export async function bootstrap(options: { port: number; cwd: string; dbPath: string }) {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -28,7 +28,7 @@ export async function bootstrap(options: { port: number; cwd: string; dbPath: st
           // 'font-src': ['\'self\'', 'https:', 'data:'],
           // 'form-action': ['\'self\''],
           // 'frame-ancestors': ['\'self\''],
-          'img-src': ['\'self\'', 'data:', "https://*"],
+          'img-src': ['\'self\'', 'data:', "https://*", "http://*"],
           // 'object-src':  ['\'none\''],
           // 'script-src': ['\'self\'', '\'unsafe-inline\''],
           // 'script-src-attr': ['\'none\''],
@@ -68,7 +68,7 @@ export async function bootstrap(options: { port: number; cwd: string; dbPath: st
   // Get the pages and add the route dynamically
 
   // initDynamicRouter
-  // initDynamicRouter(app) // Routes registered in this way do not execute middleware
+  initDynamicRouter(app) // Routes registered in this way do not execute middleware
 
   // TODO：Initialize flexsearch,  the Next-Generation full text search library
   await app.listen(options.port)

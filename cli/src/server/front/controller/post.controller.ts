@@ -1,10 +1,14 @@
 import { Controller, Get, Param, Render } from '@nestjs/common'
-import { ViewData } from '../../core/helper/viewData'
+import { ViewData, mixedDataView } from '../../core/helper/viewData'
 import { PostService } from '../../core/service/post.service'
+import { SysConfigService } from '../../core/service/sysConfig.service'
 
 @Controller('post')
 export class PostController {
-  constructor(private postService: PostService) {}
+  constructor(
+    private readonly postService: PostService,
+    private readonly sysConfigService: SysConfigService
+  ) {}
 
   @Get(':url')
   @Render('post')
@@ -19,6 +23,7 @@ export class PostController {
     viewData.assign('post', post)
     viewData.assign('prevPost', prevPost)
     viewData.assign('nextPost', nextPost)
-    return viewData.assign()
+    viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
+    return mixedDataView(viewData).assign()
   }
 }

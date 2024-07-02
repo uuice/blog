@@ -4,7 +4,6 @@
   {% set post = page %}
 {% endif%}
   {% set cover = post.cover %}
-  {% set description = post.description and post.description.length %}
   <article id="{{ post.layout }}-{{ post.slug }}" class="h-entry article article-type-{{ post.layout }}" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   {# {% if is_post() or theme.home.style == 'detail' %}
     {% include 'post/gallery' %}
@@ -43,7 +42,7 @@
         </footer> #}
     </div>
     
-    {% if pageType === "Index" %}
+    {% if isIndex %}
       <a class="right-panel {% if cover %} with-pic {% else %} non-pic {% endif %}"
         {% if cover %} style="background-image: url({{ cover }})" {% endif %}
         href="/post/{{ post._url }}" 
@@ -59,11 +58,9 @@
     {% endif %}
   </div>
   
-  {% include './post/nav.njk' %}
-
-  {# {% if not index %}
-    {% include 'post/nav' %}
-  {% endif %} #}
+  {% if not isIndex %}
+    {% include './post/nav.njk' %}
+  {% endif %}
 </article>
 
 

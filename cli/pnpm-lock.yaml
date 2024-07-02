@@ -29,6 +29,9 @@ dependencies:
   chokidar:
     specifier: ^3.6.0
     version: 3.6.0
+  colorjs.io:
+    specifier: ^0.5.2
+    version: 0.5.2
   commander:
     specifier: ^12.1.0
     version: 12.1.0
@@ -1522,6 +1525,10 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /colorjs.io@0.5.2:
+    resolution: {integrity: sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw==}
+    dev: false
 
   /commander@1.1.1:
     resolution: {integrity: sha512-71Rod2AhcH3JhkBikVpNd0pA+fWsmAaVoti6OR38T76chA7vE3pSerS0Jor4wDw+tOueD2zLVvFOw5H0Rcj7rA==}

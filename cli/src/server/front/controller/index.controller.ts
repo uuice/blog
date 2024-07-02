@@ -1,13 +1,13 @@
 import { PostService } from './../../core/service/post.service'
-import { Controller, Get, NotFoundException, Param, Render } from '@nestjs/common'
-import { ViewData } from '../../core/helper/viewData'
-import { PageService } from '../../core/service/page.service'
+import { Controller, Get, Param, Render } from '@nestjs/common'
+import { ViewData, mixedDataView } from '../../core/helper/viewData'
+import { SysConfigService } from '../../core/service/sysConfig.service'
 
 @Controller('')
 export class IndexController {
   constructor(
-    private postService: PostService,
-    private pageService: PageService
+    private readonly postService: PostService,
+    private readonly sysConfigService: SysConfigService
   ) {}
 
   @Get('')
@@ -17,7 +17,8 @@ export class IndexController {
     viewData.assign('pageType', 'Index')
     const pageQueryList = this.postService.getPageQuery(1, 10)
     viewData.assign(pageQueryList)
-    return viewData.assign()
+    viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
+    return mixedDataView(viewData).assign()
   }
 
   @Get('page/:pageIndex')
@@ -27,20 +28,24 @@ export class IndexController {
     viewData.assign('pageType', 'Index')
     const pageQueryList = this.postService.getPageQuery(pageIndex, 10)
     viewData.assign(pageQueryList)
-    return viewData.assign()
+    viewData.assign({ pageIndex })
+    viewData.assign({ pageIndex })
+    viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
+    return mixedDataView(viewData).assign()
   }
 
-  @Get(':pageAlias')
-  @Render('page')
-  async pageItem(@Param('pageAlias') pageAlias: string) {
-    const viewData = new ViewData()
+  // @Get(':pageAlias')
+  // @Render('page')
+  // async pageItem(@Param('pageAlias') pageAlias: string) {
+  //   const viewData = new ViewData()
 
-    const page = await this.pageService.getPageByAlias(pageAlias)
-    if (!page) {
-      throw new NotFoundException('page not found')
-    }
-    viewData.assign('pageType', 'Page')
-    viewData.assign('page', page)
-    return viewData.assign()
-  }
+  //   const page = await this.pageService.getPageByAlias(pageAlias)
+  //   if (!page) {
+  //     throw new NotFoundException('page not found')
+  //   }
+  //   viewData.assign('pageType', 'Page')
+  //   viewData.assign('page', page)
+  //   viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
+  //   return mixedDataView(viewData).assign()
+  // }
 }
