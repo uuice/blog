@@ -7,9 +7,7 @@ import { DbService } from './core/service/db.service'
 import { initSwagger } from './initSwagger'
 import { Logger } from '@nestjs/common'
 import { initView } from './initView'
-import { PageService } from './core/service/page.service'
-import { Router } from 'express'
-import { PageController } from './front/controller/page.controller'
+// import { initDynamicRouter } from './initDynamicRouter'
 
 export async function bootstrap(options: { port: number; cwd: string; dbPath: string }) {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -68,19 +66,9 @@ export async function bootstrap(options: { port: number; cwd: string; dbPath: st
   initSwagger(app)
 
   // Get the pages and add the route dynamically
-  const pageService = app.get(PageService)
-  const pageList = pageService.getPageList()
-  const dynamicRouter = Router()
-  pageList.forEach((page) => {
-    dynamicRouter.get(`/${page.alias}`, async (req, res) => {
-      // const pageController = new PageController(pageService)
-      const pageController = app.get(PageController)
-      const result = await pageController.index(`${page.alias}`)
-      res.render('page', result)
-    })
-  })
-  // Mount the dynamic route to the application root path
-  app.use('/', dynamicRouter)
+
+  // initDynamicRouter
+  // initDynamicRouter(app) // Routes registered in this way do not execute middleware
 
   // TODO：Initialize flexsearch,  the Next-Generation full text search library
   await app.listen(options.port)

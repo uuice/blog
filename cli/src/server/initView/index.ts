@@ -38,7 +38,7 @@ export async function initView(app: NestExpressApplication): Promise<void> {
 
   const viewsPath = join(cwd, 'themes', theme, 'views')
   const assetsPath = join(cwd, 'themes', theme, 'assets')
-  const env = nunjucks.configure(viewsPath, {
+  const env: nunjucks.Environment = nunjucks.configure(viewsPath, {
     autoescape: true,
     watch: true,
     noCache: process.env.NODE_ENV === 'dev',
@@ -56,7 +56,7 @@ export async function initView(app: NestExpressApplication): Promise<void> {
   app.set('viewInstance', env)
 }
 
-async function initTmpExtend(env, app) {
+async function initTmpExtend(env: nunjucks.Environment, app: NestExpressApplication) {
   // const sysConfigService = app.get(SysConfigService)
   // const sysConfig = await sysConfigService.getSysConfig()
   // add global variables and function
@@ -65,6 +65,15 @@ async function initTmpExtend(env, app) {
   env.addGlobal('dateFormat', dateFormat)
   env.addGlobal('moment', moment)
   env.addGlobal('_', _)
+  // Add helper function
+  env.addGlobal('isHome', _)
+  env.addGlobal('isHomeFirstPage', _)
+  env.addGlobal('isPost', _)
+  env.addGlobal('isArchive', _)
+  env.addGlobal('isYear', _)
+  env.addGlobal('isMonth', _)
+  env.addGlobal('isCategory', _)
+  env.addGlobal('isTag', _)
 
   // filter
   env.addFilter('shorten', shorten)
