@@ -1,5 +1,5 @@
 import { PostService } from './../../core/service/post.service'
-import { Controller, Get, Param, Render } from '@nestjs/common'
+import { Controller, Get, Param, ParseIntPipe, Render } from '@nestjs/common'
 import { ViewData, mixedDataView } from '../../core/helper/viewData'
 import { SysConfigService } from '../../core/service/sysConfig.service'
 
@@ -23,13 +23,11 @@ export class IndexController {
 
   @Get('page/:pageIndex')
   @Render('index')
-  indexWidthPageIndex(@Param('pageIndex') pageIndex: number) {
+  indexWidthPageIndex(@Param('pageIndex', ParseIntPipe) pageIndex: number) {
     const viewData = new ViewData()
     viewData.assign('pageType', 'Index')
     const pageQueryList = this.postService.getPageQuery(pageIndex, 10)
     viewData.assign(pageQueryList)
-    viewData.assign({ pageIndex })
-    viewData.assign({ pageIndex })
     viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
     return mixedDataView(viewData).assign()
   }
