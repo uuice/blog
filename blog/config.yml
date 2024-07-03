@@ -1,18 +1,21 @@
 # Site
 title: 轻盈的鱼
 subTitle: 幻想变成轻盈的鱼， 畅游在自由的海洋
-description: 
+description: 幻想变成轻盈的鱼， 畅游在自由的海洋
 keywords:
 author: uuice
 favicon:
 
 # URL
-url: http://example.com
+url: https://uuice.com
 
 # Theme
 theme: default
 beian: 浙ICP备13002567号-4
 banner: /assets/images/banner.jpg
+
+rss: true
+sitemap: true
 
 # Profile
 avatar: /assets/images/avatar.jpg

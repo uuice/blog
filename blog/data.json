@@ -658,14 +658,16 @@
   "systemConfig": {
     "title": "轻盈的鱼",
     "subTitle": "幻想变成轻盈的鱼， 畅游在自由的海洋",
-    "description": null,
+    "description": "幻想变成轻盈的鱼， 畅游在自由的海洋",
     "keywords": null,
     "author": "uuice",
     "favicon": null,
-    "url": "http://example.com",
+    "url": "https://uuice.com",
     "theme": "default",
     "beian": "浙ICP备13002567号-4",
     "banner": "/assets/images/banner.jpg",
+    "rss": true,
+    "sitemap": true,
     "avatar": "/assets/images/avatar.jpg"
   },
   "tags": [

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
-import { PAGE } from '../../../types/page'
+import { LIST_PAGE_ITEM, PAGE } from '../../../types/page'
 import { isEqual, omit } from 'lodash'
 
 @Injectable()
@@ -19,7 +19,7 @@ export class PageService {
       .value()
   }
 
-  getPageList(): Omit<PAGE, 'content' | '_content' | '_toc'>[] {
+  getPageList(): LIST_PAGE_ITEM[] {
     return (
       this.dbService
         .getInstance()

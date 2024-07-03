@@ -23,10 +23,17 @@
       <span class="dark-mode-icon">{% include '_icon/dark_mode.njk' %}</span>
     </a>
     {% if sysConfig.rss %}
-      <a id="nav-rss-link" class="nav-icon mobile-hide" href="" title="">
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/rss.xml" title="" target="_blank">
         {% include '_icon/rss_feed.njk' %}
       </a>
     {% endif %}
+
+   {% if sysConfig.sitemap %}
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/rss.xml" title="" target="_blank">
+        站点地图
+      </a>
+    {% endif %}
+
     <div id="nav-menu-btn" class="nav-icon">
       {% include '_icon/menu.njk' %}
     </div>

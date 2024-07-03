@@ -13,7 +13,6 @@ export class PostController {
   @Get(':url')
   @Render('post')
   index(@Param('url') url: string) {
-    // default month
     const viewData = new ViewData()
     viewData.assign('pageType', 'Post')
     viewData.assign('url', url)

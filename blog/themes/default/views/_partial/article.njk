@@ -24,7 +24,7 @@
         {% include './post/tag.njk' %}
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
-        {% if pageType == "Index"%}
+        {% if isIndex %}
             <div class="truncate-text">
               {{ post.excerpt | stripHtml | shorten(500)}}
           </div>
@@ -33,19 +33,19 @@
           {% endif%}
       </div>
 
-        {# <footer class="article-footer">
-          {% if post.excerpt and index %}
-            <a href="/post/{{post_url}}#more" class="article-more-link">
+        <footer class="article-footer">
+          {% if post.excerpt and isIndex %}
+            <a href="/post/{{post._url}}#more" class="article-more-link">
               阅读全文<i class="fa-solid fa-angle-right"></i>
             </a>
           {% endif %}
-        </footer> #}
+        </footer>
     </div>
     
     {% if isIndex %}
       <a class="right-panel {% if cover %} with-pic {% else %} non-pic {% endif %}"
         {% if cover %} style="background-image: url({{ cover }})" {% endif %}
-        href="/post/{{ post._url }}" 
+        href="/archives/{{ post._url }}" 
       >
         {% if cover %}
           <div class="overlay">

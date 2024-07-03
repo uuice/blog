@@ -5,7 +5,7 @@
       <h3 class="widget-title">最新文章</h3>
       <ul>
         {% for post in list %}
-          <a class="recent-link" href="/post/{{post._url}}" title="{{post.title}}" >
+          <a class="recent-link" href="/archives/{{post._url}}" title="{{post.title}}" >
             <div class="recent-link-text">
               {{post.title if post.title else "无标题"}}
             </div>

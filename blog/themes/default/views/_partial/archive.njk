@@ -38,7 +38,7 @@
         </div>
 
             {% for post in postList %}
-             <a class="archive-article-link" href="/post/{{post._url}}" title="{{ post.title }}">
+             <a class="archive-article-link" href="/archives/{{post._url}}" title="{{ post.title }}">
                 <div class="date">{{ post.created_time | date("MM-DD")}}</div>
                 <div class="line">
                     <div class="dot"></div>

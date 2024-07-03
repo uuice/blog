@@ -1,7 +1,7 @@
 import { Controller, Get, Param, UseInterceptors } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { PageService } from '../../core/service/page.service'
-import { PAGE } from '../../../types/page'
+import { LIST_PAGE_ITEM, PAGE } from '../../../types/page'
 import { LowdbUndefinedInterceptor } from '../interceptor/lowdb-undefined.interceptor'
 
 @ApiTags('page')
@@ -15,7 +15,7 @@ export class PageController {
     summary: "Get the page list without 'content' | '_content' | '_toc'",
     description: ''
   })
-  queryList(): Omit<PAGE, 'content' | '_content' | '_toc'>[] {
+  queryList(): LIST_PAGE_ITEM[] {
     return this.pageService.getPageList()
   }
 

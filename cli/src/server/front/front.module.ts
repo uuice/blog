@@ -15,6 +15,8 @@ import { TestController } from './controller/test.controller'
 import { APP_FILTER } from '@nestjs/core'
 import { NotFoundFilter } from './filter/not-found.filter'
 import { TagController } from './controller/tag.controller'
+import { RssController } from './controller/rss.controller'
+import { SitemapController } from './controller/sitemap.controller'
 
 @Module({
   imports: [CoreModule],
@@ -29,7 +31,9 @@ import { TagController } from './controller/tag.controller'
     PostController,
     ArchiveController,
     TagController,
-    TestController
+    TestController,
+    RssController,
+    SitemapController
   ],
   providers: [
     {

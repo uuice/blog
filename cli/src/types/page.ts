@@ -20,3 +20,5 @@ export interface PAGE {
   [key: string]: string | Array<string> | boolean | number
   _symbolsCount: number
 }
+
+export type LIST_PAGE_ITEM = Omit<PAGE, 'content' | '_content' | '_toc'>
