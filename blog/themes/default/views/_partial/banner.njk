@@ -1,5 +1,5 @@
 {% set bannerUrl = sysConfig.banner %}
-<div id="banner" class="{% if pageType == "Index" %} is_home {% endif %}">
+<div id="banner" class="{% if isIndex %} is_home {% endif %}">
   <img src="{{ bannerUrl }}" itemprop="image">
   <div id="banner-dim"></div>
 </div>

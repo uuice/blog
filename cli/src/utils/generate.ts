@@ -23,16 +23,16 @@ export const generate = async (
   systemConfigPath: string,
   dataBasePath: string
 ) => {
-  const postPattern = join(postDirPath, '/**/*.md')
+  const postPattern = join(postDirPath, '**', '*.md')
   const postList = await generatePosts(postPattern)
 
-  const pagePattern = join(pageDirPath, '/**/*.md')
+  const pagePattern = join(pageDirPath, '**', '*.md')
   const pageList = await generatePages(pagePattern)
 
-  const jsonPattern = join(jsonDirPath, '/**/*.json')
+  const jsonPattern = join(jsonDirPath, '**', '*.json')
   const jsonList = await generateJsons(jsonPattern)
 
-  const ymlPattern = join(ymlDirPath, '/**/*.yml')
+  const ymlPattern = join(ymlDirPath, '**', '*.yml')
   const ymlList = await generateYmls(ymlPattern)
 
   const systemConfig = await generateSystemConfig(systemConfigPath)
@@ -63,7 +63,7 @@ async function generatePosts(path: string): Promise<POST[]> {
 }
 
 async function generateJsons(path: string): Promise<JSON_OBJ> {
-  const jsonFileList: string[] = await glob(path, { ignore: 'node_modules/**' })
+  const jsonFileList: string[] = await glob(path.replace(/\\/g, '/'), { ignore: 'node_modules/**' })
   const result: {
     [key: string]: any
   } = {}
@@ -78,7 +78,7 @@ async function generateJsons(path: string): Promise<JSON_OBJ> {
 }
 
 async function generateYmls(path: string): Promise<JSON_OBJ> {
-  const ymlFileList: string[] = await glob(path, { ignore: 'node_modules/**' })
+  const ymlFileList: string[] = await glob(path.replace(/\\/g, '/'), { ignore: 'node_modules/**' })
   const result: {
     [key: string]: any
   } = {}
@@ -92,10 +92,10 @@ async function generateYmls(path: string): Promise<JSON_OBJ> {
 }
 
 async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
-  const mdFileList: string[] = await glob(path, { ignore: 'node_modules/**' })
+  const mdFileList: string[] = await glob(path.replace(/\\/g, '/'), { ignore: 'node_modules/**' })
   const promiseList: Promise<string>[] = []
   mdFileList.forEach((file: string) => {
-    const promise = readFile(file, 'utf-8') // 替换为实际的异步操作，返回一个 Promise 对象
+    const promise = readFile(file, 'utf-8')
     promiseList.push(promise)
   })
 

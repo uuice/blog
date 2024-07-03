@@ -1,9 +1,9 @@
 {% set hueList = [0, 30, 60, 180, 250, 270, 300, 330, 345] %}
 {% set hue = "180" %}
 <div class="widget color-picker">
-  <h3 class="widget-title">Theme Preview</h3>
+  <h3 class="widget-title">主题预览</h3>
   <div id="banner-toggle-bar">
-    <label for="vehicle1">Show Banner</label><br>
+    <label for="vehicle1">显示标题</label><br>
     <input type="checkbox" id="banner-checkbox" name="banner-checkbox" value="show">
   </div>
 
@@ -14,8 +14,8 @@
     {% endfor %}
   </div>
   <input type="range" min="0" max="360" value="{{ hue }}" class="slider" id="colorSlider" step="5" style="width: 100%;">
-  <p class="hue-text">Hue: <span id="hueValue"></span></p>
-  <p class="oklch-tip">You are using an outdated browser that does not support OKLCH colors. The color setting will not take effect.</p>
+  <p class="hue-text">色调: <span id="hueValue"></span></p>
+  <p class="oklch-tip">如果您使用的浏览器过时，不支持OKLCH颜色。颜色设置会不生效。</p>
 </div>
 
 <script>

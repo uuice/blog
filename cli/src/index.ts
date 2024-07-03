@@ -96,23 +96,25 @@ export default function (cwd = process.cwd()): void {
     .description('generate data json')
     .option('-w, --watch', 'Listen to the source file directory')
     .action(async (options) => {
-      try {
-        const { generate } = await import('./utils/generate')
-        console.info(`${chalk.cyan('[Info]')}: start generating`)
-        console.time(`${chalk.cyan('[Info]')}: generate data json`)
-        await generate(
+      if (options.watch) {
+        await generateCommandByWatch(
           postDirPath,
           pageDirPath,
           jsonDirPath,
           ymlDirPath,
           systemConfigPath,
-          dataBasePath
+          dataBasePath,
+          sourcePath
         )
-        console.timeEnd(`${chalk.cyan('[Info]')}: generate data json`)
-        console.info(`${chalk.green('[Success]')}: end generating`)
-      } catch (err: any) {
-        console.error(`${chalk.red('[Error]')}: ${err?.message || err}`)
       }
+      await generateCommand(
+        postDirPath,
+        pageDirPath,
+        jsonDirPath,
+        ymlDirPath,
+        systemConfigPath,
+        dataBasePath
+      )
     })
 
   program
@@ -130,6 +132,16 @@ export default function (cwd = process.cwd()): void {
           dbPath: dataBasePath
         }).then(async (app) => {
           if (options.watch) {
+            await generateCommandByWatch(
+              postDirPath,
+              pageDirPath,
+              jsonDirPath,
+              ymlDirPath,
+              systemConfigPath,
+              dataBasePath,
+              sourcePath
+            )
+
             const chokidar = await import('chokidar')
             console.info(`${chalk.cyan('[Info]')}: start listening on data.json`)
             const watcher = chokidar.watch(dataBasePath, {
@@ -179,4 +191,61 @@ function formatDate(data?: string): string {
 
   const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
   return formattedDate
+}
+
+async function generateCommand(
+  postDirPath,
+  pageDirPath,
+  jsonDirPath,
+  ymlDirPath,
+  systemConfigPath,
+  dataBasePath
+): Promise<void> {
+  try {
+    const { generate } = await import('./utils/generate')
+    console.info(`${chalk.cyan('[Info]')}: start generating`)
+    console.time(`${chalk.cyan('[Info]')}: generate data json`)
+    await generate(
+      postDirPath,
+      pageDirPath,
+      jsonDirPath,
+      ymlDirPath,
+      systemConfigPath,
+      dataBasePath
+    )
+    console.timeEnd(`${chalk.cyan('[Info]')}: generate data json`)
+    console.info(`${chalk.green('[Success]')}: end generating`)
+  } catch (err: any) {
+    console.error(`${chalk.red('[Error]')}: ${err?.message || err}`)
+  }
+}
+
+async function generateCommandByWatch(
+  postDirPath,
+  pageDirPath,
+  jsonDirPath,
+  ymlDirPath,
+  systemConfigPath,
+  dataBasePath,
+  sourcePath
+) {
+  const chokidar = await import('chokidar')
+  console.info(`${chalk.cyan('[Info]')}: start listening source file directory`)
+  const watcher = chokidar.watch(sourcePath, {
+    ignored: /node_modules/,
+    persistent: true,
+    depth: 99,
+    ignoreInitial: true
+  })
+
+  watcher.on('all', async (path) => {
+    await generateCommand(
+      postDirPath,
+      pageDirPath,
+      jsonDirPath,
+      ymlDirPath,
+      systemConfigPath,
+      dataBasePath
+    )
+  })
 }
