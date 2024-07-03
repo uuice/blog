@@ -17,9 +17,11 @@ import { NotFoundFilter } from './filter/not-found.filter'
 import { TagController } from './controller/tag.controller'
 import { RssController } from './controller/rss.controller'
 import { SitemapController } from './controller/sitemap.controller'
+import { DynamicPageModule } from './dynamic-page.module'
+import { CommonDataMiddleware } from './middleware/common-data.middleware'
 
 @Module({
-  imports: [CoreModule],
+  imports: [CoreModule, DynamicPageModule.forRoot()],
   controllers: [
     CategoryController,
     CommentController,
@@ -44,6 +46,6 @@ import { SitemapController } from './controller/sitemap.controller'
 })
 export class FrontModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(...[RouteForwardingMiddleware]).forRoutes('*')
+    consumer.apply(...[RouteForwardingMiddleware, CommonDataMiddleware]).forRoutes('*')
   }
 }

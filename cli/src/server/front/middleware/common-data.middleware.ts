@@ -10,7 +10,7 @@ export class CommonDataMiddleware implements NestMiddleware {
     // Adds public data to the res.locals object
     const sysConfig = this.sysConfigService.getSysConfig()
     res.locals.sysConfig = sysConfig
-    console.log('CommonDataMiddleware emit')
+    // console.log('CommonDataMiddleware emit')
     next()
   }
 }

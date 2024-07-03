@@ -8,7 +8,9 @@ import low from 'lowdb'
 export class DbService {
   private db: any
 
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService) {
+    this.initDb()
+  }
 
   getInstance() {
     return this.db
