@@ -18,28 +18,28 @@
 
     <div id="num-bar">
       {% if prevPage %}
-      <a class="page-number" href="/page/{{nextPage}}/">{{prevPage}}</a>  
+      <a class="page-number" href="/page/{{prevPage}}">{{prevPage}}</a>  
        {% endif %}
       <span class="page-number current">{{pageIndex}}</span>
        {% if nextPage %}
-      <a class="page-number" href="/page/{{nextPage}}/">{{nextPage}}</a>  
+      <a class="page-number" href="/page/{{nextPage}}">{{nextPage}}</a>  
        {% endif %}
     </div>
     {% if nextPage %} 
         <a id="prev-btn" class="page-nav-btn" href="/page/{{ nextPage }}">
-        <i class="fa-solid fa-angle-left"></i>
+        <i class="fa-solid fa-angle-right"></i>
         </a>
      {% else %}
         <a id="prev-btn" class="page-nav-btn disabled" href="">
-        <i class="fa-solid fa-angle-left"></i>
+        <i class="fa-solid fa-angle-right"></i>
         </a>
      {% endif%}
   </nav>
 {% endif %}
 
-  {# pageIndex: {{ pageIndex }},
+  pageIndex: {{ pageIndex }},
    pageCount: {{ pageCount }},
    prevPage: {{ prevPage }},
   nextPage: {{ nextPage }},
- pageSize: {{ pageSize }}, #}
+ pageSize: {{ pageSize }},
 {% endblock %}
