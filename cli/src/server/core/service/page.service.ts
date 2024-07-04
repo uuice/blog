@@ -24,7 +24,7 @@ export class PageService {
       this.dbService
         .getInstance()
         .get('pages')
-        .map((item: PAGE) => omit(item, ['content', '_content', '_toc']))
+        .map((item: PAGE) => omit(item, ['content', 'mdContent', 'toc']))
         .value() || []
     )
   }

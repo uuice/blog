@@ -24,7 +24,7 @@ export class TagService {
       .getInstance()
       .get('tags')
       .find({
-        _url: url
+        url: url
       })
       .value()
   }

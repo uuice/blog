@@ -31,9 +31,9 @@ export class PostService {
       this.dbService
         .getInstance()
         .get('posts')
-        .map((item: POST) => omit(item, ['content', '_content', '_toc']))
-        // .sortBy('_created_timestamp')
-        .orderBy('_created_timestamp', 'desc')
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        // .sortBy('created_timestamp')
+        .orderBy('created_timestamp', 'desc')
         .value() || []
     )
   }
@@ -61,7 +61,7 @@ export class PostService {
       .getInstance()
       .get('posts')
       .find({
-        _url: url
+        url
       })
       .value()
   }
@@ -71,9 +71,9 @@ export class PostService {
       this.dbService
         .getInstance()
         .get('posts')
-        .map((item: POST) => omit(item, ['content', '_content', '_toc']))
-        // .sortBy('_created_timestamp')
-        .orderBy('_created_timestamp', 'desc')
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        // .sortBy('created_timestamp')
+        .orderBy('created_timestamp', 'desc')
         .take(num)
         .value() || []
     )
@@ -96,9 +96,9 @@ export class PostService {
         .getInstance()
         .get('posts')
         .filter((post: POST) => postIdArray.includes(post.id))
-        .map((item: POST) => omit(item, ['content', '_content', '_toc']))
-        // .sortBy('_created_timestamp')
-        .orderBy('_created_timestamp', 'desc')
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        // .sortBy('created_timestamp')
+        .orderBy('created_timestamp', 'desc')
         .value() || []
     )
   }
@@ -120,9 +120,9 @@ export class PostService {
         .getInstance()
         .get('posts')
         .filter((post: POST) => postIdArray.includes(post.id))
-        .map((item: POST) => omit(item, ['content', '_content', '_toc']))
-        // .sortBy('_created_timestamp')
-        .orderBy('_created_timestamp', 'desc')
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        // .sortBy('created_timestamp')
+        .orderBy('created_timestamp', 'desc')
         .value() || []
     )
   }
@@ -132,14 +132,14 @@ export class PostService {
       this.dbService
         .getInstance()
         .get('posts')
-        .map((item: POST) => omit(item, ['content', '_content', '_toc']))
-        .orderBy('_created_timestamp', 'desc')
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        .orderBy('created_timestamp', 'desc')
         .value() || []
 
     const result: ARCHIVES_DATE_YEAR = []
 
     postList.forEach((post: POST) => {
-      const year = moment(post._created_timestamp).format('YYYY')
+      const year = moment(post.created_timestamp).format('YYYY')
       const index = result.findIndex((obj) => year in obj)
       if (index < 0) {
         const obj = { [year]: [post] }
@@ -155,7 +155,7 @@ export class PostService {
     const postList: LIST_POST_ITEM[] = this.getPostListByCategoryIdOrTitle(categoryId)
     const result: ARCHIVES_DATE_YEAR = []
     postList.forEach((post: LIST_POST_ITEM) => {
-      const year = moment(post._created_timestamp as number).format('YYYY')
+      const year = moment(post.created_timestamp as number).format('YYYY')
       const index = result.findIndex((obj) => year in obj)
       if (index < 0) {
         const obj = { [year]: [post] }
@@ -171,7 +171,7 @@ export class PostService {
     const postList: LIST_POST_ITEM[] = this.getPostListByTagIdOrTitle(tagId)
     const result: ARCHIVES_DATE_YEAR = []
     postList.forEach((post: LIST_POST_ITEM) => {
-      const year = moment(post._created_timestamp as number).format('YYYY')
+      const year = moment(post.created_timestamp as number).format('YYYY')
       const index = result.findIndex((obj) => year in obj)
       if (index < 0) {
         const obj = { [year]: [post] }
@@ -188,14 +188,14 @@ export class PostService {
       this.dbService
         .getInstance()
         .get('posts')
-        .map((item: POST) => omit(item, ['content', '_content', '_toc']))
-        .orderBy('_created_timestamp', 'desc')
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        .orderBy('created_timestamp', 'desc')
         .value() || []
 
     const result: ARCHIVES_DATE_YEAR_MONTH = []
     postList.forEach((post: POST) => {
-      const year = moment(post._created_timestamp).format('YYYY')
-      const month = moment(post._created_timestamp).format('MM')
+      const year = moment(post.created_timestamp).format('YYYY')
+      const month = moment(post.created_timestamp).format('MM')
       const yearIndex = result.findIndex((obj) => year in obj)
       if (yearIndex < 0) {
         // year doesn't exist

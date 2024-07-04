@@ -48,7 +48,7 @@ export class SitemapController {
         url: [
           ...postList.map((post: LIST_POST_ITEM) => {
             return {
-              loc: join(sysConfig.url, 'archives', post._url as string),
+              loc: join(sysConfig.url, 'archives', post.url as string),
               lastmod: moment(post.updated_time as string).format(),
               changefreq: 'daily',
               priority: '0.7'
@@ -74,7 +74,7 @@ export class SitemapController {
 
           ...pageList.map((page: LIST_PAGE_ITEM) => {
             return {
-              loc: join(sysConfig.url, (page.alias || page._url) as string),
+              loc: join(sysConfig.url, (page.alias || page.url) as string),
               lastmod: moment(page.updated_time as string).format(),
               changefreq: 'daily',
               priority: '0.7'

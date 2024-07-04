@@ -3,7 +3,7 @@
     <div class="widget">
       <h3 class="widget-title">分类</h3>
      {% for cate in list%}
-      <a class="category-link" href="/categories/{{ cate._url }}">
+      <a class="category-link" href="/categories/{{ cate.url }}">
                 {{ cate.title }}
                 <div class="category-count">{{ cate.postNum}}</div>
             </a>

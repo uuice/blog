@@ -12,7 +12,7 @@ export class PageController {
 
   @Get('queryList')
   @ApiOperation({
-    summary: "Get the page list without 'content' | '_content' | '_toc'",
+    summary: "Get the page list without 'content' | 'mdContent' | 'toc'",
     description: ''
   })
   queryList(): LIST_PAGE_ITEM[] {

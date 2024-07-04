@@ -32,9 +32,9 @@ export class RssController {
           item: (postList || []).map((post: LIST_POST_ITEM) => {
             return {
               title: '<![CDATA[' + post.title + ']]',
-              link: sysConfig.url + '/archives/' + post._url,
+              link: sysConfig.url + '/archives/' + post.url,
               description: '<![CDATA[' + (post.excerpt || post.title) + ']]',
-              guid: '/archives/' + post._url,
+              guid: '/archives/' + post.url,
               pubDate: moment(post.created_time as string).format('ddd, DD MMM YYYY HH:mm:ss [GMT]')
             }
           })

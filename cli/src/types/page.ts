@@ -12,13 +12,13 @@ export interface PAGE {
   excerpt: string
   published: boolean
   content: string
-  _content: string
-  _toc: string
-  _created_timestamp: number
-  _updated_timestamp: number
-  _url: string
+  mdContent: string
+  toc: string
+  created_timestamp: number
+  updated_timestamp: number
+  url: string
   [key: string]: string | Array<string> | boolean | number
-  _symbolsCount: number
+  symbolsCount: number
 }
 
-export type LIST_PAGE_ITEM = Omit<PAGE, 'content' | '_content' | '_toc'>
+export type LIST_PAGE_ITEM = Omit<PAGE, 'content' | 'mdContent' | 'toc'>

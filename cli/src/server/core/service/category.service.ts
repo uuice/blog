@@ -24,7 +24,7 @@ export class CategoryService {
       .getInstance()
       .get('categories')
       .find({
-        _url: url
+        url: url
       })
       .value()
   }

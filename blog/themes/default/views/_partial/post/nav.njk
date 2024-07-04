@@ -2,7 +2,7 @@
 <nav id="article-nav">
   <a class="article-nav-btn left {% if not prevPost %} disabled {% endif %}"
     {% if prevPost %}
-      href="/archives/{{prevPost._url}}"
+      href="/archives/{{prevPost.url}}"
       title="{{ prevPost.title }}"
     {% endif %}>
     <i class="fa-solid fa-angle-left"></i>
@@ -16,7 +16,7 @@
   </a>
   <a class="article-nav-btn right {% if not nextPost %} disabled {% endif %}"
     {% if nextPost %}
-      href="/archives/{{nextPost._url}}"
+      href="/archives/{{nextPost.url}}"
       title="{{ nextPost.title }}"
     {% endif %}>
 

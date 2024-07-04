@@ -119,27 +119,27 @@ async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
       excerpt,
       published: json.data.published || '',
       content: json.content || '',
-      _content: contentToc._content || '',
-      _toc: contentToc._toc || '',
-      _url: titleToUrl(json.data.title || ''),
-      _created_timestamp:
+      mdContent: contentToc.mdContent || '',
+      toc: contentToc.toc || '',
+      url: titleToUrl(json.data.title || ''),
+      created_timestamp:
         json.data.created_time || json.data.date
           ? moment(json.data.created_time || json.data.date).valueOf()
           : 0,
-      _updated_timestamp:
+      updated_timestamp:
         json.data.updated_time || json.data.updated
           ? moment(json.data.updated_time || json.data.updated).valueOf()
           : 0,
-      _symbolsCount: symbolsCount(contentToc._content || '')
+      symbolsCount: symbolsCount(contentToc.mdContent || '')
     })
   }
   return result
 }
 
-async function getContentToc(content: string): Promise<{ _content: string; _toc: string }> {
+async function getContentToc(content: string): Promise<{ mdContent: string; toc: string }> {
   return {
-    _content: await markdownToHtml(content),
-    _toc: await markdownToToc(content)
+    mdContent: await markdownToHtml(content),
+    toc: await markdownToToc(content)
   }
 }
 
@@ -180,7 +180,7 @@ async function generateCategoriesTags(
             id,
             title: tag,
             description: tag,
-            _url: titleToUrl(tag || '')
+            url: titleToUrl(tag || '')
           })
           postTags.push({
             postId: post.id,
@@ -205,7 +205,7 @@ async function generateCategoriesTags(
             id,
             title: category,
             description: category,
-            _url: titleToUrl(category || '')
+            url: titleToUrl(category || '')
           })
           postCategories.push({
             postId: post.id,

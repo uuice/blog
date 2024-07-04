@@ -25,7 +25,7 @@ export async function bootstrap(options: { port: number; cwd: string; dbPath: st
           // 'font-src': ['\'self\'', 'https:', 'data:'],
           // 'form-action': ['\'self\''],
           // 'frame-ancestors': ['\'self\''],
-          'img-src': ['\'self\'', 'data:', "https://*", "http://*"],
+          'img-src': ['\'self\'', '*', 'data:', "https://*", "http://*"],
           // 'object-src':  ['\'none\''],
           // 'script-src': ['\'self\'', '\'unsafe-inline\''],
           // 'script-src-attr': ['\'none\''],

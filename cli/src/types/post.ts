@@ -14,16 +14,16 @@ export interface POST {
   excerpt: string
   published: boolean
   content: string
-  _content: string
-  _toc: string
-  _created_timestamp: number
-  _updated_timestamp: number
-  _url: string
+  mdContent: string
+  toc: string
+  created_timestamp: number
+  updated_timestamp: number
+  url: string
   [key: string]: string | Array<string> | boolean | number
-  _symbolsCount: number
+  symbolsCount: number
 }
 
-export type LIST_POST_ITEM = Omit<POST, 'content' | '_content' | '_toc'>
+export type LIST_POST_ITEM = Omit<POST, 'content' | 'mdContent' | 'toc'>
 
 export type ARCHIVES_DATE_YEAR = { [date: string]: LIST_POST_ITEM[] }[]
 
@@ -35,5 +35,5 @@ export type POST_PAGE_QUERY = {
   prevPage: number
   nextPage: number
   pageSize: number
-  postList: Omit<PAGE, 'content' | '_content' | '_toc'>[]
+  postList: Omit<PAGE, 'content' | 'mdContent' | 'toc'>[]
 }

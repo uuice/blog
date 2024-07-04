@@ -82,7 +82,7 @@ export class PostController {
 
   @Get('pageQuery')
   @ApiOperation({
-    summary: "Gets the paging query for post without 'content' | '_content' | '_toc'",
+    summary: "Gets the paging query for post without 'content' | 'mdContent' | 'toc'",
     description: ''
   })
   @ApiQuery({

@@ -18,7 +18,7 @@
             {% include './post/category.njk' %}  
           </div>
           <div class="wordcount need-seperator meta-info">
-            {{ post._symbolsCount }} 字
+            {{ post.symbolsCount }} 字
           </div>
         </div>
         {% include './post/tag.njk' %}
@@ -29,13 +29,13 @@
               {{ post.excerpt | stripHtml | shorten(500)}}
           </div>
           {% else%}
-          {{ post._content | safe}}
+          {{ post.mdContent | safe}}
           {% endif%}
       </div>
 
         <footer class="article-footer">
           {% if post.excerpt and isIndex %}
-            <a href="/post/{{post._url}}#more" class="article-more-link">
+            <a href="/post/{{post.url}}#more" class="article-more-link">
               阅读全文<i class="fa-solid fa-angle-right"></i>
             </a>
           {% endif %}
@@ -45,7 +45,7 @@
     {% if isIndex %}
       <a class="right-panel {% if cover %} with-pic {% else %} non-pic {% endif %}"
         {% if cover %} style="background-image: url({{ cover }})" {% endif %}
-        href="/archives/{{ post._url }}" 
+        href="/archives/{{ post.url }}" 
       >
         {% if cover %}
           <div class="overlay">
