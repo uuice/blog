@@ -46,9 +46,19 @@ export function PageItem(app: NestExpressApplication): void {
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
   this.run = async function (context, args, body, callback) {
-    if (args.id || args.title) {
+    if (args.id) {
       const pageService = app.get(PageService)
-      context.ctx.page = await pageService.getPageByIdOrTitle(args.id || args.title)
+      context.ctx.page = await pageService.getPageById(args.id)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.title) {
+      const pageService = app.get(PageService)
+      context.ctx.page = await pageService.getPageByTitle(args.title)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.url) {
+      const pageService = app.get(PageService)
+      context.ctx.page = await pageService.getPageByUrl(args.url)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else if (args.alias) {

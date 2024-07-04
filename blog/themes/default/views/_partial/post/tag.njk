@@ -2,7 +2,7 @@
 <ul class="article-tag-list" itemprop="keywords">
   {% for tag in post.tags%}
   <li class="article-tag-list-item">
-    <a class="article-tag-list-link" href="/tags/{{ tag }}" rel="tag">{{ tag }}</a>
+    <a class="article-tag-list-link" href="/tags/{{ tag | titleToUrl }}" rel="tag">{{ tag }}</a>
   </li>
   {% endfor%}
 </ul>

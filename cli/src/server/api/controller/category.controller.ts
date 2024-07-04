@@ -28,12 +28,30 @@ export class CategoryController {
     return this.categoryService.getCategoryListWidthPostNum()
   }
 
-  @Get('query/:idOrTitle')
+  @Get('query/id/:id')
   @ApiOperation({
-    summary: 'Get category by id or title',
+    summary: 'Get category by id',
     description: ''
   })
-  query(@Param('idOrTitle') idOrTitle: string): CATEGORY | undefined {
-    return this.categoryService.getCategoryByIdOrTitle(idOrTitle)
+  queryById(@Param('id') id: string): CATEGORY | undefined {
+    return this.categoryService.getCategoryById(id)
+  }
+
+  @Get('query/title/:title')
+  @ApiOperation({
+    summary: 'Get category by title',
+    description: ''
+  })
+  queryByTitle(@Param('title') title: string): CATEGORY | undefined {
+    return this.categoryService.getCategoryByTitle(title)
+  }
+
+  @Get('query/url/:url')
+  @ApiOperation({
+    summary: 'Get category by url',
+    description: ''
+  })
+  queryByUrl(@Param('url') url: string): CATEGORY | undefined {
+    return this.categoryService.getCategoryByUrl(url)
   }
 }

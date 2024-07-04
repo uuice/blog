@@ -28,12 +28,30 @@ export class TagController {
     return this.tagService.getTagListWidthPostNum()
   }
 
-  @Get('query/:idOrTitle')
+  @Get('query/id/:id')
   @ApiOperation({
-    summary: 'Get tag by id or title',
+    summary: 'Get tag by id',
     description: ''
   })
-  query(@Param('idOrTitle') idOrTitle: string): TAG | undefined {
-    return this.tagService.getTagByIdOrTitle(idOrTitle)
+  queryById(@Param('id') id: string): TAG | undefined {
+    return this.tagService.getTagById(id)
+  }
+
+  @Get('query/title/:title')
+  @ApiOperation({
+    summary: 'Get tag by title',
+    description: ''
+  })
+  queryByTitle(@Param('title') title: string): TAG | undefined {
+    return this.tagService.getTagByTitle(title)
+  }
+
+  @Get('query/url/:url')
+  @ApiOperation({
+    summary: 'Get tag by url',
+    description: ''
+  })
+  queryByUrl(@Param('url') url: string): TAG | undefined {
+    return this.tagService.getTagByUrl(url)
   }
 }

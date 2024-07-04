@@ -21,7 +21,7 @@
     {% for page in list %}
     {{page | dump | console('page', 'log') | safe}}
       <li>
-        {{ page.id }}:{{ page.title}}
+        {{ page.id }}:{{ page.title}}:{{page.url}}
       </li>
     {% endfor %}
   </ul>
@@ -72,7 +72,7 @@
     {% for cate in list %}
     {{cate | dump | console('page', 'log') | safe}}
       <li>
-        {{ cate.id }}:{{ cate.title}}
+        {{ cate.id }}:{{ cate.title}}:{{cate.url}}
       </li>
     {% endfor %}
   </ul>
@@ -85,7 +85,7 @@
     {% for cate in list %}
     {{cate | dump | console('page', 'log') | safe}}
       <li>
-        {{ cate.id }}:{{ cate.title}}:{{ cate.postNum }}
+        {{ cate.id }}:{{ cate.title}}:{{ cate.postNum }}::{{cate.url}}
       </li>
     {% endfor %}
   </ul>
@@ -111,7 +111,7 @@
     {% for tag in list %}
     {{tag | dump | console('tag', 'log') | safe}}
       <li>
-        {{ tag.id }}:{{ tag.title}}
+        {{ tag.id }}:{{ tag.title}}:{{tag.url}}
       </li>
     {% endfor %}
   </ul>
@@ -124,7 +124,7 @@
     {% for tag in list %}
     {{tag | dump | console('page', 'log') | safe}}
       <li>
-        {{ tag.id }}:{{ tag.title}}:{{ tag.postNum }}
+        {{ tag.id }}:{{ tag.title}}:{{ tag.postNum }}:{{tag.url}}
       </li>
     {% endfor %}
   </ul>

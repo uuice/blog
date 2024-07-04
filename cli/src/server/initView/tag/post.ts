@@ -49,8 +49,16 @@ export function PostListByCategory(app: NestExpressApplication): void {
   }
   this.run = async function (context, args, body, callback) {
     const postService = app.get(PostService)
-    if (args.id || args.title) {
-      context.ctx.list = await postService.getPostListByCategoryIdOrTitle(args.id || args.title)
+    if (args.id) {
+      context.ctx.list = await postService.getPostListByCategoryId(args.id)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.title) {
+      context.ctx.list = await postService.getPostListByCategoryTitle(args.title)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.id || args.title) {
+      context.ctx.list = await postService.getPostListByCategoryUrl(args.url)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else {
@@ -80,7 +88,15 @@ export function PostListByTag(app: NestExpressApplication): void {
   this.run = async function (context, args, body, callback) {
     const postService = app.get(PostService)
     if (args.id || args.title) {
-      context.ctx.list = await postService.getPostListByTagIdOrTitle(args.id || args.title)
+      context.ctx.list = await postService.getPostListByTagId(args.id)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.id || args.title) {
+      context.ctx.list = await postService.getPostListByTagTitle(args.title)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.id || args.title) {
+      context.ctx.list = await postService.getPostListByTagUrl(args.url)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else {
@@ -108,9 +124,19 @@ export function PostItem(app: NestExpressApplication): void {
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
   this.run = async function (context, args, body, callback) {
-    if (args.id || args.title) {
+    if (args.id) {
       const postService = app.get(PostService)
-      context.ctx.post = await postService.getPostByIdOrTitle(args.id || args.title)
+      context.ctx.post = await postService.getPostById(args.id)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.title) {
+      const postService = app.get(PostService)
+      context.ctx.post = await postService.getPostByTitle(args.title)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.url) {
+      const postService = app.get(PostService)
+      context.ctx.post = await postService.getPostByUrl(args.url)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else if (args.alias) {
@@ -221,8 +247,8 @@ export function PostPrev(app: NestExpressApplication): void {
   this.run = async function (context, args, body, callback) {
     const postService = app.get(PostService)
     // type: tag category  year month
-    if (args.id || args.title) {
-      context.ctx.post = await postService.getPrevPostByPostIdOrTitle(args.id || args.title)
+    if (args.id) {
+      context.ctx.post = await postService.getPrevPostByPostId(args.id)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else {
@@ -252,8 +278,8 @@ export function PostNext(app: NestExpressApplication): void {
   this.run = async function (context, args, body, callback) {
     const postService = app.get(PostService)
     // type: tag category  year month
-    if (args.id || args.title) {
-      context.ctx.post = await postService.getNextPostByPostIdOrTitle(args.id || args.title)
+    if (args.id) {
+      context.ctx.post = await postService.getNextPostByPostId(args.id)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else {

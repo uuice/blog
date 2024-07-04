@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% set hasBanner = "true" %}
-{% set previewMode = "false" %}
+{% set previewMode = "true" %}
 {% set sidebar_position = "left" %}
 <html theme="dark" showBanner="true" hasBanner="{{ hasBanner }}">
 <meta charset="UTF-8">
@@ -28,14 +28,14 @@
 {% include '_partial/head.njk' %}
 <body>
 
-      {% if previewMode %}
-    {# {% include '_widget/color.njk' %} #}
+  {% if previewMode %}
+    {% include '_widget/color.njk' %}
   {% endif %}
   {% if hasBanner != "false" %}
     {% include '_partial/banner.njk' %}
   {% endif %}
   <div id="main-grid" class="{% if sidebar_position == 'right' %} right-sidebar {% endif %}">
-    <div id="nav" class="{% if pageType == 'Index' %} is_home {% endif %}">
+    <div id="nav" class="{% if isIndex %} is_home {% endif %}">
       {% include '_partial/navbar.njk' %}
     </div>
     <div id="sidebar-wrapper">
@@ -52,7 +52,5 @@
     {% include '_partial/back-to-top.njk' %}
   </div>
   <script src="/assets/js/light-dark-switch.js"></script>
-
- 
 </body>
 </html>

@@ -30,6 +30,7 @@ import moment from 'moment'
 import * as _ from 'lodash'
 import { stripHtml } from './filter/stripHtml'
 import { getColor } from './function/getColor'
+import { titleToUrl } from './filter/titleToUrl'
 
 export async function initView(app: NestExpressApplication): Promise<void> {
   const sysConfigService = app.get(SysConfigService)
@@ -75,6 +76,8 @@ async function initTmpExtend(env: nunjucks.Environment, app: NestExpressApplicat
   env.addFilter('date', date)
   env.addFilter('symbolsCount', symbolsCount)
   env.addFilter('stripHtml', stripHtml)
+  env.addFilter('titleToUrl', titleToUrl)
+
   // tags
   env.addExtension('TagTest', new TagTest(app))
   env.addExtension('TagTest2', new TagTest2(app))

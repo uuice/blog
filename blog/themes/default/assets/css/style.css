@@ -320,7 +320,7 @@ body,
   height: 100%;
 }
 body {
-  font: 16px "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font: 14px "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-text-size-adjust: 100%;
   background: var(--page-background);
   background-size: 240px;
@@ -554,7 +554,7 @@ navbar,
 .comment-card .main-title,
 .archive-main-card .archive-title {
   text-decoration: none;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
   color: var(--main-title);
   line-height: 40px;
@@ -2259,7 +2259,7 @@ a.article-title:active {
   width: 65%;
 }
 .archive-main-card .archive-article-link .title-inner {
-  font-size: 16px;
+  font-size: 14px;
   padding-right: 32px;
   font-weight: bold;
   color: var(--archive-title);
@@ -2292,7 +2292,7 @@ a.article-title:active {
 }
 #footer {
   background: var(--card-background);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: medium;
   display: -webkit-box;
   display: -moz-box;
@@ -2742,7 +2742,7 @@ input[type="range"] {
 .info-card a {
   color: var(--link);
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
 }
 .widget ul ul,
 .info-card ul ul,
@@ -2817,7 +2817,7 @@ input[type="range"] {
   }
 }
 .info-card .username {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: var(--info-name);
   line-height: 28px;
@@ -2838,7 +2838,7 @@ input[type="range"] {
   margin-bottom: 12px;
 }
 .info-card .subtitle {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
   color: var(--info-sub);
   margin-bottom: 8px;
@@ -2940,7 +2940,7 @@ input[type="range"] {
 }
 .category-link .category-count,
 .archive-link .archive-count {
-  height: 28px;
+  height: 26px;
   width: 32px;
   color: var(--text-on-light);
   background: var(--badge-bg);

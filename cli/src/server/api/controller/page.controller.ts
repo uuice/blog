@@ -19,7 +19,7 @@ export class PageController {
     return this.pageService.getPageList()
   }
 
-  @Get('queryByAlias/:alias')
+  @Get('query/alias/:alias')
   @ApiOperation({
     summary: 'Get page by alias',
     description: ''
@@ -28,12 +28,30 @@ export class PageController {
     return this.pageService.getPageByAlias(alias)
   }
 
-  @Get('query/:idOrTitle')
+  @Get('query/id/:id')
+  @ApiOperation({
+    summary: 'Get page by title',
+    description: ''
+  })
+  queryById(@Param('id') id: string): PAGE | undefined {
+    return this.pageService.getPageById(id)
+  }
+
+  @Get('query/title/:title')
   @ApiOperation({
     summary: 'Get page by id or title',
     description: ''
   })
-  query(@Param('idOrTitle') idOrTitle: string): PAGE | undefined {
-    return this.pageService.getPageByIdOrTitle(idOrTitle)
+  queryByTitle(@Param('title') title: string): PAGE | undefined {
+    return this.pageService.getPageByTitle(title)
+  }
+
+  @Get('query/url/:url')
+  @ApiOperation({
+    summary: 'Get page by url',
+    description: ''
+  })
+  queryByUrl(@Param('url') url: string): PAGE | undefined {
+    return this.pageService.getPageByUrl(url)
   }
 }

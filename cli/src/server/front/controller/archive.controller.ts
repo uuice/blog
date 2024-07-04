@@ -1,5 +1,5 @@
 import { mixedDataView } from './../../core/helper/viewData'
-import { Controller, Get, Param, Render } from '@nestjs/common'
+import { Controller, Get, NotFoundException, Param, Render } from '@nestjs/common'
 import { ViewData } from '../../core/helper/viewData'
 import { SysConfigService } from '../../core/service/sysConfig.service'
 import { PostService } from '../../core/service/post.service'
@@ -29,8 +29,11 @@ export class ArchiveController {
     viewData.assign('pageType', 'Post')
     viewData.assign('url', url)
     const post = this.postService.getPostByUrl(url)
-    const prevPost = this.postService.getPrevPostByPostIdOrTitle(post.id)
-    const nextPost = this.postService.getNextPostByPostIdOrTitle(post.id)
+    if (!post) {
+      throw new NotFoundException('Post not found')
+    }
+    const prevPost = this.postService.getPrevPostByPostId(post.id)
+    const nextPost = this.postService.getNextPostByPostId(post.id)
     viewData.assign('post', post)
     viewData.assign('prevPost', prevPost)
     viewData.assign('nextPost', nextPost)

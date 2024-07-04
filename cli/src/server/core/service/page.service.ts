@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
 import { LIST_PAGE_ITEM, PAGE } from '../../../types/page'
-import { isEqual, omit } from 'lodash'
+import { omit } from 'lodash'
 
 @Injectable()
 export class PageService {
@@ -11,11 +11,33 @@ export class PageService {
     return this.dbService.getInstance().get('pages').find({ alias }).value()
   }
 
-  getPageByIdOrTitle(idOrTitle: string): PAGE | undefined {
+  getPageById(id: string): PAGE | undefined {
     return this.dbService
       .getInstance()
       .get('pages')
-      .find((item: PAGE) => isEqual(item.id, idOrTitle) || isEqual(item.title, idOrTitle))
+      .find({
+        id
+      })
+      .value()
+  }
+
+  getPageByTitle(title: string): PAGE | undefined {
+    return this.dbService
+      .getInstance()
+      .get('pages')
+      .find({
+        title
+      })
+      .value()
+  }
+
+  getPageByUrl(url: string): PAGE | undefined {
+    return this.dbService
+      .getInstance()
+      .get('pages')
+      .find({
+        url
+      })
       .value()
   }
 

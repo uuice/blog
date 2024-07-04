@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
 import { CATEGORY, CATEGORY_WITH_POST_NUM } from '../../../types/category'
-import { isEqual } from 'lodash'
 
 @Injectable()
 export class CategoryService {
@@ -11,11 +10,23 @@ export class CategoryService {
     return this.dbService.getInstance().get('categories').value() || []
   }
 
-  getCategoryByIdOrTitle(idOrTitle: string): CATEGORY | undefined {
+  getCategoryById(id: string): CATEGORY | undefined {
     return this.dbService
       .getInstance()
       .get('categories')
-      .find((item: CATEGORY) => isEqual(item.id, idOrTitle) || isEqual(item.title, idOrTitle))
+      .find({
+        id
+      })
+      .value()
+  }
+
+  getCategoryByTitle(title: string): CATEGORY | undefined {
+    return this.dbService
+      .getInstance()
+      .get('categories')
+      .find({
+        title
+      })
       .value()
   }
 
@@ -24,7 +35,7 @@ export class CategoryService {
       .getInstance()
       .get('categories')
       .find({
-        url: url
+        url
       })
       .value()
   }

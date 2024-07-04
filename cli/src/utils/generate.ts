@@ -121,7 +121,7 @@ async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
       content: json.content || '',
       mdContent: contentToc.mdContent || '',
       toc: contentToc.toc || '',
-      url: titleToUrl(json.data.title || ''),
+      url: titleToUrl(json.data.alias || json.data.title || ''),
       created_timestamp:
         json.data.created_time || json.data.date
           ? moment(json.data.created_time || json.data.date).valueOf()

@@ -38,11 +38,23 @@ export class PostService {
     )
   }
 
-  getPostByIdOrTitle(idOrTitle: string): POST | undefined {
+  getPostById(id: string): POST | undefined {
     return this.dbService
       .getInstance()
       .get('posts')
-      .find((item: POST) => isEqual(item.id, idOrTitle) || isEqual(item.title, idOrTitle))
+      .find({
+        id
+      })
+      .value()
+  }
+
+  getPostByTitle(title: string): POST | undefined {
+    return this.dbService
+      .getInstance()
+      .get('posts')
+      .find({
+        title
+      })
       .value()
   }
 
@@ -79,8 +91,8 @@ export class PostService {
     )
   }
 
-  getPostListByCategoryIdOrTitle(categoryIdOrTitle: string): LIST_POST_ITEM[] {
-    const category = this.categoryService.getCategoryByIdOrTitle(categoryIdOrTitle)
+  getPostListByCategoryId(categoryId: string): LIST_POST_ITEM[] {
+    const category = this.categoryService.getCategoryById(categoryId)
     if (!category) return []
     const postCategories =
       this.dbService
@@ -103,8 +115,104 @@ export class PostService {
     )
   }
 
-  getPostListByTagIdOrTitle(tagIdOrTitle: string): LIST_POST_ITEM[] {
-    const tag = this.tagService.getTagByIdOrTitle(tagIdOrTitle)
+  getPostListByCategoryTitle(categoryTitle: string): LIST_POST_ITEM[] {
+    const category = this.categoryService.getCategoryByTitle(categoryTitle)
+    if (!category) return []
+    const postCategories =
+      this.dbService
+        .getInstance()
+        .get('postCategories')
+        .filter({
+          categoryId: category.id
+        })
+        .value() || []
+    const postIdArray = postCategories.map((item: POST_CATEGORY) => item.postId)
+    return (
+      this.dbService
+        .getInstance()
+        .get('posts')
+        .filter((post: POST) => postIdArray.includes(post.id))
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        // .sortBy('created_timestamp')
+        .orderBy('created_timestamp', 'desc')
+        .value() || []
+    )
+  }
+
+  getPostListByCategoryUrl(categoryUrl: string): LIST_POST_ITEM[] {
+    const category = this.categoryService.getCategoryByUrl(categoryUrl)
+    if (!category) return []
+    const postCategories =
+      this.dbService
+        .getInstance()
+        .get('postCategories')
+        .filter({
+          categoryId: category.id
+        })
+        .value() || []
+    const postIdArray = postCategories.map((item: POST_CATEGORY) => item.postId)
+    return (
+      this.dbService
+        .getInstance()
+        .get('posts')
+        .filter((post: POST) => postIdArray.includes(post.id))
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        // .sortBy('created_timestamp')
+        .orderBy('created_timestamp', 'desc')
+        .value() || []
+    )
+  }
+
+  getPostListByTagId(tagId: string): LIST_POST_ITEM[] {
+    const tag = this.tagService.getTagById(tagId)
+    if (!tag) return []
+    const postTags =
+      this.dbService
+        .getInstance()
+        .get('postTags')
+        .filter({
+          tagId: tag.id
+        })
+        .value() || []
+    const postIdArray = postTags.map((item: POST_TAG) => item.postId)
+    return (
+      this.dbService
+        .getInstance()
+        .get('posts')
+        .filter((post: POST) => postIdArray.includes(post.id))
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        // .sortBy('created_timestamp')
+        .orderBy('created_timestamp', 'desc')
+        .value() || []
+    )
+  }
+
+  getPostListByTagTitle(tagTitle: string): LIST_POST_ITEM[] {
+    const tag = this.tagService.getTagByTitle(tagTitle)
+    if (!tag) return []
+    const postTags =
+      this.dbService
+        .getInstance()
+        .get('postTags')
+        .filter({
+          tagId: tag.id
+        })
+        .value() || []
+    const postIdArray = postTags.map((item: POST_TAG) => item.postId)
+    return (
+      this.dbService
+        .getInstance()
+        .get('posts')
+        .filter((post: POST) => postIdArray.includes(post.id))
+        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
+        // .sortBy('created_timestamp')
+        .orderBy('created_timestamp', 'desc')
+        .value() || []
+    )
+  }
+
+  getPostListByTagUrl(tagUrl: string): LIST_POST_ITEM[] {
+    const tag = this.tagService.getTagByUrl(tagUrl)
     if (!tag) return []
     const postTags =
       this.dbService
@@ -152,7 +260,7 @@ export class PostService {
   }
 
   getArchivesByCategoryIdDateYear(categoryId: string): ARCHIVES_DATE_YEAR {
-    const postList: LIST_POST_ITEM[] = this.getPostListByCategoryIdOrTitle(categoryId)
+    const postList: LIST_POST_ITEM[] = this.getPostListByCategoryId(categoryId)
     const result: ARCHIVES_DATE_YEAR = []
     postList.forEach((post: LIST_POST_ITEM) => {
       const year = moment(post.created_timestamp as number).format('YYYY')
@@ -168,7 +276,7 @@ export class PostService {
   }
 
   getArchivesByTagIdDateYear(tagId: string): ARCHIVES_DATE_YEAR {
-    const postList: LIST_POST_ITEM[] = this.getPostListByTagIdOrTitle(tagId)
+    const postList: LIST_POST_ITEM[] = this.getPostListByTagId(tagId)
     const result: ARCHIVES_DATE_YEAR = []
     postList.forEach((post: LIST_POST_ITEM) => {
       const year = moment(post.created_timestamp as number).format('YYYY')
@@ -229,7 +337,7 @@ export class PostService {
 
     categoryList.forEach((category: CATEGORY) => {
       result.push({
-        [category.title]: this.getPostListByCategoryIdOrTitle(category.id)
+        [category.title]: this.getPostListByCategoryId(category.id)
       })
     })
     return result
@@ -241,27 +349,27 @@ export class PostService {
 
     tagList.forEach((tag: TAG) => {
       result.push({
-        [tag.title]: this.getPostListByTagIdOrTitle(tag.id)
+        [tag.title]: this.getPostListByTagId(tag.id)
       })
     })
     return result
   }
 
-  getPrevPostByPostIdOrTitle(postIdOrTitle: string): LIST_POST_ITEM | undefined {
+  getPrevPostByPostId(postId: string): LIST_POST_ITEM | undefined {
     const postList = this.getPostList()
 
     const index = postList.findIndex((post: LIST_POST_ITEM) => {
-      return isEqual(post.id, postIdOrTitle) || isEqual(post.title, postIdOrTitle)
+      return isEqual(post.id, postId)
     })
 
     return postList[index - 1]
   }
 
-  getNextPostByPostIdOrTitle(postIdOrTitle: string): LIST_POST_ITEM | undefined {
+  getNextPostByPostId(postId: string): LIST_POST_ITEM | undefined {
     const postList = this.getPostList()
 
     const index = postList.findIndex((post: LIST_POST_ITEM) => {
-      return isEqual(post.id, postIdOrTitle) || isEqual(post.title, postIdOrTitle)
+      return isEqual(post.id, postId)
     })
 
     return postList[index + 1]
@@ -276,8 +384,8 @@ export class PostService {
     return {
       pageIndex,
       pageCount,
-      prevPage: pageIndex > 1 ? pageIndex - 1 : null,
-      nextPage: pageIndex < pageCount ? pageIndex + 1 : null,
+      prevPageIndex: pageIndex > 1 ? pageIndex - 1 : null,
+      nextPageIndex: pageIndex < pageCount ? pageIndex + 1 : null,
       pageSize,
       postList: postList.slice(startIndex, endIndex)
     }

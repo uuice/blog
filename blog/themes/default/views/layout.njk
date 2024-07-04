@@ -21,7 +21,7 @@
     {% include '_partial/banner.njk' %}
   {% endif %}
   <div id="main-grid" class="{% if sidebar_position == 'right' %} right-sidebar {% endif %}">
-    <div id="nav" class="{% if pageType == 'Index' %} is_home {% endif %}">
+    <div id="nav" class="{% if isIndex %} is_home {% endif %}">
       {% include '_partial/navbar.njk' %}
     </div>
     <div id="sidebar-wrapper">

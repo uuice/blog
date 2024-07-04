@@ -21,9 +21,7 @@ function createPageController(alias) {
     constructor(
       private readonly pageService: PageService,
       private readonly sysConfigService: SysConfigService
-    ) {
-      console.log('DynamicPageModule function loaded')
-    }
+    ) {}
 
     @Get('')
     @Render('page')
@@ -44,9 +42,7 @@ function createPageController(alias) {
   imports: [CoreModule]
 })
 export class DynamicPageModule {
-  constructor() {
-    console.log('DynamicPageModule loaded')
-  }
+  constructor() {}
 
   static forRoot(): DynamicModule {
     const providers: Provider[] = []

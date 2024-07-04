@@ -49,9 +49,19 @@ export function TagItem(app: NestExpressApplication): void {
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
   this.run = async function (context, args, body, callback) {
-    if (args.id || args.title) {
+    if (args.id) {
       const tagService = app.get(TagService)
-      context.ctx.tag = await tagService.getTagByIdOrTitle(args.id || args.title)
+      context.ctx.tag = await tagService.getTagById(args.id)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.title) {
+      const tagService = app.get(TagService)
+      context.ctx.tag = await tagService.getTagByTitle(args.title)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.url) {
+      const tagService = app.get(TagService)
+      context.ctx.tag = await tagService.getTagByUrl(args.url)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else {

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Render, Res } from '@nestjs/common'
+import { Controller, Get, NotFoundException, Param, Render, Res } from '@nestjs/common'
 import { ViewData, mixedDataView } from '../../core/helper/viewData'
 import { TagService } from '../../core/service/tag.service'
 import { Response } from 'express'
@@ -18,6 +18,11 @@ export class TagController {
     viewData.assign('pageType', 'Tag')
     viewData.assign('url', url)
     const tag = this.tagService.getTagByUrl(url)
+
+    if (!tag) {
+      throw new NotFoundException('Tag not found')
+    }
+
     viewData.assign('tag', tag)
     viewData.assign(res.locals)
     viewData.assign('sysConfig', this.sysConfigService.getSysConfig())

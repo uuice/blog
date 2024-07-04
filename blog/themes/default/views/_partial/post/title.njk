@@ -21,7 +21,7 @@
     {% endif %}
   {% endif %} #}
 
-  {% if pageType == "Index" %}
+  {% if isIndex %}
     <h1 itemprop="name">
       <a class="{{ class_name }}" href="/archives/{{ post.url }}">{{ postTitle }}</a>
     </h1>

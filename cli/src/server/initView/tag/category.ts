@@ -49,10 +49,19 @@ export function CategoryItem(app: NestExpressApplication): void {
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
   this.run = async function (context, args, body, callback) {
-    if (args.id || args.title) {
+    if (args.id) {
       const categoryService = app.get(CategoryService)
-
-      context.ctx.category = await categoryService.getCategoryByIdOrTitle(args.id || args.title)
+      context.ctx.category = await categoryService.getCategoryById(args.id)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.title) {
+      const categoryService = app.get(CategoryService)
+      context.ctx.category = await categoryService.getCategoryByTitle(args.title)
+      const result = new nunjucks.runtime.SafeString(body())
+      return callback(null, result)
+    } else if (args.url) {
+      const categoryService = app.get(CategoryService)
+      context.ctx.category = await categoryService.getCategoryByUrl(args.url)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else {

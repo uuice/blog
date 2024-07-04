@@ -6,8 +6,8 @@
 
 {%if pageCount > 1 %}
   <nav id="page-nav">
-   {% if prevPage %} 
-        <a id="prev-btn" class="page-nav-btn" href="/page/{{ prevPage }}">
+   {% if prevPageIndex %} 
+        <a id="prev-btn" class="page-nav-btn" href="/page/{{ prevPageIndex }}">
         <i class="fa-solid fa-angle-left"></i>
         </a>
      {% else %}
@@ -17,16 +17,16 @@
      {% endif%}
 
     <div id="num-bar">
-      {% if prevPage %}
-      <a class="page-number" href="/page/{{prevPage}}">{{prevPage}}</a>  
+      {% if prevPageIndex %}
+      <a class="page-number" href="/page/{{prevPageIndex}}">{{prevPageIndex}}</a>  
        {% endif %}
       <span class="page-number current">{{pageIndex}}</span>
-       {% if nextPage %}
-      <a class="page-number" href="/page/{{nextPage}}">{{nextPage}}</a>  
+       {% if nextPageIndex %}
+      <a class="page-number" href="/page/{{nextPageIndex}}">{{nextPageIndex}}</a>  
        {% endif %}
     </div>
-    {% if nextPage %} 
-        <a id="prev-btn" class="page-nav-btn" href="/page/{{ nextPage }}">
+    {% if nextPageIndex %} 
+        <a id="prev-btn" class="page-nav-btn" href="/page/{{ nextPageIndex }}">
         <i class="fa-solid fa-angle-right"></i>
         </a>
      {% else %}
@@ -39,7 +39,7 @@
 
   pageIndex: {{ pageIndex }},
    pageCount: {{ pageCount }},
-   prevPage: {{ prevPage }},
-  nextPage: {{ nextPage }},
+   prevPageIndex: {{ prevPageIndex }},
+  nextPageIndex: {{ nextPageIndex }},
  pageSize: {{ pageSize }},
 {% endblock %}

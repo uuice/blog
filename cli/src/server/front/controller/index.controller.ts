@@ -31,19 +31,4 @@ export class IndexController {
     viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
     return mixedDataView(viewData).assign()
   }
-
-  // @Get(':pageAlias')
-  // @Render('page')
-  // async pageItem(@Param('pageAlias') pageAlias: string) {
-  //   const viewData = new ViewData()
-
-  //   const page = await this.pageService.getPageByAlias(pageAlias)
-  //   if (!page) {
-  //     throw new NotFoundException('page not found')
-  //   }
-  //   viewData.assign('pageType', 'Page')
-  //   viewData.assign('page', page)
-  //   viewData.assign('sysConfig', this.sysConfigService.getSysConfig())
-  //   return mixedDataView(viewData).assign()
-  // }
 }

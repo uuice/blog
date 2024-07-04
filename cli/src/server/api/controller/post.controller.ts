@@ -62,13 +62,31 @@ export class PostController {
     return this.postService.getArchivesByTag()
   }
 
-  @Get('query/:idOrTitle')
+  @Get('query/id/:id')
   @ApiOperation({
-    summary: 'Get post by id or title',
+    summary: 'Get post by id',
     description: ''
   })
-  query(@Param('idOrTitle') idOrTitle: string): POST | undefined {
-    return this.postService.getPostByIdOrTitle(idOrTitle)
+  queryById(@Param('id') id: string): POST | undefined {
+    return this.postService.getPostById(id)
+  }
+
+  @Get('query/title/:title')
+  @ApiOperation({
+    summary: 'Get post by title',
+    description: ''
+  })
+  queryByTitle(@Param('title') title: string): POST | undefined {
+    return this.postService.getPostByTitle(title)
+  }
+
+  @Get('query/url/:url')
+  @ApiOperation({
+    summary: 'Get post by url',
+    description: ''
+  })
+  queryByUrl(@Param('url') url: string): POST | undefined {
+    return this.postService.getPostByUrl(url)
   }
 
   @Get('queryByAlias/:alias')
@@ -108,12 +126,12 @@ export class PostController {
     description: ''
   })
   @ApiQuery({
-    name: 'postIdOrTitle',
-    description: 'The current post id or title',
+    name: 'postId',
+    description: 'The current post id',
     type: 'string'
   })
-  prevPost(@Query() query: { postIdOrTitle: string }): LIST_POST_ITEM | undefined {
-    return this.postService.getPrevPostByPostIdOrTitle(query.postIdOrTitle)
+  prevPost(@Query() query: { postId: string }): LIST_POST_ITEM | undefined {
+    return this.postService.getPrevPostByPostId(query.postId)
   }
 
   @Get('nextPost')
@@ -122,11 +140,11 @@ export class PostController {
     description: ''
   })
   @ApiQuery({
-    name: 'postIdOrTitle',
-    description: 'The current post id or title',
+    name: 'postId',
+    description: 'The current post id',
     type: 'string'
   })
-  nextPost(@Query() query: { postIdOrTitle: string }): LIST_POST_ITEM | undefined {
-    return this.postService.getNextPostByPostIdOrTitle(query.postIdOrTitle)
+  nextPost(@Query() query: { postId: string }): LIST_POST_ITEM | undefined {
+    return this.postService.getNextPostByPostId(query.postId)
   }
 }
