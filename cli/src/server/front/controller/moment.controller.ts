@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common'
-import { ViewData, mixedDataView } from '../../core/helper/viewData'
-import { SysConfigService } from '../../core/service/sysConfig.service'
+import { mixedDataView, ViewData } from '../../core/helper/viewData'
+import { SysConfigService } from '../../core/service'
 
 @Controller('moment')
 export class MomentController {

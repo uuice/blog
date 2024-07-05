@@ -1,7 +1,6 @@
-import { PageService } from './../../core/service/page.service'
 import { Controller, Get, NotFoundException, Param, Render } from '@nestjs/common'
-import { ViewData, mixedDataView } from '../../core/helper/viewData'
-import { SysConfigService } from '../../core/service/sysConfig.service'
+import { PageService, SysConfigService } from '../../core/service'
+import { mixedDataView, ViewData } from '../../core/helper/viewData'
 
 @Controller('page')
 export class PageController {
@@ -15,7 +14,7 @@ export class PageController {
   async index(@Param('url') url: string) {
     const viewData = new ViewData()
 
-    const page = await this.pageService.getPageByUrl(url)
+    const page = this.pageService.getPageByUrl(url)
     if (!page) {
       throw new NotFoundException('Page not found')
     }

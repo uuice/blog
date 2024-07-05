@@ -3,7 +3,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ApiModule } from '../api/api.module'
 import PKG from '../../../package.json'
 
-export function initSwagger(app: NestExpressApplication) {
+export async function initSwagger(app: NestExpressApplication) {
   const apiConfig = new DocumentBuilder()
     .setTitle('uuice')
     .setDescription('uuice`s blog api')

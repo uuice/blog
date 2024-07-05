@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config'
 @Injectable()
 export class TemplateStaticMiddleware implements NestMiddleware {
   constructor(private readonly configService: ConfigService) {}
+
   async use(req: Request, res: Response, next: NextFunction) {
     const template = 'default'
     const rule = new RegExp(`^/template/${template}`)

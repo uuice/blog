@@ -1,8 +1,7 @@
 import { Controller, Get, NotFoundException, Param, Render, Res } from '@nestjs/common'
-import { ViewData, mixedDataView } from '../../core/helper/viewData'
-import { TagService } from '../../core/service/tag.service'
+import { mixedDataView, ViewData } from '../../core/helper/viewData'
+import { SysConfigService, TagService } from '../../core/service'
 import { Response } from 'express'
-import { SysConfigService } from '../../core/service/sysConfig.service'
 
 @Controller('tags')
 export class TagController {

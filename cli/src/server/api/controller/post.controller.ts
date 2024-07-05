@@ -1,13 +1,13 @@
 import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common'
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger'
-import { PostService } from '../../core/service/post.service'
+import { PostService } from '../../core/service'
 import {
   ARCHIVES_DATE_YEAR,
   ARCHIVES_DATE_YEAR_MONTH,
   LIST_POST_ITEM,
   POST,
   POST_PAGE_QUERY
-} from '../../../types/post'
+} from '../../../types'
 import { LowdbUndefinedInterceptor } from '../interceptor/lowdb-undefined.interceptor'
 import { isNumber } from 'lodash'
 

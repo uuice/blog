@@ -1,7 +1,6 @@
-import { CategoryService } from './../../core/service/category.service'
 import { Controller, Get, NotFoundException, Param, Render } from '@nestjs/common'
-import { ViewData, mixedDataView } from '../../core/helper/viewData'
-import { SysConfigService } from '../../core/service/sysConfig.service'
+import { CategoryService, SysConfigService } from '../../core/service'
+import { mixedDataView, ViewData } from '../../core/helper/viewData'
 
 @Controller('categories')
 export class CategoryController {

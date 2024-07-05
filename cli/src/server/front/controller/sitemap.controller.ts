@@ -1,16 +1,15 @@
-import { LIST_POST_ITEM } from './../../../types/post'
-import { Controller, Get, Header, Req, Res } from '@nestjs/common'
-import { SysConfigService } from '../../core/service/sysConfig.service'
-import { Response, Request } from 'express'
-import { PostService } from '../../core/service/post.service'
+import { Controller, Get, Header, Res } from '@nestjs/common'
+import { CATEGORY, LIST_PAGE_ITEM, LIST_POST_ITEM, TAG } from '../../../types'
+import {
+  CategoryService,
+  PageService,
+  PostService,
+  SysConfigService,
+  TagService
+} from '../../core/service'
+import { Response } from 'express'
 import moment from 'moment'
 import xml2js from 'xml2js'
-import { CategoryService } from '../../core/service/category.service'
-import { TagService } from '../../core/service/tag.service'
-import { CATEGORY } from '../../../types/category'
-import { TAG } from '../../../types/tag'
-import { PageService } from '../../core/service/page.service'
-import { LIST_PAGE_ITEM } from '../../../types/page'
 import { join } from 'node:path'
 
 @Controller('sitemap.xml')
@@ -26,7 +25,7 @@ export class SitemapController {
   @Get('')
   @Header('Content-Type', 'application/xml')
   @Header('Cache-Control', 'no-cache')
-  index(@Req() req: Request, @Res() res: Response) {
+  index(@Res() res: Response) {
     const sysConfig = this.sysConfigService.getSysConfig()
     const postList = this.postService.getPostList()
     const categoryList = this.categoryService.getCategoryList()

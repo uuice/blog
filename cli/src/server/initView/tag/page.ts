@@ -1,15 +1,15 @@
 import * as nunjucks from 'nunjucks'
 import { NestExpressApplication } from '@nestjs/platform-express'
-import { PageService } from '../../core/service/page.service'
+import { PageService } from '../../core/service'
 
 export function PageList(app: NestExpressApplication): void {
   // tag with endpoint test
   this.tags = ['PageList']
-  this.parse = function (parser, nodes) {
+  this.parse = function (parser: any, nodes: any) {
     const tok = parser.nextToken()
     const args = parser.parseSignature(null, true)
     // !nunjucks has a bug, when args.children is empty
-    // add a empty node to args.children
+    // add an empty node to args.children
     if (!args.children.length) {
       // Handle empty arguments
       args.addChild(new nodes.Literal(0, 0, ''))
@@ -19,10 +19,10 @@ export function PageList(app: NestExpressApplication): void {
     parser.advanceAfterBlockEnd()
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
-  this.run = async function (context, args, body, callback) {
+  this.run = async function (context: any, args: any, body: any, callback: any) {
     const pageService = app.get(PageService)
 
-    context.ctx.list = await pageService.getPageList()
+    context.ctx.list = pageService.getPageList()
     const result = new nunjucks.runtime.SafeString(body())
     return callback(null, result)
   }
@@ -31,11 +31,11 @@ export function PageList(app: NestExpressApplication): void {
 export function PageItem(app: NestExpressApplication): void {
   // tag with endpoint test
   this.tags = ['PageItem']
-  this.parse = function (parser, nodes) {
+  this.parse = function (parser: any, nodes: any) {
     const tok = parser.nextToken()
     const args = parser.parseSignature(null, true)
     // !nunjucks has a bug, when args.children is empty
-    // add a empty node to args.children
+    // add an empty node to args.children
     if (!args.children.length) {
       // Handle empty arguments
       args.addChild(new nodes.Literal(0, 0, ''))
@@ -45,25 +45,25 @@ export function PageItem(app: NestExpressApplication): void {
     parser.advanceAfterBlockEnd()
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
-  this.run = async function (context, args, body, callback) {
+  this.run = async function (context: any, args: any, body: any, callback: any) {
     if (args.id) {
       const pageService = app.get(PageService)
-      context.ctx.page = await pageService.getPageById(args.id)
+      context.ctx.page = pageService.getPageById(args.id)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else if (args.title) {
       const pageService = app.get(PageService)
-      context.ctx.page = await pageService.getPageByTitle(args.title)
+      context.ctx.page = pageService.getPageByTitle(args.title)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else if (args.url) {
       const pageService = app.get(PageService)
-      context.ctx.page = await pageService.getPageByUrl(args.url)
+      context.ctx.page = pageService.getPageByUrl(args.url)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else if (args.alias) {
       const pageService = app.get(PageService)
-      context.ctx.page = await pageService.getPageByAlias(args.alias)
+      context.ctx.page = pageService.getPageByAlias(args.alias)
       const result = new nunjucks.runtime.SafeString(body())
       return callback(null, result)
     } else {

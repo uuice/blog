@@ -1,6 +1,6 @@
-import { SysConfigService } from '../../core/service/sysConfig.service'
 import { Injectable, NestMiddleware } from '@nestjs/common'
-import { Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
+import { SysConfigService } from '../../core/service'
 
 @Injectable()
 export class CommonDataMiddleware implements NestMiddleware {
@@ -8,8 +8,7 @@ export class CommonDataMiddleware implements NestMiddleware {
 
   async use(req: Request, res: Response, next: NextFunction) {
     // Adds public data to the res.locals object
-    const sysConfig = this.sysConfigService.getSysConfig()
-    res.locals.sysConfig = sysConfig
+    res.locals.sysConfig = this.sysConfigService.getSysConfig()
     // console.log('CommonDataMiddleware emit')
     next()
   }

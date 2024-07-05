@@ -16,7 +16,7 @@ export const titleToUrl = (title: string): string => {
       .toLowerCase()
     return url
   } else {
-    // If the title does not have Chinese, simply replace the space and convert to lowercase
+    // If the title does not have Chinese, replace the space and convert to lowercase
     return title
       .replace(/[^a-zA-Z-\s]/g, '')
       .replace(/\s+/g, '-')

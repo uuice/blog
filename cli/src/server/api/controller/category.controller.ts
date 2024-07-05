@@ -1,7 +1,7 @@
 import { Controller, Get, Param, UseInterceptors } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { CATEGORY, CATEGORY_WITH_POST_NUM } from '../../../types/category'
-import { CategoryService } from '../../core/service/category.service'
+import { CATEGORY, CATEGORY_WITH_POST_NUM } from '../../../types'
+import { CategoryService } from '../../core/service'
 import { LowdbUndefinedInterceptor } from '../interceptor/lowdb-undefined.interceptor'
 
 @ApiTags('category')

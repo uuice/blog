@@ -1,5 +1,6 @@
 export class ViewData {
   private readonly viewData = {}
+
   constructor() {
     this.viewData = {}
   }

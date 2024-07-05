@@ -1,8 +1,7 @@
 import { Controller, Get, Header, Req, Res } from '@nestjs/common'
-import { SysConfigService } from '../../core/service/sysConfig.service'
-import { Response, Request } from 'express'
-import { PostService } from '../../core/service/post.service'
-import { LIST_POST_ITEM } from '../../../types/post'
+import { PostService, SysConfigService } from '../../core/service'
+import { Request, Response } from 'express'
+import { LIST_POST_ITEM } from '../../../types'
 import moment from 'moment'
 import xml2js from 'xml2js'
 

@@ -1,6 +1,6 @@
 import { Controller, Get, Param, UseInterceptors } from '@nestjs/common'
-import { TagService } from '../../core/service/tag.service'
-import { TAG } from '../../../types/tag'
+import { TagService } from '../../core/service'
+import { TAG } from '../../../types'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { LowdbUndefinedInterceptor } from '../interceptor/lowdb-undefined.interceptor'
 

@@ -1,19 +1,18 @@
 import { NestExpressApplication } from '@nestjs/platform-express'
-import { shorten } from './filter/shorten'
-import { console as Console } from './filter/console'
-import { TagTest } from './tag/tagTest'
-import { TagTest2 } from './tag/tagTest2'
-import { SysConfig, SysConfigItem } from './tag/sysConfig'
-import { SysConfigService } from '../core/service/sysConfig.service'
-import { ConfigService, CWD } from '../core/service/config.service'
+import { ConfigService, CWD, SysConfigService } from '../core/service'
 import { join } from 'node:path'
 import * as nunjucks from 'nunjucks'
-import { PageItem, PageList } from './tag/page'
-import { CategoryItem, CategoryList } from './tag/category'
-import { TagItem, TagList } from './tag/tag'
-import { YmlConfig } from './tag/ymlConfig'
-import { JsonConfig } from './tag/jsonConfig'
+
+import moment from 'moment'
+import _ from 'lodash'
+import { Console, date, shorten, stripHtml, symbolsCount, titleToUrl } from './filter'
+import { dateFormat, getColor } from './function'
 import {
+  CategoryItem,
+  CategoryList,
+  JsonConfig,
+  PageItem,
+  PageList,
   PostArchive,
   PostItem,
   PostListByCategory,
@@ -21,16 +20,15 @@ import {
   PostNext,
   PostPageList,
   PostPrev,
-  PostRecent
-} from './tag/post'
-import { date } from './filter/date'
-import { symbolsCount } from './filter/symbolsCount'
-import { dateFormat } from './function/dateFormat'
-import moment from 'moment'
-import * as _ from 'lodash'
-import { stripHtml } from './filter/stripHtml'
-import { getColor } from './function/getColor'
-import { titleToUrl } from './filter/titleToUrl'
+  PostRecent,
+  SysConfig,
+  SysConfigItem,
+  TagItem,
+  TagList,
+  TagTest,
+  TagTest2,
+  YmlConfig
+} from './tag'
 
 export async function initView(app: NestExpressApplication): Promise<void> {
   const sysConfigService = app.get(SysConfigService)
@@ -40,6 +38,8 @@ export async function initView(app: NestExpressApplication): Promise<void> {
 
   const viewsPath = join(cwd, 'themes', theme, 'views')
   const assetsPath = join(cwd, 'themes', theme, 'assets')
+  console.log(viewsPath)
+  console.log(assetsPath)
   const env: nunjucks.Environment = nunjucks.configure(viewsPath, {
     autoescape: true,
     watch: true,

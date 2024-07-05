@@ -4,11 +4,11 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 export function TagTest(app: NestExpressApplication): void {
   // tag with endpoint test
   this.tags = ['TagTest']
-  this.parse = function (parser, nodes) {
+  this.parse = function (parser: any, nodes: any) {
     const tok = parser.nextToken()
     const args = parser.parseSignature(null, true)
     // !nunjucks has a bug, when args.children is empty
-    // add a empty node to args.children
+    // add an empty node to args.children
     if (!args.children.length) {
       // Handle empty arguments
       args.addChild(new nodes.Literal(0, 0, ''))
@@ -18,7 +18,7 @@ export function TagTest(app: NestExpressApplication): void {
     parser.advanceAfterBlockEnd()
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
-  this.run = async function (context, args, body, callback) {
+  this.run = async function (context: any, args: any, body: any, callback: any) {
     // const configLocalService = app.get(ConfigLocalService)
     // console.log(configLocalService.getKnexConfig())
     // const userService = app.get(UserService)

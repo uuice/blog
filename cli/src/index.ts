@@ -1,8 +1,9 @@
 import pkg from '../package.json'
 import { Command } from 'commander'
 import { join } from 'node:path'
-import { stat, readFile, writeFile, mkdir } from 'node:fs/promises'
+import { mkdir, readFile, stat, writeFile } from 'node:fs/promises'
 import chalk from 'chalk'
+
 export default function (cwd = process.cwd()): void {
   const sourcePath = join(cwd, 'source')
   const systemConfigPath = join(cwd, 'config.yml')
@@ -189,17 +190,16 @@ function formatDate(data?: string): string {
   const minutes = String(now.getMinutes()).padStart(2, '0')
   const seconds = String(now.getSeconds()).padStart(2, '0')
 
-  const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
-  return formattedDate
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 }
 
 async function generateCommand(
-  postDirPath,
-  pageDirPath,
-  jsonDirPath,
-  ymlDirPath,
-  systemConfigPath,
-  dataBasePath
+  postDirPath: string,
+  pageDirPath: string,
+  jsonDirPath: string,
+  ymlDirPath: string,
+  systemConfigPath: string,
+  dataBasePath: string
 ): Promise<void> {
   try {
     const { generate } = await import('./utils/generate')
@@ -221,13 +221,13 @@ async function generateCommand(
 }
 
 async function generateCommandByWatch(
-  postDirPath,
-  pageDirPath,
-  jsonDirPath,
-  ymlDirPath,
-  systemConfigPath,
-  dataBasePath,
-  sourcePath
+  postDirPath: string,
+  pageDirPath: string,
+  jsonDirPath: string,
+  ymlDirPath: string,
+  systemConfigPath: string,
+  dataBasePath: string,
+  sourcePath: string
 ) {
   const chokidar = await import('chokidar')
   console.info(`${chalk.cyan('[Info]')}: start listening source file directory`)
@@ -238,7 +238,7 @@ async function generateCommandByWatch(
     ignoreInitial: true
   })
 
-  watcher.on('all', async (path) => {
+  watcher.on('all', async () => {
     await generateCommand(
       postDirPath,
       pageDirPath,

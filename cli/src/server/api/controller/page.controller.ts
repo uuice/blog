@@ -1,7 +1,7 @@
 import { Controller, Get, Param, UseInterceptors } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { PageService } from '../../core/service/page.service'
-import { LIST_PAGE_ITEM, PAGE } from '../../../types/page'
+import { PageService } from '../../core/service'
+import { LIST_PAGE_ITEM, PAGE } from '../../../types'
 import { LowdbUndefinedInterceptor } from '../interceptor/lowdb-undefined.interceptor'
 
 @ApiTags('page')

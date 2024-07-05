@@ -1,8 +1,6 @@
-import { mixedDataView } from './../../core/helper/viewData'
 import { Controller, Get, NotFoundException, Param, Render } from '@nestjs/common'
-import { ViewData } from '../../core/helper/viewData'
-import { SysConfigService } from '../../core/service/sysConfig.service'
-import { PostService } from '../../core/service/post.service'
+import { mixedDataView, ViewData } from '../../core/helper/viewData'
+import { PostService, SysConfigService } from '../../core/service'
 
 @Controller('archives')
 export class ArchiveController {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
-import { LIST_PAGE_ITEM, PAGE } from '../../../types/page'
+import { LIST_PAGE_ITEM, PAGE } from '../../../types'
 import { omit } from 'lodash'
 
 @Injectable()

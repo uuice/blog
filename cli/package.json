@@ -1,6 +1,6 @@
 {
   "name": "uuice-cli",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "uuice`s blog cli, developing...",
   "main": "dist/index",
   "bin": {
@@ -68,7 +68,6 @@
     "highlight.js": "^11.9.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
-    "lowdb": "^1.0.0",
     "markdown-toc": "^1.2.0",
     "marked": "^13.0.0",
     "md5": "^2.3.0",

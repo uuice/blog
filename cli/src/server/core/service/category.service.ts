@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
-import { CATEGORY, CATEGORY_WITH_POST_NUM } from '../../../types/category'
+import { CATEGORY, CATEGORY_WITH_POST_NUM } from '../../../types'
 
 @Injectable()
 export class CategoryService {

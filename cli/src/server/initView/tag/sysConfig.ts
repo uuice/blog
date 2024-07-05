@@ -1,14 +1,14 @@
 import * as nunjucks from 'nunjucks'
 import { NestExpressApplication } from '@nestjs/platform-express'
-import { SysConfigService } from '../../core/service/sysConfig.service'
+import { SysConfigService } from '../../core/service'
 
 export function SysConfig(app: NestExpressApplication): void {
   this.tags = ['SysConfig']
-  this.parse = function (parser, nodes) {
+  this.parse = function (parser: any, nodes: any) {
     const tok = parser.nextToken()
     const args = parser.parseSignature(null, true)
     // !nunjucks has a bug, when args.children is empty
-    // add a empty node to args.children
+    // add an empty node to args.children
     if (!args.children.length) {
       // Handle empty arguments
       args.addChild(new nodes.Literal(0, 0, ''))
@@ -19,7 +19,7 @@ export function SysConfig(app: NestExpressApplication): void {
 
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
-  this.run = async function (context, args, body, callback) {
+  this.run = async function (context: any, args: any, body: any, callback: any) {
     const sysConfigService = app.get(SysConfigService)
     context.ctx.list = await sysConfigService.getSysConfig()
     const result = new nunjucks.runtime.SafeString(body())
@@ -29,11 +29,11 @@ export function SysConfig(app: NestExpressApplication): void {
 
 export function SysConfigItem(app: NestExpressApplication): void {
   this.tags = ['SysConfigItem']
-  this.parse = function (parser, nodes) {
+  this.parse = function (parser: any, nodes: any) {
     const tok = parser.nextToken()
     const args = parser.parseSignature(null, true)
     // !nunjucks has a bug, when args.children is empty
-    // add a empty node to args.children
+    // add an empty node to args.children
     if (!args.children.length) {
       // Handle empty arguments
       args.addChild(new nodes.Literal(0, 0, ''))
@@ -43,7 +43,7 @@ export function SysConfigItem(app: NestExpressApplication): void {
     // parser.advanceAfterBlockEnd()
     return new nodes.CallExtensionAsync(this, 'run', args) // async
   }
-  this.run = async function (context, args, callback) {
+  this.run = async function (context: any, args: any, callback: any) {
     const sysConfigService = app.get(SysConfigService)
     const result = new nunjucks.runtime.SafeString(await sysConfigService.getSysConfig(args.path))
     return callback(null, result)

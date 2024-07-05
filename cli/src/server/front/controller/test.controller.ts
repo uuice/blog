@@ -1,6 +1,6 @@
 import { Controller, Get, Render } from '@nestjs/common'
-import { ViewData, mixedDataView } from '../../core/helper/viewData'
-import { SysConfigService } from '../../core/service/sysConfig.service'
+import { mixedDataView, ViewData } from '../../core/helper/viewData'
+import { SysConfigService } from '../../core/service'
 
 @Controller('test')
 export class TestController {

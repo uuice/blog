@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { CONFIG } from '../../../types/config'
+import { CONFIG } from '../../../types'
 import { join } from 'node:path'
 
 export const CWD = 'cwd'
@@ -8,6 +8,8 @@ export const ROUTER_FORWARDING = 'router_forwarding'
 
 @Injectable()
 export class ConfigService {
+  config: CONFIG = {}
+
   constructor() {
     const cwd = process.cwd()
     const dataBasePath = join(cwd, 'data.json')
@@ -15,10 +17,6 @@ export class ConfigService {
     this.setItem(DB_PATH, dataBasePath)
     this.setItem(ROUTER_FORWARDING, {})
   }
-
-  config: CONFIG = {}
-
-  routes: Record<string, string>
 
   getItem(key: string) {
     return this.config[key]

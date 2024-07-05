@@ -1,7 +1,6 @@
-import { PostService } from './../../core/service/post.service'
 import { Controller, Get, Param, ParseIntPipe, Render } from '@nestjs/common'
-import { ViewData, mixedDataView } from '../../core/helper/viewData'
-import { SysConfigService } from '../../core/service/sysConfig.service'
+import { PostService, SysConfigService } from '../../core/service'
+import { mixedDataView, ViewData } from '../../core/helper/viewData'
 
 @Controller('')
 export class IndexController {

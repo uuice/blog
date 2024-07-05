@@ -1,11 +1,5 @@
 import { glob } from 'glob'
-import { POST } from '../types/post'
-import { PAGE } from '../types/page'
-import { JSON_OBJ } from '../types/json'
-import { TAG } from '../types/tag'
-import { CATEGORY } from '../types/category'
-import { POST_TAG } from '../types/post_tag'
-import { POST_CATEGORY } from '../types/post_category'
+import { CATEGORY, JSON_OBJ, PAGE, POST, POST_CATEGORY, POST_TAG, TAG } from '../types'
 import { readFile, writeFile } from 'node:fs/promises'
 import matter from 'gray-matter'
 import { join, parse } from 'node:path'
@@ -150,7 +144,7 @@ async function generateSystemConfig(path: string): Promise<JSON_OBJ> {
 
 async function generateCategoriesTags(
   posts: POST[],
-  pages: PAGE[]
+  pages?: PAGE[]
 ): Promise<{
   tags: TAG[]
   categories: CATEGORY[]
@@ -163,7 +157,9 @@ async function generateCategoriesTags(
   const postTags: POST_TAG[] = []
 
   // !pages 需不需要支持 tag 和 category 暂时不需要， 后续再定
-  // !Does pages need to support tag and category? No for now. We will decide later
+  // !Do pages need to support tag and category?
+  // !No for now.
+  // !We will decide later
   posts.forEach((post) => {
     if (post.tags && post.tags.length) {
       post.tags.forEach((tag) => {

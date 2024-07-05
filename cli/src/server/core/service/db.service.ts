@@ -1,26 +1,28 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService, DB_PATH } from './config.service'
 
-import FileSync from 'lowdb/adapters/FileSync'
-import low from 'lowdb'
+import { JSONFile } from '../../../lowdb/node'
+import { LowWithLodash } from '../../../lowdb'
 
 @Injectable()
 export class DbService {
   private db: any
 
-  constructor(private configService: ConfigService) {
-    this.initDb()
-  }
+  constructor(private configService: ConfigService) {}
 
   getInstance() {
-    return this.db
+    return this.db.chain
   }
 
-  initDb() {
-    this.db = low(new FileSync(this.configService.getItem(DB_PATH) as string))
+  async initDb() {
+    const adapter = new JSONFile(this.configService.getItem(DB_PATH) as string)
+    this.db = new LowWithLodash(adapter, {})
+    await this.db.read()
   }
 
-  reload() {
-    this.db = low(new FileSync(this.configService.getItem(DB_PATH) as string))
+  async reload() {
+    const adapter = new JSONFile(this.configService.getItem(DB_PATH) as string)
+    this.db = new LowWithLodash(adapter, {})
+    await this.db.read()
   }
 }

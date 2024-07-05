@@ -8,7 +8,6 @@ import { MomentController } from './controller/moment.controller'
 import { PageController } from './controller/page.controller'
 import { PhotoController } from './controller/photo.controller'
 import { PostController } from './controller/post.controller'
-import { RouteForwardingMiddleware } from './middleware/route-forwarding.middleware'
 import { ArchiveController } from './controller/archive.controller'
 import { TestController } from './controller/test.controller'
 // import { CommonDataMiddleware } from './middleware/common-data.middleware'
@@ -46,6 +45,6 @@ import { CommonDataMiddleware } from './middleware/common-data.middleware'
 })
 export class FrontModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(...[RouteForwardingMiddleware, CommonDataMiddleware]).forRoutes('*')
+    consumer.apply(...[CommonDataMiddleware]).forRoutes('*')
   }
 }

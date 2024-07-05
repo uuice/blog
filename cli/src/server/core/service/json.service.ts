@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
-import { JSON_OBJ } from '../../../types/json'
+import { JSON_OBJ } from '../../../types'
 
 @Injectable()
 export class JsonService {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { TAG, TAG_WITH_POST_NUM } from '../../../types/tag'
+import { TAG, TAG_WITH_POST_NUM } from '../../../types'
 import { DbService } from './db.service'
 
 @Injectable()

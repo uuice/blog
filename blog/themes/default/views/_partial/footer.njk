@@ -1,10 +1,5 @@
-{% set theme_sidebar="bottom" %}
 {% set theme_copyright="true" %}
-
 <footer id="footer">
-  {% if theme_sidebar === 'bottom' %}
-    {% include '_partial/sidebar.njk' %}
-  {% endif %}
   <div id="footer-info" class="inner">
     {% if theme.copyright %}
       {{ theme_copyright }}

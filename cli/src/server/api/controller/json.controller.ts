@@ -1,6 +1,6 @@
 import { Controller, Get, Param, UseInterceptors } from '@nestjs/common'
-import { JSON_OBJ } from '../../../types/json'
-import { JsonService } from '../../core/service/json.service'
+import { JSON_OBJ } from '../../../types'
+import { JsonService } from '../../core/service'
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
 import { LowdbUndefinedInterceptor } from '../interceptor/lowdb-undefined.interceptor'
 

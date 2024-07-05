@@ -1,20 +1,20 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { DbService } from './db.service'
 import {
   ARCHIVES_DATE_YEAR,
   ARCHIVES_DATE_YEAR_MONTH,
+  CATEGORY,
   LIST_POST_ITEM,
   POST,
-  POST_PAGE_QUERY
-} from '../../../types/post'
-import { POST_CATEGORY } from '../../../types/post_category'
-import { POST_TAG } from '../../../types/post_tag'
+  POST_CATEGORY,
+  POST_PAGE_QUERY,
+  POST_TAG,
+  TAG
+} from '../../../types'
 import { isEqual, omit } from 'lodash'
 import { CategoryService } from './category.service'
 import { TagService } from './tag.service'
-import { CATEGORY } from '../../../types/category'
 import moment from 'moment'
-import { TAG } from '../../../types/tag'
 
 @Injectable()
 export class PostService {
@@ -23,8 +23,6 @@ export class PostService {
     private categoryService: CategoryService,
     private tagService: TagService
   ) {}
-
-  private readonly logger = new Logger(PostService.name)
 
   getPostList(): LIST_POST_ITEM[] {
     return (
@@ -94,54 +92,22 @@ export class PostService {
   getPostListByCategoryId(categoryId: string): LIST_POST_ITEM[] {
     const category = this.categoryService.getCategoryById(categoryId)
     if (!category) return []
-    const postCategories =
-      this.dbService
-        .getInstance()
-        .get('postCategories')
-        .filter({
-          categoryId: category.id
-        })
-        .value() || []
-    const postIdArray = postCategories.map((item: POST_CATEGORY) => item.postId)
-    return (
-      this.dbService
-        .getInstance()
-        .get('posts')
-        .filter((post: POST) => postIdArray.includes(post.id))
-        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
-        // .sortBy('created_timestamp')
-        .orderBy('created_timestamp', 'desc')
-        .value() || []
-    )
+    return this.getPostListByCategory(category)
   }
 
   getPostListByCategoryTitle(categoryTitle: string): LIST_POST_ITEM[] {
     const category = this.categoryService.getCategoryByTitle(categoryTitle)
     if (!category) return []
-    const postCategories =
-      this.dbService
-        .getInstance()
-        .get('postCategories')
-        .filter({
-          categoryId: category.id
-        })
-        .value() || []
-    const postIdArray = postCategories.map((item: POST_CATEGORY) => item.postId)
-    return (
-      this.dbService
-        .getInstance()
-        .get('posts')
-        .filter((post: POST) => postIdArray.includes(post.id))
-        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
-        // .sortBy('created_timestamp')
-        .orderBy('created_timestamp', 'desc')
-        .value() || []
-    )
+    return this.getPostListByCategory(category)
   }
 
   getPostListByCategoryUrl(categoryUrl: string): LIST_POST_ITEM[] {
     const category = this.categoryService.getCategoryByUrl(categoryUrl)
     if (!category) return []
+    return this.getPostListByCategory(category)
+  }
+
+  getPostListByCategory(category: CATEGORY): LIST_POST_ITEM[] {
     const postCategories =
       this.dbService
         .getInstance()
@@ -166,54 +132,22 @@ export class PostService {
   getPostListByTagId(tagId: string): LIST_POST_ITEM[] {
     const tag = this.tagService.getTagById(tagId)
     if (!tag) return []
-    const postTags =
-      this.dbService
-        .getInstance()
-        .get('postTags')
-        .filter({
-          tagId: tag.id
-        })
-        .value() || []
-    const postIdArray = postTags.map((item: POST_TAG) => item.postId)
-    return (
-      this.dbService
-        .getInstance()
-        .get('posts')
-        .filter((post: POST) => postIdArray.includes(post.id))
-        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
-        // .sortBy('created_timestamp')
-        .orderBy('created_timestamp', 'desc')
-        .value() || []
-    )
+    return this.getPostListByTag(tag)
   }
 
   getPostListByTagTitle(tagTitle: string): LIST_POST_ITEM[] {
     const tag = this.tagService.getTagByTitle(tagTitle)
     if (!tag) return []
-    const postTags =
-      this.dbService
-        .getInstance()
-        .get('postTags')
-        .filter({
-          tagId: tag.id
-        })
-        .value() || []
-    const postIdArray = postTags.map((item: POST_TAG) => item.postId)
-    return (
-      this.dbService
-        .getInstance()
-        .get('posts')
-        .filter((post: POST) => postIdArray.includes(post.id))
-        .map((item: POST) => omit(item, ['content', 'mdContent', 'toc']))
-        // .sortBy('created_timestamp')
-        .orderBy('created_timestamp', 'desc')
-        .value() || []
-    )
+    return this.getPostListByTag(tag)
   }
 
   getPostListByTagUrl(tagUrl: string): LIST_POST_ITEM[] {
     const tag = this.tagService.getTagByUrl(tagUrl)
     if (!tag) return []
+    return this.getPostListByTag(tag)
+  }
+
+  getPostListByTag(tag: TAG): LIST_POST_ITEM[] {
     const postTags =
       this.dbService
         .getInstance()
@@ -261,22 +195,15 @@ export class PostService {
 
   getArchivesByCategoryIdDateYear(categoryId: string): ARCHIVES_DATE_YEAR {
     const postList: LIST_POST_ITEM[] = this.getPostListByCategoryId(categoryId)
-    const result: ARCHIVES_DATE_YEAR = []
-    postList.forEach((post: LIST_POST_ITEM) => {
-      const year = moment(post.created_timestamp as number).format('YYYY')
-      const index = result.findIndex((obj) => year in obj)
-      if (index < 0) {
-        const obj = { [year]: [post] }
-        result.push(obj)
-      } else {
-        result[index][year].push(post)
-      }
-    })
-    return result
+    return this.getArchivesByPostListDateYear(postList)
   }
 
   getArchivesByTagIdDateYear(tagId: string): ARCHIVES_DATE_YEAR {
     const postList: LIST_POST_ITEM[] = this.getPostListByTagId(tagId)
+    return this.getArchivesByPostListDateYear(postList)
+  }
+
+  getArchivesByPostListDateYear(postList: LIST_POST_ITEM[]): ARCHIVES_DATE_YEAR {
     const result: ARCHIVES_DATE_YEAR = []
     postList.forEach((post: LIST_POST_ITEM) => {
       const year = moment(post.created_timestamp as number).format('YYYY')
