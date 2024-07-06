@@ -12,7 +12,7 @@ url: https://uuice.com
 # Theme
 theme: default
 beian: 浙ICP备13002567号-4
-banner: /assets/images/banner.jpg
+banner:
 
 rss: true
 sitemap: true

@@ -109,6 +109,49 @@
       "symbolsCount": 1036
     },
     {
+      "id": "1ef3b5d3-d10c-6040-8228-d52499675442",
+      "title": "让浏览器兼容placeholder",
+      "alias": "",
+      "cover": "",
+      "created_time": "2017-04-29T21:00:51.000Z",
+      "updated_time": "2017-04-29T21:00:51.000Z",
+      "categories": [
+        "html"
+      ],
+      "tags": [],
+      "excerpt": "什么是placeholderplaceholder 属性提供可描述输入字段预期值的提示信息（hint）。该提示会在输入字段为空时显示，并会在字段获得焦点时消失。placeholder兼容性解决$(function(){    if(!placeholderSupport()){   // 判断浏览器",
+      "published": true,
+      "content": "\n#### 什么是placeholder\n\nplaceholder 属性提供可描述输入字段预期值的提示信息（hint）。\n该提示会在输入字段为空时显示，并会在字段获得焦点时消失。\n\n<!-- more -->\n\n#### placeholder兼容性解决\n\n```js\n$(function(){\n    if(!placeholderSupport()){   // 判断浏览器是否支持 placeholder\n        $('[placeholder]').focus(function() {\n            var input = $(this);\n            if (input.val() == input.attr('placeholder')) {\n                input.val('');\n                input.removeClass('placeholder');\n            }\n        }).blur(function() {\n            var input = $(this);\n            if (input.val() == '' || input.val() == input.attr('placeholder')) {\n                input.addClass('placeholder');\n                input.val(input.attr('placeholder'));\n            }\n        }).blur();\n    };\n})\nfunction placeholderSupport() {\n    return 'placeholder' in document.createElement('input');\n}\n```",
+      "mdContent": "<h4 id=\"toc-04a6ee\">什么是placeholder</h4>\n<p>placeholder 属性提供可描述输入字段预期值的提示信息（hint）。\n该提示会在输入字段为空时显示，并会在字段获得焦点时消失。</p>\n<!-- more -->\n\n<h4 id=\"toc-9c8b5f\">placeholder兼容性解决</h4>\n<pre><code class=\"hljs lang-js\">$(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>){\n    <span class=\"hljs-keyword\">if</span>(!<span class=\"hljs-title function_\">placeholderSupport</span>()){   <span class=\"hljs-comment\">// 判断浏览器是否支持 placeholder</span>\n        $(<span class=\"hljs-string\">&#x27;[placeholder]&#x27;</span>).<span class=\"hljs-title function_\">focus</span>(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>) {\n            <span class=\"hljs-keyword\">var</span> input = $(<span class=\"hljs-variable language_\">this</span>);\n            <span class=\"hljs-keyword\">if</span> (input.<span class=\"hljs-title function_\">val</span>() == input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>)) {\n                input.<span class=\"hljs-title function_\">val</span>(<span class=\"hljs-string\">&#x27;&#x27;</span>);\n                input.<span class=\"hljs-title function_\">removeClass</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>);\n            }\n        }).<span class=\"hljs-title function_\">blur</span>(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>) {\n            <span class=\"hljs-keyword\">var</span> input = $(<span class=\"hljs-variable language_\">this</span>);\n            <span class=\"hljs-keyword\">if</span> (input.<span class=\"hljs-title function_\">val</span>() == <span class=\"hljs-string\">&#x27;&#x27;</span> || input.<span class=\"hljs-title function_\">val</span>() == input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>)) {\n                input.<span class=\"hljs-title function_\">addClass</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>);\n                input.<span class=\"hljs-title function_\">val</span>(input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>));\n            }\n        }).<span class=\"hljs-title function_\">blur</span>();\n    };\n})\n<span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">placeholderSupport</span>(<span class=\"hljs-params\"></span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-string\">&#x27;placeholder&#x27;</span> <span class=\"hljs-keyword\">in</span> <span class=\"hljs-variable language_\">document</span>.<span class=\"hljs-title function_\">createElement</span>(<span class=\"hljs-string\">&#x27;input&#x27;</span>);\n}\n</code></pre>\n",
+      "toc": "<ul>\n<li><a href=\"#toc-04a6ee\">什么是placeholder</a></li>\n<li><a href=\"#toc-9c8b5f\">placeholder兼容性解决</a></li>\n</ul>\n",
+      "url": "rang-liu-lan-qi-jian-rong-placeholder",
+      "created_timestamp": 1493499651000,
+      "updated_timestamp": 1493499651000,
+      "symbolsCount": 2383
+    },
+    {
+      "id": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
+      "title": "浏览器指定内核访问",
+      "alias": "",
+      "cover": "",
+      "created_time": "2017-04-29T21:13:03.000Z",
+      "updated_time": "2017-04-29T21:13:03.000Z",
+      "categories": [
+        "notes",
+        "html"
+      ],
+      "tags": [],
+      "excerpt": "360页面默认使用极速内核&lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;页面默认使用ie兼容内核&lt;meta name=&quot;renderer&quot; content=&quot;ie-comp&quo",
+      "published": true,
+      "content": "\n360页面默认使用极速内核\n```html\n<meta name=\"renderer\" content=\"webkit\">\n```\n页面默认使用ie兼容内核\n```html\n<meta name=\"renderer\" content=\"ie-comp\">\n```\n页面默认使用ie标准内核\n```html\n<meta name=\"renderer\" content=\"ie-stand\">\n\n<!-- more -->\n```",
+      "mdContent": "<p>360页面默认使用极速内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;webkit&quot;</span>&gt;</span>\n</code></pre>\n<p>页面默认使用ie兼容内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;ie-comp&quot;</span>&gt;</span>\n</code></pre>\n<p>页面默认使用ie标准内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;ie-stand&quot;</span>&gt;</span>\n\n<span class=\"hljs-comment\">&lt;!-- more --&gt;</span>\n</code></pre>\n",
+      "toc": "",
+      "url": "liu-lan-qi-zhi-ding-nei-he-fang-wen",
+      "created_timestamp": 1493500383000,
+      "updated_timestamp": 1493500383000,
+      "symbolsCount": 984
+    },
+    {
       "id": "1ef3b59b-0a4e-6760-9d78-69ba27cbd20e",
       "title": "通过takeUntil取消订阅可观察对象",
       "alias": "",
@@ -238,47 +281,28 @@
       "symbolsCount": 6165
     },
     {
-      "id": "1ef3b5d3-d10c-6040-8228-d52499675442",
-      "title": "让浏览器兼容placeholder",
+      "id": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
+      "title": "在Directive中获取组件DOM以及实例",
       "alias": "",
       "cover": "",
-      "created_time": "2017-04-29T21:00:51.000Z",
-      "updated_time": "2017-04-29T21:00:51.000Z",
+      "created_time": "2022-06-29T10:37:52.000Z",
+      "updated_time": "2022-06-29T10:37:52.000Z",
       "categories": [
-        "html"
+        "angular"
       ],
-      "tags": [],
-      "excerpt": "什么是placeholderplaceholder 属性提供可描述输入字段预期值的提示信息（hint）。该提示会在输入字段为空时显示，并会在字段获得焦点时消失。placeholder兼容性解决$(function(){    if(!placeholderSupport()){   // 判断浏览器",
-      "published": true,
-      "content": "\n#### 什么是placeholder\n\nplaceholder 属性提供可描述输入字段预期值的提示信息（hint）。\n该提示会在输入字段为空时显示，并会在字段获得焦点时消失。\n\n<!-- more -->\n\n#### placeholder兼容性解决\n\n```js\n$(function(){\n    if(!placeholderSupport()){   // 判断浏览器是否支持 placeholder\n        $('[placeholder]').focus(function() {\n            var input = $(this);\n            if (input.val() == input.attr('placeholder')) {\n                input.val('');\n                input.removeClass('placeholder');\n            }\n        }).blur(function() {\n            var input = $(this);\n            if (input.val() == '' || input.val() == input.attr('placeholder')) {\n                input.addClass('placeholder');\n                input.val(input.attr('placeholder'));\n            }\n        }).blur();\n    };\n})\nfunction placeholderSupport() {\n    return 'placeholder' in document.createElement('input');\n}\n```",
-      "mdContent": "<h4 id=\"toc-04a6ee\">什么是placeholder</h4>\n<p>placeholder 属性提供可描述输入字段预期值的提示信息（hint）。\n该提示会在输入字段为空时显示，并会在字段获得焦点时消失。</p>\n<!-- more -->\n\n<h4 id=\"toc-9c8b5f\">placeholder兼容性解决</h4>\n<pre><code class=\"hljs lang-js\">$(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>){\n    <span class=\"hljs-keyword\">if</span>(!<span class=\"hljs-title function_\">placeholderSupport</span>()){   <span class=\"hljs-comment\">// 判断浏览器是否支持 placeholder</span>\n        $(<span class=\"hljs-string\">&#x27;[placeholder]&#x27;</span>).<span class=\"hljs-title function_\">focus</span>(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>) {\n            <span class=\"hljs-keyword\">var</span> input = $(<span class=\"hljs-variable language_\">this</span>);\n            <span class=\"hljs-keyword\">if</span> (input.<span class=\"hljs-title function_\">val</span>() == input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>)) {\n                input.<span class=\"hljs-title function_\">val</span>(<span class=\"hljs-string\">&#x27;&#x27;</span>);\n                input.<span class=\"hljs-title function_\">removeClass</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>);\n            }\n        }).<span class=\"hljs-title function_\">blur</span>(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>) {\n            <span class=\"hljs-keyword\">var</span> input = $(<span class=\"hljs-variable language_\">this</span>);\n            <span class=\"hljs-keyword\">if</span> (input.<span class=\"hljs-title function_\">val</span>() == <span class=\"hljs-string\">&#x27;&#x27;</span> || input.<span class=\"hljs-title function_\">val</span>() == input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>)) {\n                input.<span class=\"hljs-title function_\">addClass</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>);\n                input.<span class=\"hljs-title function_\">val</span>(input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>));\n            }\n        }).<span class=\"hljs-title function_\">blur</span>();\n    };\n})\n<span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">placeholderSupport</span>(<span class=\"hljs-params\"></span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-string\">&#x27;placeholder&#x27;</span> <span class=\"hljs-keyword\">in</span> <span class=\"hljs-variable language_\">document</span>.<span class=\"hljs-title function_\">createElement</span>(<span class=\"hljs-string\">&#x27;input&#x27;</span>);\n}\n</code></pre>\n",
-      "toc": "<ul>\n<li><a href=\"#toc-04a6ee\">什么是placeholder</a></li>\n<li><a href=\"#toc-9c8b5f\">placeholder兼容性解决</a></li>\n</ul>\n",
-      "url": "rang-liu-lan-qi-jian-rong-placeholder",
-      "created_timestamp": 1493499651000,
-      "updated_timestamp": 1493499651000,
-      "symbolsCount": 2383
-    },
-    {
-      "id": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
-      "title": "浏览器指定内核访问",
-      "alias": "",
-      "cover": "",
-      "created_time": "2017-04-29T21:13:03.000Z",
-      "updated_time": "2017-04-29T21:13:03.000Z",
-      "categories": [
-        "notes",
-        "html"
+      "tags": [
+        "angular",
+        "directive"
       ],
-      "tags": [],
-      "excerpt": "360页面默认使用极速内核&lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;页面默认使用ie兼容内核&lt;meta name=&quot;renderer&quot; content=&quot;ie-comp&quo",
+      "excerpt": "在Directive中获取组件DOM以及实例",
       "published": true,
-      "content": "\n360页面默认使用极速内核\n```html\n<meta name=\"renderer\" content=\"webkit\">\n```\n页面默认使用ie兼容内核\n```html\n<meta name=\"renderer\" content=\"ie-comp\">\n```\n页面默认使用ie标准内核\n```html\n<meta name=\"renderer\" content=\"ie-stand\">\n\n<!-- more -->\n```",
-      "mdContent": "<p>360页面默认使用极速内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;webkit&quot;</span>&gt;</span>\n</code></pre>\n<p>页面默认使用ie兼容内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;ie-comp&quot;</span>&gt;</span>\n</code></pre>\n<p>页面默认使用ie标准内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;ie-stand&quot;</span>&gt;</span>\n\n<span class=\"hljs-comment\">&lt;!-- more --&gt;</span>\n</code></pre>\n",
-      "toc": "",
-      "url": "liu-lan-qi-zhi-ding-nei-he-fang-wen",
-      "created_timestamp": 1493500383000,
-      "updated_timestamp": 1493500383000,
-      "symbolsCount": 984
+      "content": "\n### 获取DOM\n\n从 `@angular/core` 导入 `ElementRef`。`ElementRef` 的 `nativeElement `属性会提供对宿主 DOM 元素的直接访问权限。\n\n<!-- more -->\n```javascript\nimport { Directive, ElementRef } from '@angular/core';\n\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private el: ElementRef,\n  ) {\n    el.nativeElement.style.backgroundColor = 'yellow';\n  }\n}\n```\n\n### 获取组件实例\n\n> 组件已知的情况下，在自定义指令中获取组件实例\n\n直接在`constructor`中注入对应组件就可以\n\n如下面代码，通过 `this.com` 就可以调用组件的属性和事件\n\n```javascript\nimport { Directive } from '@angular/core';\nimport { comTest } from 'comTest';\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private com: comTest\n  ) {\n    console.log(this.com)\n  }\n}\n\n```",
+      "mdContent": "<h3 id=\"toc-291011\">获取DOM</h3>\n<p>从 <code>@angular/core</code> 导入 <code>ElementRef</code>。<code>ElementRef</code> 的 <code>nativeElement </code>属性会提供对宿主 DOM 元素的直接访问权限。</p>\n<!-- more -->\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">import</span> { <span class=\"hljs-title class_\">Directive</span>, <span class=\"hljs-title class_\">ElementRef</span> } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;@angular/core&#x27;</span>;\n\n@<span class=\"hljs-title class_\">Directive</span>({\n  <span class=\"hljs-attr\">selector</span>: <span class=\"hljs-string\">&#x27;[appTest]&#x27;</span>\n})\n<span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TestDirective</span> {\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\">\n    private el: ElementRef,\n  </span>) {\n    el.<span class=\"hljs-property\">nativeElement</span>.<span class=\"hljs-property\">style</span>.<span class=\"hljs-property\">backgroundColor</span> = <span class=\"hljs-string\">&#x27;yellow&#x27;</span>;\n  }\n}\n</code></pre>\n<h3 id=\"toc-fd30cc\">获取组件实例</h3>\n<blockquote>\n<p>组件已知的情况下，在自定义指令中获取组件实例</p>\n</blockquote>\n<p>直接在<code>constructor</code>中注入对应组件就可以</p>\n<p>如下面代码，通过 <code>this.com</code> 就可以调用组件的属性和事件</p>\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">import</span> { <span class=\"hljs-title class_\">Directive</span> } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;@angular/core&#x27;</span>;\n<span class=\"hljs-keyword\">import</span> { comTest } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;comTest&#x27;</span>;\n@<span class=\"hljs-title class_\">Directive</span>({\n  <span class=\"hljs-attr\">selector</span>: <span class=\"hljs-string\">&#x27;[appTest]&#x27;</span>\n})\n<span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TestDirective</span> {\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\">\n    private com: comTest\n  </span>) {\n    <span class=\"hljs-variable language_\">console</span>.<span class=\"hljs-title function_\">log</span>(<span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">com</span>)\n  }\n}\n</code></pre>\n",
+      "toc": "<ul>\n<li><a href=\"#toc-291011\">获取DOM</a></li>\n<li><a href=\"#toc-fd30cc\">获取组件实例</a></li>\n</ul>\n",
+      "url": "zai-directive-zhong-huo-qu-zu-jian-dom-yi-ji-shi-li",
+      "created_timestamp": 1656499072000,
+      "updated_timestamp": 1656499072000,
+      "symbolsCount": 2129
     },
     {
       "id": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
@@ -322,30 +346,6 @@
       "created_timestamp": 1496764814000,
       "updated_timestamp": 1496764814000,
       "symbolsCount": 2777
-    },
-    {
-      "id": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
-      "title": "在Directive中获取组件DOM以及实例",
-      "alias": "",
-      "cover": "",
-      "created_time": "2022-06-29T10:37:52.000Z",
-      "updated_time": "2022-06-29T10:37:52.000Z",
-      "categories": [
-        "angular"
-      ],
-      "tags": [
-        "angular",
-        "directive"
-      ],
-      "excerpt": "在Directive中获取组件DOM以及实例",
-      "published": true,
-      "content": "\n### 获取DOM\n\n从 `@angular/core` 导入 `ElementRef`。`ElementRef` 的 `nativeElement `属性会提供对宿主 DOM 元素的直接访问权限。\n\n<!-- more -->\n```javascript\nimport { Directive, ElementRef } from '@angular/core';\n\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private el: ElementRef,\n  ) {\n    el.nativeElement.style.backgroundColor = 'yellow';\n  }\n}\n```\n\n### 获取组件实例\n\n> 组件已知的情况下，在自定义指令中获取组件实例\n\n直接在`constructor`中注入对应组件就可以\n\n如下面代码，通过 `this.com` 就可以调用组件的属性和事件\n\n```javascript\nimport { Directive } from '@angular/core';\nimport { comTest } from 'comTest';\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private com: comTest\n  ) {\n    console.log(this.com)\n  }\n}\n\n```",
-      "mdContent": "<h3 id=\"toc-291011\">获取DOM</h3>\n<p>从 <code>@angular/core</code> 导入 <code>ElementRef</code>。<code>ElementRef</code> 的 <code>nativeElement </code>属性会提供对宿主 DOM 元素的直接访问权限。</p>\n<!-- more -->\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">import</span> { <span class=\"hljs-title class_\">Directive</span>, <span class=\"hljs-title class_\">ElementRef</span> } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;@angular/core&#x27;</span>;\n\n@<span class=\"hljs-title class_\">Directive</span>({\n  <span class=\"hljs-attr\">selector</span>: <span class=\"hljs-string\">&#x27;[appTest]&#x27;</span>\n})\n<span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TestDirective</span> {\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\">\n    private el: ElementRef,\n  </span>) {\n    el.<span class=\"hljs-property\">nativeElement</span>.<span class=\"hljs-property\">style</span>.<span class=\"hljs-property\">backgroundColor</span> = <span class=\"hljs-string\">&#x27;yellow&#x27;</span>;\n  }\n}\n</code></pre>\n<h3 id=\"toc-fd30cc\">获取组件实例</h3>\n<blockquote>\n<p>组件已知的情况下，在自定义指令中获取组件实例</p>\n</blockquote>\n<p>直接在<code>constructor</code>中注入对应组件就可以</p>\n<p>如下面代码，通过 <code>this.com</code> 就可以调用组件的属性和事件</p>\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">import</span> { <span class=\"hljs-title class_\">Directive</span> } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;@angular/core&#x27;</span>;\n<span class=\"hljs-keyword\">import</span> { comTest } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;comTest&#x27;</span>;\n@<span class=\"hljs-title class_\">Directive</span>({\n  <span class=\"hljs-attr\">selector</span>: <span class=\"hljs-string\">&#x27;[appTest]&#x27;</span>\n})\n<span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TestDirective</span> {\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\">\n    private com: comTest\n  </span>) {\n    <span class=\"hljs-variable language_\">console</span>.<span class=\"hljs-title function_\">log</span>(<span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">com</span>)\n  }\n}\n</code></pre>\n",
-      "toc": "<ul>\n<li><a href=\"#toc-291011\">获取DOM</a></li>\n<li><a href=\"#toc-fd30cc\">获取组件实例</a></li>\n</ul>\n",
-      "url": "zai-directive-zhong-huo-qu-zu-jian-dom-yi-ji-shi-li",
-      "created_timestamp": 1656499072000,
-      "updated_timestamp": 1656499072000,
-      "symbolsCount": 2129
     },
     {
       "id": "1ef3b5b7-e0bc-6ce0-ac15-c509070dad5f",
@@ -806,7 +806,7 @@
     "url": "https://uuice.com",
     "theme": "default",
     "beian": "浙ICP备13002567号-4",
-    "banner": "/assets/images/banner.jpg",
+    "banner": null,
     "rss": true,
     "sitemap": true,
     "setting": true,
@@ -858,12 +858,6 @@
       "url": "linux"
     },
     {
-      "id": "0a347cfa-d40a-5cde-816b-6899edf5386f",
-      "title": "javascript",
-      "description": "javascript",
-      "url": "javascript"
-    },
-    {
       "id": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
       "title": "html",
       "description": "html",
@@ -876,16 +870,22 @@
       "url": "notes"
     },
     {
-      "id": "fbe30cce-885f-5935-93b1-a721fcaa2bab",
-      "title": "http",
-      "description": "http",
-      "url": "http"
+      "id": "0a347cfa-d40a-5cde-816b-6899edf5386f",
+      "title": "javascript",
+      "description": "javascript",
+      "url": "javascript"
     },
     {
       "id": "d22b62a2-d564-576e-96dd-0b8433662e2d",
       "title": "angular",
       "description": "angular",
       "url": "angular"
+    },
+    {
+      "id": "fbe30cce-885f-5935-93b1-a721fcaa2bab",
+      "title": "http",
+      "description": "http",
+      "url": "http"
     },
     {
       "id": "d37f4904-cd43-5471-b39d-5d159141c14a",
@@ -932,6 +932,21 @@
       "id": "ee0d41c2-237b-516d-a083-48e1e0216d69"
     },
     {
+      "postId": "1ef3b5d3-d10c-6040-8228-d52499675442",
+      "categoryId": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
+      "id": "9f3d34f1-3c09-5bc3-9726-5f5ad8a4c102"
+    },
+    {
+      "postId": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
+      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
+      "id": "d6ec2c01-63bc-5f06-ab40-c964282bda04"
+    },
+    {
+      "postId": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
+      "categoryId": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
+      "id": "9ffe9bd3-e201-5239-88ca-5128e42f9380"
+    },
+    {
       "postId": "1ef3b59b-0a4e-6760-9d78-69ba27cbd20e",
       "categoryId": "0a347cfa-d40a-5cde-816b-6899edf5386f",
       "id": "623af1cc-50a2-59c6-ba07-b35b7fe3c4e4"
@@ -962,19 +977,9 @@
       "id": "a0683a1c-1508-5ef8-9944-609a3ce43ee9"
     },
     {
-      "postId": "1ef3b5d3-d10c-6040-8228-d52499675442",
-      "categoryId": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
-      "id": "9f3d34f1-3c09-5bc3-9726-5f5ad8a4c102"
-    },
-    {
-      "postId": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
-      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
-      "id": "d6ec2c01-63bc-5f06-ab40-c964282bda04"
-    },
-    {
-      "postId": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
-      "categoryId": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
-      "id": "9ffe9bd3-e201-5239-88ca-5128e42f9380"
+      "postId": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
+      "categoryId": "d22b62a2-d564-576e-96dd-0b8433662e2d",
+      "id": "ada65018-4243-5d36-87d8-cf355667f1a0"
     },
     {
       "postId": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
@@ -990,11 +995,6 @@
       "postId": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
       "categoryId": "fbe30cce-885f-5935-93b1-a721fcaa2bab",
       "id": "33c470d7-615a-5898-9bb1-830f3c8dd260"
-    },
-    {
-      "postId": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
-      "categoryId": "d22b62a2-d564-576e-96dd-0b8433662e2d",
-      "id": "ada65018-4243-5d36-87d8-cf355667f1a0"
     },
     {
       "postId": "1ef3b5b7-e0bc-6ce0-ac15-c509070dad5f",
