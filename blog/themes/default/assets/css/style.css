@@ -2149,6 +2149,9 @@ input[type="range"] {
 #sidebar .sticky {
   position: sticky;
   top: 88px;
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   #sidebar {
@@ -2156,9 +2159,6 @@ input[type="range"] {
     gap: 16px;
     flex-flow: column;
   }
-}
-.widget-wrap {
-  margin-bottom: 16px;
 }
 .widget-title {
   color: var(--widget-title);
