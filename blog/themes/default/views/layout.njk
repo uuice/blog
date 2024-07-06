@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% set hasBanner = "true" %}
+{% set hasBanner = "sysConfig.banner" %}
 {% set previewMode = "false" %}
 {% set sidebar_position = "left" %}
 <html theme="dark" showBanner="true" hasBanner="{{ hasBanner }}">
@@ -18,7 +18,7 @@
   {% if previewMode %}
     {% include '_widget/color.njk' %}
   {% endif %}
-  {% if hasBanner != "false" %}
+  {% if hasBanner %}
     {% include '_partial/banner.njk' %}
   {% endif %}
 
