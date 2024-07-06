@@ -1,21 +1,24 @@
 ---
+id: 1ef3b5a7-26a0-61a0-aeca-5e11b525f15e
 title: 在Directive中获取组件DOM以及实例
-alias: alias11
-id: 71
-date: 2023-11-24 21:10:42
-auther: nginx
-excerpt: 在Directive中获取组件DOM以及实例
+alias:
+cover:
+created_time: 2022-06-29 10:37:52
+updated_time: 2022-06-29 10:37:52
 categories:
   - angular
 tags:
   - angular
   - directive
+excerpt: 在Directive中获取组件DOM以及实例
+published: true
 ---
 
-### 获取 DOM
+### 获取DOM
 
 从 `@angular/core` 导入 `ElementRef`。`ElementRef` 的 `nativeElement `属性会提供对宿主 DOM 元素的直接访问权限。
 
+<!-- more -->
 ```javascript
 import { Directive, ElementRef } from '@angular/core';
 

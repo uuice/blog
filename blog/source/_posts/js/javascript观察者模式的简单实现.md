@@ -1,17 +1,22 @@
 ---
+id: 1ef3b5ed-f869-6b00-8f14-0e29fe3fa024
 title: javascript观察者模式的简单实现
-id: 33
-date: 2023-11-24 21:10:41
-auther: nginx
-cover: https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0854.jpg?imageMogr2/thumbnail/640x/interlace/1
-excerpt: 观察者模式当一个对象的状态发生改变，所有依赖于它的对象都将得到通知，也叫做发布-订阅模式基本的代码框架function PubSub() {    this.handlers = {};}PubSub.prototype = {    // 订阅事件    on function(eventTyp
+alias:
+cover:
+created_time: 2018-03-14 15:15:33
+updated_time: 2018-03-14 15:15:33
 categories:
- - javascript
-tags: 
+  - javascript
+tags:
+excerpt: 观察者模式当一个对象的状态发生改变，所有依赖于它的对象都将得到通知，也叫做发布-订阅模式基本的代码框架function PubSub() {    this.handlers = {};}PubSub.prototype = {
+published: true
 ---
 
- ### 观察者模式
+### 观察者模式
 当一个对象的状态发生改变，所有依赖于它的对象都将得到通知，也叫做发布-订阅模式
+
+<!-- more -->
+
 ### 基本的代码框架
 ```javascript
 function PubSub() {

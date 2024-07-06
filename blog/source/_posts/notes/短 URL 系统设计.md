@@ -1,17 +1,24 @@
 ---
+id: 1ef3b5e4-51b0-6ce0-b727-e8921436fadf
 title: 短 URL 系统设计
-id: 37
-date: 2023-11-24 21:10:41
-auther: nginx
-excerpt: 原理通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。实现方式将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面通过访问短连接获取到62进制字符串
+alias:
+cover:
+created_time: 2017-04-29 20:52:14
+updated_time: 2017-04-29 20:52:14
 categories:
- - notes
-tags: 
+  - notes
+tags:
+excerpt: 原理通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。实现方式将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面通过访问短连接获取到62进制字符串
+published: true
 ---
+
+
 
 ### 原理
 
 通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。
+
+<!-- more -->
 
 ### 实现方式
 
@@ -85,7 +92,6 @@ function convBase($numberInput, $fromBaseInput, $toBaseInput)
 echo convBase('1234567890987654321','0123456789','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 ?>
 ```
-
 - 2、62进制转十进制
 
 ```php

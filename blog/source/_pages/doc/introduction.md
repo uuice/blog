@@ -8,7 +8,7 @@ updated_time: 2024-07-04 10:35:55
 categories:
 tags:
 excerpt:
-published:
+published: true
 ---
 
 ## 项目介绍

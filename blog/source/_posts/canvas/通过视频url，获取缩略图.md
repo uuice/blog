@@ -1,14 +1,20 @@
 ---
+id: 1ef3b5e1-c89c-6410-866c-c03a58533afa
 title: 通过视频url，获取缩略图
-id: 35
-date: 2023-11-24 21:10:41
-auther: nginx
-cover: https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0979.jpg?imageMogr2/thumbnail/640x/interlace/1
-excerpt: getVideoImg (url) {      let _this = this      // 创建视频对象      let video = document.createElement(&#39;video&#39;)      video.src = url      video.
+alias:
+cover:
+created_time: 2019-06-20 14:22:06
+updated_time: 2019-06-20 14:22:06
 categories:
-  - notes
+  - canvas
 tags:
+excerpt:   通过视频url，获取缩略图  getVideoImg (url) {      let _this = this      // 创建视频对象      let video = document.createElement(&#39;video&#39;)      video.src = url      video.
+published: true
 ---
+
+### 通过视频url，获取缩略图
+
+<!-- more -->
 
 ```javascript
     getVideoImg (url) {

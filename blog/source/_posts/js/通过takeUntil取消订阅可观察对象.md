@@ -1,18 +1,25 @@
 ---
-title: 通过takeUntil取消订阅可观察对象 / Angular Observable destroy with takeUntil
-id: 161
-date: 2023-11-24 21:10:42
-auther: nginx
-excerpt: Angular 中的单例 Service通过@NgModule()装饰器来声明一个service时， 会与整个应用的生命周期保持一致， 属于单利service （单例模式）。Angular 中的非单例 Service通过@Component()装饰器来声明一个service时，会成为一个非单例的se
+id: 1ef3b59b-0a4e-6760-9d78-69ba27cbd20e
+title: 通过takeUntil取消订阅可观察对象
+alias:
+cover:
+created_time: 2023-03-01 10:46:32
+updated_time: 2023-03-01 10:46:32
 categories:
- - rxjs
- - angular
-tags: 
+  - javascript
+tags:
+  - Rxjs
+  - Angular
+excerpt: Angular 中的单例 Service通过@NgModule()装饰器来声明一个service时， 会与整个应用的生命周期保持一致， 属于单利service （单例模式）。Angular 中的非单例 Service通过@Component()装饰器来声明一个service时，会成为一个非单例的se
+published: true
 ---
+
 
 ### Angular 中的单例 Service / Angular singleton Service
 
 通过`@NgModule()`装饰器来声明一个service时， 会与整个应用的生命周期保持一致， 属于单例service （单例模式）。
+
+<!-- more -->
 
 ### Angular 中的非单例 Service / Non-singleton Service in Angular
 
@@ -20,7 +27,7 @@ tags:
 
 非单例service 拥有ngOnDestroy()生命周期， 因此可以通过创建一个非单例的service来取消订阅可观察对象。
 
-### 创建DestroyService / Create DestoryService
+### 创建DestroyService / Create DestroyService
 
 ```javascript
 import { Injectable, OnDestroy } from '@angular/core';

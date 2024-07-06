@@ -1,13 +1,15 @@
 ---
+id: 1ef3b5cb-5325-6760-803d-418bab754735
 title: HTML5 Canvas手机九宫格手势密码解锁 ，支持N*N个点
-id: 43
-date: 2023-11-24 21:10:41
-auther: nginx
-cover: https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0894.jpg?imageMogr2/thumbnail/640x/interlace/1
-excerpt: 对于canvas不熟悉的可以查看 MDN 上的canvas教程在开始之前，先介绍一个数学知识，怎么判断一个点是否在圆内通过判断一个点到圆心的距离是否大于半径。例如：半径是R  如O(x,y)点圆心，任意一点P（x1,y1） （x-x1）*(x-x1)+(y-y1)*(y-y1)&gt;R*R 那么在
+alias:
+cover:
+created_time: 2018-03-10 11:22:03
+updated_time: 2018-03-10 11:22:03
 categories:
- - canvas
-tags: 
+  - canvas
+tags:
+excerpt: 对于canvas不熟悉的可以查看 MDN 上的canvas教程在开始之前，先介绍一个数学知识，怎么判断一个点是否在圆内通过判断一个点到圆心的距离是否大于半径。例如：半径是R  如O(x,y)点圆心，任意一点P（x1,y1） （x-x1）*(x-x1)+(y-y1)*(y-y1)&gt;R*R 那么在
+published: true
 ---
 
 > 对于canvas不熟悉的可以查看 MDN 上的<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial" target="_blank">canvas教程</a>
@@ -15,6 +17,8 @@ tags:
 在开始之前，先介绍一个数学知识，怎么判断一个点是否在圆内
 通过判断一个点到圆心的距离是否大于半径。
 例如：半径是R  如O(x,y)点圆心，任意一点P（x1,y1） `（x-x1）*(x-x1)+(y-y1)*(y-y1)>R*R` 那么在圆外 反之在圆内
+
+<!-- more -->
 
 ### 准备及布局设置
 本例引入了jQuery，写成了jQuery插件的形式，真实使用的时候，可以去掉jQuery，用原生的js写。
@@ -241,7 +245,7 @@ touch函数统一处理滑动事件
 - canvas底部的N*N的点不需要每次都重绘，可以用两个canvas进行叠加
 - 本例只是实现了绘制的部分，并没有进行具体的解锁逻辑处理。
 
-	可以将密码保存到 localStorage 里，页面打开的时候从本地读取密码，如果没有设置就让用户设置密码，具体的密码规则自己定制。
+  可以将密码保存到 localStorage 里，页面打开的时候从本地读取密码，如果没有设置就让用户设置密码，具体的密码规则自己定制。
 
 - 没有添加密码错误/正确的样式，可以在配置中添加相应的颜色，再绘制canvas的时候选择对象的颜色。
 

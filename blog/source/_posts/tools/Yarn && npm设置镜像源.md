@@ -1,20 +1,20 @@
 ---
-title: Yarn && npm设置镜像源
-id: 34
-date: 2023-11-24 21:10:41
-auther: nginx
-excerpt: 安装yarnnpm i -g yarnyarnyarn config set registry https//registry.npm.taobao.org --global  &amp;&amp; \yarn config set disturl https//npm.taobao.org/d
+id: 1ef3b5dd-e4d9-6b40-b309-a07bac6c751a
+title: Yarn &amp;&amp; npm设置镜像源
+alias:
+cover:
+created_time: 2020-04-17 22:35:21
+updated_time: 2020-04-17 22:35:21
 categories:
   - nodejs
 tags:
+excerpt: 安装yarnnpm i -g yarnyarnyarn config set registry https://registry.npm.taobao.org --global  &amp;&amp; \yarn config set disturl https://npm.taobao.org/d
+published: true
 ---
 
-### 安装 yarn
-
+### 安装yarn
     npm i -g yarn
-
 ### yarn
-
     yarn config set registry https://registry.npm.taobao.org --global  && \
     yarn config set disturl https://npm.taobao.org/dist --global && \
     yarn config set sass_binary_site https://npm.taobao.org/mirrors/node-sass --global  && \
@@ -25,9 +25,7 @@ tags:
     yarn config set phantomjs_cdnurl https://npm.taobao.org/mirrors/phantomjs --global  && \
     yarn config set selenium_cdnurl https://npm.taobao.org/mirrors/selenium --global  && \
     yarn config set node_inspector_cdnurl https://npm.taobao.org/mirrors/node-inspector --global
-
 ### npm
-
     npm set registry https://registry.npm.taobao.org && \
     npm set disturl https://npm.taobao.org/dist && \
     npm set sass_binary_site https://npm.taobao.org/mirrors/node-sass && \

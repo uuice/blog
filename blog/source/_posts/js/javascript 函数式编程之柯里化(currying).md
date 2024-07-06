@@ -1,15 +1,21 @@
 ---
+id: 1ef3b5bb-0805-6d80-9432-553b597926f2
 title: javascript 函数式编程之柯里化(currying)
-id: 45
-date: 2023-11-24 21:10:42
-auther: nginx
+alias:
+cover:
+created_time: 2018-03-14 14:45:46
+updated_time: 2018-03-14 14:45:46
 categories:
- - javascript
-tags: 
+  - javascript
+tags:
+excerpt:
+published: true
 ---
 
 ### 什么是柯里化
 函数柯里化（curry）的定义很简单：传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数。
+
+<!-- more -->
 
 ### js中柯里化的基本实现
 ```javascript

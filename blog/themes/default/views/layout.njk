@@ -5,6 +5,7 @@
 <html theme="dark" showBanner="true" hasBanner="{{ hasBanner }}">
 <meta charset="UTF-8">
 <title>{% SysConfigItem path="title" %}</title>
+ <meta name="author" content="{{sysConfig.author}}">
 <link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
 <link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
 <link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
@@ -20,17 +21,20 @@
   {% if hasBanner != "false" %}
     {% include '_partial/banner.njk' %}
   {% endif %}
-  <div id="main-grid" class="{% if sidebar_position == 'right' %} right-sidebar {% endif %}">
-    <div id="nav" class="{% if isIndex %} is_home {% endif %}">
-      {% include '_partial/navbar.njk' %}
+
+  <div id="main-container">
+    <div id="header-nav" class="{% if isIndex %} is_home {% endif %}">
+       {% include '_partial/navbar.njk' %}
     </div>
-    <div id="sidebar-wrapper">
-      {% include '_partial/sidebar.njk' %}
+    <div id="main-content-wrap">
+       <div id="main-sidebar">
+          {% include '_partial/sidebar.njk' %}
+        </div>
+        <div id="main-content">
+            {% block body %}{% endblock %}
+        </div>
     </div>
-    <div id="content-body">
-        {% block body %}{% endblock %}
-    </div>
-    <div id="footer-wrapper">
+    <div id="main-footer">
       {% include '_partial/footer.njk' %}
     </div>
     {% include '_partial/back-to-top.njk' %}

@@ -1,20 +1,26 @@
 ---
+id: 1ef3b5b1-f8de-63b0-8838-ac54a1c91482
 title: canvas实现圆形进度条
-id: 49
-date: 2023-11-24 21:10:42
-auther: nginx
+alias:
+cover:
+created_time: 2017-04-29 22:16:42
+updated_time: 2017-04-29 22:16:42
 categories:
- - canvas
-tags: 
+  - canvas
+tags:
+excerpt:
+published: true
 ---
+
 
 ### 需要关注的几个点
 
 - 弧形的圆角
-通过定义`ctx.lineCap = 'round';`来实现
+  通过定义`ctx.lineCap = 'round';`来实现
 - 避免移动端canvas模糊，需要先计算`dpi`来进行适配，通过`getPixelRatio`方法。也可以直接计算为2倍或3倍（偷懒的做法）
 - 可以通过requestAnimationFrame来对canvas动画进行优化，本例未做处理。有兴趣的可以自行查看相关信息。
 
+<!-- more -->
 
 ### 代码如下
 

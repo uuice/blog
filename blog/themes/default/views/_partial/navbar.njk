@@ -1,12 +1,6 @@
 <navbar id="navbar">
   <nav id="title-nav">
     <a href="/">
-      <div id="vivia-logo">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
       <div>{{ sysConfig.title }}</div>
     </a>
   </nav>
@@ -29,8 +23,15 @@
     {% endif %}
 
    {% if sysConfig.sitemap %}
-      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/rss.xml" title="" target="_blank">
+      <a id="nav-sitemap-link" class="nav-icon mobile-hide" href="/rss.xml" title="" target="_blank">
           {% include '_icon/sitemap.njk' %}
+      </a>
+    {% endif %}
+
+
+   {% if sysConfig.setting %}
+      <a id="nav-setting-link" class="nav-icon mobile-hide" title="" target="_blank">
+          {% include '_icon/setting.njk' %}
       </a>
     {% endif %}
 
@@ -58,4 +59,11 @@
   dropdownBtn.onclick = function() {
     dropdownEle.classList.toggle("hidden");
   }
+
+    let navSettingLink = document.getElementById("nav-setting-link");
+    let colorPicker = document.getElementById("color-picker");
+    navSettingLink.onclick = function() {
+      colorPicker.classList.toggle("hidden");
+    }
+
 </script>

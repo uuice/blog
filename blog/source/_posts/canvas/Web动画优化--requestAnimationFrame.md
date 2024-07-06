@@ -1,13 +1,15 @@
 ---
+id: 1ef3b5cf-0201-6880-9695-c8862c624a56
 title: Web动画优化--requestAnimationFrame
-id: 42
-date: 2023-11-24 21:10:41
-auther: nginx
-cover: https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0748.jpg?imageMogr2/thumbnail/640x/interlace/1
-excerpt: 什么是requestAnimationFramewindow.requestAnimationFrame（callback）方法告诉浏览器您希望执行动画，并请求在下一次重新绘制之前,浏览器调用指定的函数更新。 callback该方法作为参数，在重绘之前调用回调。注意：如果您要在下一次重新绘制时进行别
+alias:
+cover:
+created_time: 2017-05-03 10:06:42
+updated_time: 2017-05-03 10:06:42
 categories:
- - canvas
-tags: 
+  - canvas
+tags:
+excerpt: 什么是requestAnimationFramewindow.requestAnimationFrame（callback）方法告诉浏览器您希望执行动画，并请求在下一次重新绘制之前,浏览器调用指定的函数更新。 callback该方法作为参数，在重绘之前调用回调。注意：如果您要在下一次重新绘制时进行别
+published: true
 ---
 
 ### 什么是requestAnimationFrame
@@ -15,6 +17,8 @@ tags:
 `window.requestAnimationFrame（callback）`方法告诉浏览器您希望执行动画，并请求在下一次重新绘制之前,浏览器调用指定的函数更新。 `callback`该方法作为参数，在重绘之前调用回调。
 
 > 注意：如果您要在下一次重新绘制时进行别的动画处理，则您的回调本身必须调用requestAnimationFrame（）。
+
+<!-- more -->
 
 ### 例如：
 

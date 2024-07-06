@@ -110,7 +110,7 @@ async function getFileJsonList(path: string): Promise<PAGE[] | POST[]> {
       updated_time: json.data.updated_time || json.data.updated || '',
       categories: json.data.categories || [],
       tags: json.data.tags || [],
-      excerpt,
+      excerpt: json.data.excerpt || excerpt,
       published: json.data.published || '',
       content: json.content || '',
       mdContent: contentToc.mdContent || '',

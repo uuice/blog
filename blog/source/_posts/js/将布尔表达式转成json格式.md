@@ -1,13 +1,17 @@
 ---
+id: 1ef3b5a2-b387-6370-adf2-057eb14ae353
 title: 将布尔表达式转成json格式
-id: 129
-date: 2023-11-24 21:10:42
-auther: nginx
-excerpt: 简单的词法分析和推栈的应用
+alias:
+cover:
+created_time: 2022-11-18 17:53:10
+updated_time: 2022-11-18 17:53:10
 categories:
- - javascript
-tags: 
+  - javascript
+tags:
+excerpt: 简单的词法分析和推栈的应用
+published: true
 ---
+
 
 ### 完整代码
 

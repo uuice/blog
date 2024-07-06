@@ -1,13 +1,17 @@
 ---
+id: 1ef3b5db-fc15-6310-b8d7-128489aa72d6
 title: express实践
-id: 38
-date: 2023-11-24 21:10:41
-auther: nginx
-excerpt: Node.js 7.0发布之前，写一篇关于express的文章项目创建使用express-generator使用npm install express-generator -g代码修改自动重启使用nodemonnodemon ./bin/www全局设置//加载配置项global.Config = r
+alias:
+cover:
+created_time: 2017-04-29 20:52:30
+updated_time: 2017-04-29 20:52:30
 categories:
- - nodejs
-tags: 
+  - nodejs
+tags:
+excerpt: Node.js 7.0发布之前，写一篇关于express的文章项目创建使用express-generator使用npm install express-generator -g代码修改自动重启使用nodemonnodemon ./bin/www全局设置//加载配置项global.Config = r
+published: true
 ---
+
 
 Node.js 7.0发布之前，写一篇关于express的文章
 
@@ -22,6 +26,8 @@ Node.js 7.0发布之前，写一篇关于express的文章
 - nodemon ./bin/www
 
 #### 全局设置
+
+<!-- more -->
 
 ```js
 //加载配置项

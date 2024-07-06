@@ -1,12 +1,15 @@
 ---
+id: 1ef3b5b7-e0bc-6ce0-ac15-c509070dad5f
 title: 深入分析css中单位px和em,rem的区别
-id: 47
-date: 2023-11-24 21:10:42
-auther: nginx
-excerpt: PX特点IE无法调整那些使用px作为单位的字体大小;EM特点em的值并不是固定的;em会继承父级元素的字体大小。比如父元素设置了1.2em,子元素也设置了1.2em 那么事实上子元素设置的是1.2*1.2 emrem特点rem是CSS3新增的一个相对单位(root em，根em)。这个单位与em有什
+alias:
+cover:
+created_time: 2017-04-29 21:06:21
+updated_time: 2017-04-29 21:06:21
 categories:
- - notes
-tags: 
+  - css
+tags:
+excerpt: PX特点IE无法调整那些使用px作为单位的字体大小;EM特点em的值并不是固定的;em会继承父级元素的字体大小。比如父元素设置了1.2em,子元素也设置了1.2em 那么事实上子元素设置的是1.2*1.2 emrem特点rem是CSS3新增的一个相对单位(root em，根em)。这个单位与em有什
+published: true
 ---
 
 ### PX特点
@@ -24,6 +27,8 @@ em会继承父级元素的字体大小。
 ### rem特点
 
 rem是CSS3新增的一个相对单位(root em，根em)。
+
+<!-- more -->
 
 - 这个单位与em有什么区别呢?
 

@@ -1,13 +1,15 @@
 ---
+id: 1ef3b5e7-6a16-6cf0-bda8-629a71b2a5d5
 title: “被污染”的 canvas
-id: 36
-date: 2023-11-24 21:10:41
-auther: nginx
-cover: https://uuice-1254189824.cos.ap-chengdu.myqcloud.com/halo-uuice/bing/0037.jpg?imageMogr2/thumbnail/640x/interlace/1
-excerpt: 什么是“被污染”的 canvas?尽管不通过 CORS 就可以在画布中使用图片，但是这会污染画布。一旦画布被污染，你就无法读取其数据。例如，你不能再使用画布的 toBlob(), toDataURL() 或 getImageData() 方法，调用它们会抛出安全错误。这种机制可以避免未经许可拉取远程
+alias:
+cover:
+created_time: 2018-04-18 21:23:37
+updated_time: 2018-04-18 21:23:37
 categories:
- - canvas
-tags: 
+  - canvas
+tags:
+excerpt: 什么是“被污染”的 canvas?尽管不通过 CORS 就可以在画布中使用图片，但是这会污染画布。一旦画布被污染，你就无法读取其数据。例如，你不能再使用画布的 toBlob(), toDataURL() 或 getImageData() 方法，调用它们会抛出安全错误。这种机制可以避免未经许可拉取远程
+published: true
 ---
 
 ### 什么是“被污染”的 canvas?
@@ -15,6 +17,8 @@ tags:
 尽管不通过 CORS 就可以在画布中使用图片，但是这会污染画布。一旦画布被污染，你就无法读取其数据。例如，你不能再使用画布的 `toBlob()`, `toDataURL()` 或 `getImageData()` 方法，调用它们会抛出安全错误。
 
 这种机制可以避免未经许可拉取远程网站信息而导致的用户隐私泄露。
+
+<!-- more -->
 
 ### 如何在canvas中使用跨越图片
 
