@@ -1,3 +1,0 @@
-# blog
-
-uuice`s blog
