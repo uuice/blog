@@ -1,14 +1,13 @@
 # 代码风格
 
-## eslint + prettier
+## eslint
 
-使用 eslint + prettier 进行格式化
+使用 eslint 进行格式化
 
 具体查看以下配置文件
 
 - .eslintrc.js
 - .eslintignore
-- .prettierrc
 
 ## editorconfig
 

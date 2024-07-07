@@ -51,7 +51,7 @@ export class DynamicPageModule {
     const pageService = new PageService(dbService)
     const pages = pageService.getPageList()
     pages.forEach((page: LIST_PAGE_ITEM) => {
-      controllers.push(createPageController(page.alias as string))
+      controllers.push(createPageController(page.url as string))
     })
     return {
       module: DynamicPageModule,
