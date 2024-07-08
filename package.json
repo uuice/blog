@@ -15,5 +15,10 @@
     "blog"
   ],
   "author": "UUICE <admin@uuice.com> (https://uuice.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@nestjs/platform-express": "^10.3.10",
+    "nunjucks": "^3.2.4",
+    "uuice-cli": "^0.0.15"
+  }
 }
