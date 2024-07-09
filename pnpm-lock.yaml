@@ -5,15 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@nestjs/platform-express':
-    specifier: ^10.3.10
-    version: 10.3.10(@nestjs/common@10.3.10)(@nestjs/core@10.3.10)
-  nunjucks:
-    specifier: ^3.2.4
-    version: 3.2.4(chokidar@3.6.0)
   uuice-cli:
-    specifier: ^0.0.15
-    version: 0.0.15
+    specifier: ^0.0.18
+    version: 0.0.18
 
 packages:
 
@@ -502,7 +496,6 @@ packages:
   /ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dev: false
 
   /ansi-regex@6.0.1:
@@ -973,7 +966,6 @@ packages:
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
-    requiresBuild: true
     dev: false
 
   /emoji-regex@9.2.2:
@@ -1084,13 +1076,13 @@ packages:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
     dev: false
 
-  /file-type@19.0.0:
-    resolution: {integrity: sha512-s7cxa7/leUWLiXO78DVVfBVse+milos9FitauDLG1pI7lNaJ2+5lzPnr2N24ym+84HVwJL6hVuGfgVE+ALvU8Q==}
+  /file-type@19.1.0:
+    resolution: {integrity: sha512-5rzeC2/GeStiAlYCenfrbKrQCiEzJTetCExFinFCH1UUz1XL7NlxRpLTwdWXzlVhLReRrWkfkNCH1Ap5zqOXtg==}
     engines: {node: '>=18'}
     dependencies:
-      readable-web-to-node-stream: 3.0.2
       strtok3: 7.1.0
-      token-types: 5.0.1
+      token-types: 6.0.0
+      uint8array-extras: 1.3.0
     dev: false
 
   /fill-range@2.2.4:
@@ -1212,13 +1204,13 @@ packages:
       is-glob: 4.0.3
     dev: false
 
-  /glob@10.4.3:
-    resolution: {integrity: sha512-Q38SGlYRpVtDBPSWEylRyctn7uDeTp4NQERTLiCT1FqA9JXPYWqAVmQU6qh4r/zMM5ehxTcbaO8EjhWnvEhmyg==}
-    engines: {node: '>=18'}
+  /glob@10.4.4:
+    resolution: {integrity: sha512-XsOKvHsu38Xe19ZQupE6N/HENeHQBA05o3hV8labZZT2zYDg1+emxWHnc/Bm9AcCMPXfD6jt+QC7zC5JSFyumw==}
+    engines: {node: 14 >=14.21 || 16 >=16.20 || 18 || 20 || >=22}
     hasBin: true
     dependencies:
       foreground-child: 3.2.1
-      jackspeak: 3.4.1
+      jackspeak: 3.4.2
       minimatch: 9.0.5
       minipass: 7.1.2
       package-json-from-dist: 1.0.0
@@ -1435,7 +1427,6 @@ packages:
   /is-fullwidth-code-point@3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
     engines: {node: '>=8'}
-    requiresBuild: true
     dev: false
 
   /is-glob@4.0.3:
@@ -1494,9 +1485,9 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /jackspeak@3.4.1:
-    resolution: {integrity: sha512-U23pQPDnmYybVkYjObcuYMk43VRlMLLqLI+RdZy8s8WV8WsxO9SnqSroKaluuvcNOdCAlauKszDwd+umbot5Mg==}
-    engines: {node: '>=18'}
+  /jackspeak@3.4.2:
+    resolution: {integrity: sha512-qH3nOSj8q/8+Eg8LUPOq3C+6HWkpUioIjDsq1+D4zY91oZvpPttw8GwtF1nReRYKXl+1AORyFqtm2f5Q1SB6/Q==}
+    engines: {node: 14 >=14.21 || 16 >=16.20 || >=18}
     dependencies:
       '@isaacs/cliui': 8.0.2
     optionalDependencies:
@@ -1590,9 +1581,9 @@ packages:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: false
 
-  /lru-cache@10.4.0:
-    resolution: {integrity: sha512-bfJaPTuEiTYBu+ulDaeQ0F+uLmlfFkMgXj4cbwfuMSjgObGMzb55FMMbDvbRU0fAHZ4sLGkz2mKwcMg8Dvm8Ww==}
-    engines: {node: '>=18'}
+  /lru-cache@10.4.2:
+    resolution: {integrity: sha512-voV4dDrdVZVNz84n39LFKDaRzfwhdzJ7akpyXfTMxCgRUp07U3lcJUXRlhTKP17rgt09sUzLi5iCitpEAr+6ug==}
+    engines: {node: 14 || 16 || 18 || 20 || >=22}
     dev: false
 
   /make-dir@3.1.0:
@@ -1945,7 +1936,7 @@ packages:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
     dependencies:
-      lru-cache: 10.4.0
+      lru-cache: 10.4.2
       minipass: 7.1.2
     dev: false
 
@@ -2067,18 +2058,13 @@ packages:
   /readable-stream@3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
     engines: {node: '>= 6'}
+    requiresBuild: true
     dependencies:
       inherits: 2.0.4
       string_decoder: 1.3.0
       util-deprecate: 1.0.2
     dev: false
-
-  /readable-web-to-node-stream@3.0.2:
-    resolution: {integrity: sha512-ePeK6cc1EcKLEhJFt/AebMCLL+GgSKhuygrZ/GLaKZYEecIgIECf4UaUuaByiGtzckwR4ain9VzUh95T1exYGw==}
-    engines: {node: '>=8'}
-    dependencies:
-      readable-stream: 3.6.2
-    dev: false
+    optional: true
 
   /readdirp@3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
@@ -2344,9 +2330,11 @@ packages:
 
   /string_decoder@1.3.0:
     resolution: {integrity: sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==}
+    requiresBuild: true
     dependencies:
       safe-buffer: 5.2.1
     dev: false
+    optional: true
 
   /strip-ansi@6.0.1:
     resolution: {integrity: sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==}
@@ -2447,8 +2435,8 @@ packages:
     engines: {node: '>=0.6'}
     dev: false
 
-  /token-types@5.0.1:
-    resolution: {integrity: sha512-Y2fmSnZjQdDb9W4w4r1tswlMHylzWIeOKpx0aZH9BgGtACHhrk3OkT52AzwcuqTRBZtvvnTjDBh8eynMulu8Vg==}
+  /token-types@6.0.0:
+    resolution: {integrity: sha512-lbDrTLVsHhOMljPscd0yitpozq7Ga2M5Cvez5AjGg8GASBjtt6iERCAJ93yommPmz62fb45oFIXHEZ3u9bfJEA==}
     engines: {node: '>=14.16'}
     dependencies:
       '@tokenizer/token': 0.3.0
@@ -2486,6 +2474,11 @@ packages:
       '@lukeed/csprng': 1.1.0
     dev: false
 
+  /uint8array-extras@1.3.0:
+    resolution: {integrity: sha512-npBAT0ZIX6mAIG7SF6G4LF1BIoRx3h+HVajSplHx0XmOD0Ug4qio5Yhcajn72i5OEj/qkk1OFaYh2PhqHBV33w==}
+    engines: {node: '>=18'}
+    dev: false
+
   /unpipe@1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
@@ -2500,8 +2493,8 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: false
 
-  /uuice-cli@0.0.15:
-    resolution: {integrity: sha512-qj2xXrg6iReLL2QH41UQUMubOMtirzQXluSGoMeZRi7AR6S1OpL7YU0bUBzBdrbif86+OcXUUbg+k8MIyyvcsw==}
+  /uuice-cli@0.0.18:
+    resolution: {integrity: sha512-pVk6R++HAuENwFWHrR8s0Iq5AQxvCEYqQXOA886UROcC1Tj+Jn32uDP8w+FF1xS5XSvypC+ynr9EwfCdJjeS7Q==}
     hasBin: true
     dependencies:
       '@nestjs/common': 10.3.10(reflect-metadata@0.2.2)(rxjs@7.8.1)
@@ -2515,8 +2508,8 @@ packages:
       colorjs.io: 0.5.2
       commander: 12.1.0
       express: 4.19.2
-      file-type: 19.0.0
-      glob: 10.4.3
+      file-type: 19.1.0
+      glob: 10.4.4
       gray-matter: 4.0.3
       helmet: 7.1.0
       highlight.js: 11.10.0

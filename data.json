@@ -109,92 +109,6 @@
       "symbolsCount": 1036
     },
     {
-      "id": "1ef3b5d3-d10c-6040-8228-d52499675442",
-      "title": "让浏览器兼容placeholder",
-      "alias": "",
-      "cover": "",
-      "created_time": "2017-04-29T21:00:51.000Z",
-      "updated_time": "2017-04-29T21:00:51.000Z",
-      "categories": [
-        "html"
-      ],
-      "tags": [],
-      "excerpt": "什么是placeholderplaceholder 属性提供可描述输入字段预期值的提示信息（hint）。该提示会在输入字段为空时显示，并会在字段获得焦点时消失。placeholder兼容性解决$(function(){    if(!placeholderSupport()){   // 判断浏览器",
-      "published": true,
-      "content": "\n#### 什么是placeholder\n\nplaceholder 属性提供可描述输入字段预期值的提示信息（hint）。\n该提示会在输入字段为空时显示，并会在字段获得焦点时消失。\n\n<!-- more -->\n\n#### placeholder兼容性解决\n\n```js\n$(function(){\n    if(!placeholderSupport()){   // 判断浏览器是否支持 placeholder\n        $('[placeholder]').focus(function() {\n            var input = $(this);\n            if (input.val() == input.attr('placeholder')) {\n                input.val('');\n                input.removeClass('placeholder');\n            }\n        }).blur(function() {\n            var input = $(this);\n            if (input.val() == '' || input.val() == input.attr('placeholder')) {\n                input.addClass('placeholder');\n                input.val(input.attr('placeholder'));\n            }\n        }).blur();\n    };\n})\nfunction placeholderSupport() {\n    return 'placeholder' in document.createElement('input');\n}\n```",
-      "mdContent": "<h4 id=\"toc-04a6ee\">什么是placeholder</h4>\n<p>placeholder 属性提供可描述输入字段预期值的提示信息（hint）。\n该提示会在输入字段为空时显示，并会在字段获得焦点时消失。</p>\n<!-- more -->\n\n<h4 id=\"toc-9c8b5f\">placeholder兼容性解决</h4>\n<pre><code class=\"hljs lang-js\">$(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>){\n    <span class=\"hljs-keyword\">if</span>(!<span class=\"hljs-title function_\">placeholderSupport</span>()){   <span class=\"hljs-comment\">// 判断浏览器是否支持 placeholder</span>\n        $(<span class=\"hljs-string\">&#x27;[placeholder]&#x27;</span>).<span class=\"hljs-title function_\">focus</span>(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>) {\n            <span class=\"hljs-keyword\">var</span> input = $(<span class=\"hljs-variable language_\">this</span>);\n            <span class=\"hljs-keyword\">if</span> (input.<span class=\"hljs-title function_\">val</span>() == input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>)) {\n                input.<span class=\"hljs-title function_\">val</span>(<span class=\"hljs-string\">&#x27;&#x27;</span>);\n                input.<span class=\"hljs-title function_\">removeClass</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>);\n            }\n        }).<span class=\"hljs-title function_\">blur</span>(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>) {\n            <span class=\"hljs-keyword\">var</span> input = $(<span class=\"hljs-variable language_\">this</span>);\n            <span class=\"hljs-keyword\">if</span> (input.<span class=\"hljs-title function_\">val</span>() == <span class=\"hljs-string\">&#x27;&#x27;</span> || input.<span class=\"hljs-title function_\">val</span>() == input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>)) {\n                input.<span class=\"hljs-title function_\">addClass</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>);\n                input.<span class=\"hljs-title function_\">val</span>(input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>));\n            }\n        }).<span class=\"hljs-title function_\">blur</span>();\n    };\n})\n<span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">placeholderSupport</span>(<span class=\"hljs-params\"></span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-string\">&#x27;placeholder&#x27;</span> <span class=\"hljs-keyword\">in</span> <span class=\"hljs-variable language_\">document</span>.<span class=\"hljs-title function_\">createElement</span>(<span class=\"hljs-string\">&#x27;input&#x27;</span>);\n}\n</code></pre>\n",
-      "toc": "<ul>\n<li><a href=\"#toc-04a6ee\">什么是placeholder</a></li>\n<li><a href=\"#toc-9c8b5f\">placeholder兼容性解决</a></li>\n</ul>\n",
-      "url": "rang-liu-lan-qi-jian-rong-placeholder",
-      "created_timestamp": 1493499651000,
-      "updated_timestamp": 1493499651000,
-      "symbolsCount": 2383
-    },
-    {
-      "id": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
-      "title": "浏览器指定内核访问",
-      "alias": "",
-      "cover": "",
-      "created_time": "2017-04-29T21:13:03.000Z",
-      "updated_time": "2017-04-29T21:13:03.000Z",
-      "categories": [
-        "notes",
-        "html"
-      ],
-      "tags": [],
-      "excerpt": "360页面默认使用极速内核&lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;页面默认使用ie兼容内核&lt;meta name=&quot;renderer&quot; content=&quot;ie-comp&quo",
-      "published": true,
-      "content": "\n360页面默认使用极速内核\n```html\n<meta name=\"renderer\" content=\"webkit\">\n```\n页面默认使用ie兼容内核\n```html\n<meta name=\"renderer\" content=\"ie-comp\">\n```\n页面默认使用ie标准内核\n```html\n<meta name=\"renderer\" content=\"ie-stand\">\n\n<!-- more -->\n```",
-      "mdContent": "<p>360页面默认使用极速内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;webkit&quot;</span>&gt;</span>\n</code></pre>\n<p>页面默认使用ie兼容内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;ie-comp&quot;</span>&gt;</span>\n</code></pre>\n<p>页面默认使用ie标准内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;ie-stand&quot;</span>&gt;</span>\n\n<span class=\"hljs-comment\">&lt;!-- more --&gt;</span>\n</code></pre>\n",
-      "toc": "",
-      "url": "liu-lan-qi-zhi-ding-nei-he-fang-wen",
-      "created_timestamp": 1493500383000,
-      "updated_timestamp": 1493500383000,
-      "symbolsCount": 984
-    },
-    {
-      "id": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
-      "title": "短 URL 系统设计",
-      "alias": "",
-      "cover": "",
-      "created_time": "2017-04-29T20:52:14.000Z",
-      "updated_time": "2017-04-29T20:52:14.000Z",
-      "categories": [
-        "notes"
-      ],
-      "tags": [],
-      "excerpt": "原理通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。实现方式将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面通过访问短连接获取到62进制字符串",
-      "published": true,
-      "content": "\n\n\n### 原理\n\n通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。\n\n<!-- more -->\n\n### 实现方式\n\n- 将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面\n- 通过访问短连接获取到62进制字符串，转化为10进制，通过查询获得长链接进行跳转\n\n### 这里有几个问题\n\n- 1、62进制如何用数据库或者KV存储来做\n\n这个问题就不展开了，自行解决\n\n- 2、如何保证同一个长地址，每次转出来都是一样的短地址\n\n上面的发号原理中，是不判断长地址是否已经转过的。同一个长地址，产生多条短地址记录，这明显是浪费空间的。\n目前没有好的解决方法\n\n### 3、跳转用301还是302\n\n301是永久重定向，302是临时重定向。短地址一经生成就不会变化，所以用301是符合http语义的。同时对服务器压力也会有一定减少。\n\n但是如果使用了301，我们就无法统计到短地址被点击的次数了。而这个点击次数是一个非常有意思的大数据分析数据源。能够分析出的东西非常非常多。\n\n对于搜索引擎SEO优化来说301跳转更合适\n\n10进制62进制互转 （php实现）\n\n这里用了php手册中的一个方法，支持任意进制的转换\n点击跳转到php手册\n\n```php\n<?php\nfunction convBase($numberInput, $fromBaseInput, $toBaseInput)\n{\n    if ($fromBaseInput==$toBaseInput) return $numberInput;\n    $fromBase = str_split($fromBaseInput,1);\n    $toBase = str_split($toBaseInput,1);\n    $number = str_split($numberInput,1);\n    $fromLen=strlen($fromBaseInput);\n    $toLen=strlen($toBaseInput);\n    $numberLen=strlen($numberInput);\n    $retval='';\n    if ($toBaseInput == '0123456789')\n    {\n        $retval=0;\n        for ($i = 1;$i <= $numberLen; $i++)\n            $retval = bcadd($retval, bcmul(array_search($number[$i-1], $fromBase),bcpow($fromLen,$numberLen-$i)));\n        return $retval;\n    }\n    if ($fromBaseInput != '0123456789')\n        $base10=convBase($numberInput, $fromBaseInput, '0123456789');\n    else\n        $base10 = $numberInput;\n    if ($base10<strlen($toBaseInput))\n        return $toBase[$base10];\n    while($base10 != '0')\n    {\n        $retval = $toBase[bcmod($base10,$toLen)].$retval;\n        $base10 = bcdiv($base10,$toLen,0);\n    }\n    return $retval;\n}\n?>\n```\n\n### 用法：\n- 1、十进制转62进制\n\n```php\n<?php\necho convBase('1234567890987654321','0123456789','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');\n?>\n```\n- 2、62进制转十进制\n\n```php\n<?php\necho convBase('1tckI2JJZDz','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ','0123456789');\n?>\n```\n这只是一个基本的思路，对于一般的使用也够了",
-      "mdContent": "<h3 id=\"toc-b6724c\">原理</h3>\n<p>通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。</p>\n<!-- more -->\n\n<h3 id=\"toc-3e9100\">实现方式</h3>\n<ul>\n<li>将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面</li>\n<li>通过访问短连接获取到62进制字符串，转化为10进制，通过查询获得长链接进行跳转</li>\n</ul>\n<h3 id=\"toc-afda0a\">这里有几个问题</h3>\n<ul>\n<li>1、62进制如何用数据库或者KV存储来做</li>\n</ul>\n<p>这个问题就不展开了，自行解决</p>\n<ul>\n<li>2、如何保证同一个长地址，每次转出来都是一样的短地址</li>\n</ul>\n<p>上面的发号原理中，是不判断长地址是否已经转过的。同一个长地址，产生多条短地址记录，这明显是浪费空间的。\n目前没有好的解决方法</p>\n<h3 id=\"toc-ff0abc\">3、跳转用301还是302</h3>\n<p>301是永久重定向，302是临时重定向。短地址一经生成就不会变化，所以用301是符合http语义的。同时对服务器压力也会有一定减少。</p>\n<p>但是如果使用了301，我们就无法统计到短地址被点击的次数了。而这个点击次数是一个非常有意思的大数据分析数据源。能够分析出的东西非常非常多。</p>\n<p>对于搜索引擎SEO优化来说301跳转更合适</p>\n<p>10进制62进制互转 （php实现）</p>\n<p>这里用了php手册中的一个方法，支持任意进制的转换\n点击跳转到php手册</p>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">convBase</span>(<span class=\"hljs-params\"><span class=\"hljs-variable\">$numberInput</span>, <span class=\"hljs-variable\">$fromBaseInput</span>, <span class=\"hljs-variable\">$toBaseInput</span></span>)\n</span>{\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$fromBaseInput</span>==<span class=\"hljs-variable\">$toBaseInput</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$numberInput</span>;\n    <span class=\"hljs-variable\">$fromBase</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$fromBaseInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$toBase</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$toBaseInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$number</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$numberInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$fromLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$fromBaseInput</span>);\n    <span class=\"hljs-variable\">$toLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$toBaseInput</span>);\n    <span class=\"hljs-variable\">$numberLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$numberInput</span>);\n    <span class=\"hljs-variable\">$retval</span>=<span class=\"hljs-string\">&#x27;&#x27;</span>;\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$toBaseInput</span> == <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>)\n    {\n        <span class=\"hljs-variable\">$retval</span>=<span class=\"hljs-number\">0</span>;\n        <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-variable\">$i</span> = <span class=\"hljs-number\">1</span>;<span class=\"hljs-variable\">$i</span> &lt;= <span class=\"hljs-variable\">$numberLen</span>; <span class=\"hljs-variable\">$i</span>++)\n            <span class=\"hljs-variable\">$retval</span> = <span class=\"hljs-title function_ invoke__\">bcadd</span>(<span class=\"hljs-variable\">$retval</span>, <span class=\"hljs-title function_ invoke__\">bcmul</span>(<span class=\"hljs-title function_ invoke__\">array_search</span>(<span class=\"hljs-variable\">$number</span>[<span class=\"hljs-variable\">$i</span>-<span class=\"hljs-number\">1</span>], <span class=\"hljs-variable\">$fromBase</span>),<span class=\"hljs-title function_ invoke__\">bcpow</span>(<span class=\"hljs-variable\">$fromLen</span>,<span class=\"hljs-variable\">$numberLen</span>-<span class=\"hljs-variable\">$i</span>)));\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$retval</span>;\n    }\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$fromBaseInput</span> != <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>)\n        <span class=\"hljs-variable\">$base10</span>=<span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-variable\">$numberInput</span>, <span class=\"hljs-variable\">$fromBaseInput</span>, <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>);\n    <span class=\"hljs-keyword\">else</span>\n        <span class=\"hljs-variable\">$base10</span> = <span class=\"hljs-variable\">$numberInput</span>;\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$base10</span>&lt;<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$toBaseInput</span>))\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$toBase</span>[<span class=\"hljs-variable\">$base10</span>];\n    <span class=\"hljs-keyword\">while</span>(<span class=\"hljs-variable\">$base10</span> != <span class=\"hljs-string\">&#x27;0&#x27;</span>)\n    {\n        <span class=\"hljs-variable\">$retval</span> = <span class=\"hljs-variable\">$toBase</span>[<span class=\"hljs-title function_ invoke__\">bcmod</span>(<span class=\"hljs-variable\">$base10</span>,<span class=\"hljs-variable\">$toLen</span>)].<span class=\"hljs-variable\">$retval</span>;\n        <span class=\"hljs-variable\">$base10</span> = <span class=\"hljs-title function_ invoke__\">bcdiv</span>(<span class=\"hljs-variable\">$base10</span>,<span class=\"hljs-variable\">$toLen</span>,<span class=\"hljs-number\">0</span>);\n    }\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$retval</span>;\n}\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<h3 id=\"toc-6c9ae3\">用法：</h3>\n<ul>\n<li>1、十进制转62进制</li>\n</ul>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-keyword\">echo</span> <span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-string\">&#x27;1234567890987654321&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>);\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<ul>\n<li>2、62进制转十进制</li>\n</ul>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-keyword\">echo</span> <span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-string\">&#x27;1tckI2JJZDz&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789&#x27;</span>);\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<p>这只是一个基本的思路，对于一般的使用也够了</p>\n",
-      "toc": "<ul>\n<li><a href=\"#toc-b6724c\">原理</a></li>\n<li><a href=\"#toc-3e9100\">实现方式</a></li>\n<li><a href=\"#toc-afda0a\">这里有几个问题</a></li>\n<li><a href=\"#toc-ff0abc\">3、跳转用301还是302</a></li>\n<li><a href=\"#toc-6c9ae3\">用法：</a></li>\n</ul>\n",
-      "url": "duan-url-xi-tong-she-ji",
-      "created_timestamp": 1493499134000,
-      "updated_timestamp": 1493499134000,
-      "symbolsCount": 6072
-    },
-    {
-      "id": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
-      "title": "X-Frame-Options 响应头",
-      "alias": "",
-      "cover": "",
-      "created_time": "2017-06-06T16:00:14.000Z",
-      "updated_time": "2017-06-06T16:00:14.000Z",
-      "categories": [
-        "notes",
-        "http"
-      ],
-      "tags": [],
-      "excerpt": "做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display ‘XXXX’ in a frame because it set ‘X-Frame-Options’ to ‘de",
-      "published": true,
-      "content": "\n做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display 'XXXX' in a frame because it set 'X-Frame-Options' to 'deny'. 查询了MDN，具体原因如下(MDN上摘录)\n\n<!-- more -->\n\n### X-Frame-Options是什么？\nX-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 `<frame>`, `<iframe>` 或者 `<object>` 中展现的标记。网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，也从而避免了点击劫持 (clickjacking) 的攻击。\n\n### 使用X-Frame-Options\nX-Frame-Options 有三个值:\n- DENY\n  表示该页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。\n- SAMEORIGIN\n  表示该页面可以在相同域名页面的 frame 中展示。\n- ALLOW-FROM uri\n  表示该页面可以在指定来源的 frame 中展示。\n  换一句话说，如果设置为 DENY，不光在别人的网站 frame 嵌入时会无法加载，在同域名页面中同样会无法加载。另一方面，如果设置为 SAMEORIGIN，那么页面就可以在同域名页面的 frame 中嵌套。\n\n### 服务器配置\n- 配置 Apache\n  配置 Apache 在所有页面上发送 X-Frame-Options 响应头，需要把下面这行添加到 'site' 的配置中:\n```\nHeader always append X-Frame-Options SAMEORIGIN\n```\n\n### 配置 nginx\n\n- 配置 nginx\n  发送 X-Frame-Options 响应头，把下面这行添加到 'http', 'server' 或者 'location' 的配置中:\n\n```\nadd_header X-Frame-Options SAMEORIGIN;\n```\n\n### 配置 IIS\n\n- 配置 IIS\n\n发送 X-Frame-Options 响应头，添加下面的配置到 Web.config 文件中:\n\n```\n<system.webServer>\n  ...\n\n  <httpProtocol>\n    <customHeaders>\n      <add name=\"X-Frame-Options\" value=\"SAMEORIGIN\" />\n    </customHeaders>\n  </httpProtocol>\n\n  ...\n</system.webServer>\n```\n\n### 其他\n\n可以直接通过meta标签来设置，不需要放在http头部请求中了。\n\n```\n<meta http-equiv=\"X-Frame-Options\" content=\"deny\">\n```\n",
-      "mdContent": "<p>做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display &#39;XXXX&#39; in a frame because it set &#39;X-Frame-Options&#39; to &#39;deny&#39;. 查询了MDN，具体原因如下(MDN上摘录)</p>\n<!-- more -->\n\n<h3 id=\"toc-00452a\">X-Frame-Options是什么？</h3>\n<p>X-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code> 或者 <code>&lt;object&gt;</code> 中展现的标记。网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，也从而避免了点击劫持 (clickjacking) 的攻击。</p>\n<h3 id=\"toc-3c05a1\">使用X-Frame-Options</h3>\n<p>X-Frame-Options 有三个值:</p>\n<ul>\n<li>DENY\n表示该页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。</li>\n<li>SAMEORIGIN\n表示该页面可以在相同域名页面的 frame 中展示。</li>\n<li>ALLOW-FROM uri\n表示该页面可以在指定来源的 frame 中展示。\n换一句话说，如果设置为 DENY，不光在别人的网站 frame 嵌入时会无法加载，在同域名页面中同样会无法加载。另一方面，如果设置为 SAMEORIGIN，那么页面就可以在同域名页面的 frame 中嵌套。</li>\n</ul>\n<h3 id=\"toc-171f7b\">服务器配置</h3>\n<ul>\n<li>配置 Apache\n配置 Apache 在所有页面上发送 X-Frame-Options 响应头，需要把下面这行添加到 &#39;site&#39; 的配置中:</li>\n</ul>\n<pre><code class=\"hljs lang-pgsql\"><span class=\"hljs-keyword\">Header</span> <span class=\"hljs-keyword\">always</span> append X-Frame-<span class=\"hljs-keyword\">Options</span> SAMEORIGIN\n</code></pre>\n<h3 id=\"toc-5f33f1\">配置 nginx</h3>\n<ul>\n<li>配置 nginx\n发送 X-Frame-Options 响应头，把下面这行添加到 &#39;http&#39;, &#39;server&#39; 或者 &#39;location&#39; 的配置中:</li>\n</ul>\n<pre><code class=\"hljs lang-mathematica\"><span class=\"hljs-type\">add_header</span> <span class=\"hljs-variable\">X</span><span class=\"hljs-operator\">-</span><span class=\"hljs-built_in\">Frame</span><span class=\"hljs-operator\">-</span><span class=\"hljs-built_in\">Options</span> <span class=\"hljs-variable\">SAMEORIGIN</span><span class=\"hljs-operator\">;</span>\n</code></pre>\n<h3 id=\"toc-170914\">配置 IIS</h3>\n<ul>\n<li>配置 IIS</li>\n</ul>\n<p>发送 X-Frame-Options 响应头，添加下面的配置到 Web.config 文件中:</p>\n<pre><code class=\"hljs lang-xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">system.webServer</span>&gt;</span>\n  ...\n\n  <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">httpProtocol</span>&gt;</span>\n    <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">customHeaders</span>&gt;</span>\n      <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">add</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;X-Frame-Options&quot;</span> <span class=\"hljs-attr\">value</span>=<span class=\"hljs-string\">&quot;SAMEORIGIN&quot;</span> /&gt;</span>\n    <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">customHeaders</span>&gt;</span>\n  <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">httpProtocol</span>&gt;</span>\n\n  ...\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">system.webServer</span>&gt;</span>\n</code></pre>\n<h3 id=\"toc-0d98c7\">其他</h3>\n<p>可以直接通过meta标签来设置，不需要放在http头部请求中了。</p>\n<pre><code class=\"hljs lang-routeros\">&lt;meta <span class=\"hljs-attribute\">http-equiv</span>=<span class=\"hljs-string\">&quot;X-Frame-Options&quot;</span> <span class=\"hljs-attribute\">content</span>=<span class=\"hljs-string\">&quot;deny&quot;</span>&gt;\n</code></pre>\n",
-      "toc": "<ul>\n<li><a href=\"#toc-00452a\">X-Frame-Options是什么？</a></li>\n<li><a href=\"#toc-3c05a1\">使用X-Frame-Options</a></li>\n<li><a href=\"#toc-171f7b\">服务器配置</a></li>\n<li><a href=\"#toc-5f33f1\">配置 nginx</a></li>\n<li><a href=\"#toc-170914\">配置 IIS</a></li>\n<li><a href=\"#toc-0d98c7\">其他</a></li>\n</ul>\n",
-      "url": "x-frame-options-xiang-ying-tou",
-      "created_timestamp": 1496764814000,
-      "updated_timestamp": 1496764814000,
-      "symbolsCount": 2777
-    },
-    {
       "id": "1ef3b59b-0a4e-6760-9d78-69ba27cbd20e",
       "title": "通过takeUntil取消订阅可观察对象",
       "alias": "",
@@ -322,6 +236,92 @@
       "created_timestamp": 1493820343000,
       "updated_timestamp": 1493820343000,
       "symbolsCount": 6165
+    },
+    {
+      "id": "1ef3b5d3-d10c-6040-8228-d52499675442",
+      "title": "让浏览器兼容placeholder",
+      "alias": "",
+      "cover": "",
+      "created_time": "2017-04-29T21:00:51.000Z",
+      "updated_time": "2017-04-29T21:00:51.000Z",
+      "categories": [
+        "html"
+      ],
+      "tags": [],
+      "excerpt": "什么是placeholderplaceholder 属性提供可描述输入字段预期值的提示信息（hint）。该提示会在输入字段为空时显示，并会在字段获得焦点时消失。placeholder兼容性解决$(function(){    if(!placeholderSupport()){   // 判断浏览器",
+      "published": true,
+      "content": "\n#### 什么是placeholder\n\nplaceholder 属性提供可描述输入字段预期值的提示信息（hint）。\n该提示会在输入字段为空时显示，并会在字段获得焦点时消失。\n\n<!-- more -->\n\n#### placeholder兼容性解决\n\n```js\n$(function(){\n    if(!placeholderSupport()){   // 判断浏览器是否支持 placeholder\n        $('[placeholder]').focus(function() {\n            var input = $(this);\n            if (input.val() == input.attr('placeholder')) {\n                input.val('');\n                input.removeClass('placeholder');\n            }\n        }).blur(function() {\n            var input = $(this);\n            if (input.val() == '' || input.val() == input.attr('placeholder')) {\n                input.addClass('placeholder');\n                input.val(input.attr('placeholder'));\n            }\n        }).blur();\n    };\n})\nfunction placeholderSupport() {\n    return 'placeholder' in document.createElement('input');\n}\n```",
+      "mdContent": "<h4 id=\"toc-04a6ee\">什么是placeholder</h4>\n<p>placeholder 属性提供可描述输入字段预期值的提示信息（hint）。\n该提示会在输入字段为空时显示，并会在字段获得焦点时消失。</p>\n<!-- more -->\n\n<h4 id=\"toc-9c8b5f\">placeholder兼容性解决</h4>\n<pre><code class=\"hljs lang-js\">$(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>){\n    <span class=\"hljs-keyword\">if</span>(!<span class=\"hljs-title function_\">placeholderSupport</span>()){   <span class=\"hljs-comment\">// 判断浏览器是否支持 placeholder</span>\n        $(<span class=\"hljs-string\">&#x27;[placeholder]&#x27;</span>).<span class=\"hljs-title function_\">focus</span>(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>) {\n            <span class=\"hljs-keyword\">var</span> input = $(<span class=\"hljs-variable language_\">this</span>);\n            <span class=\"hljs-keyword\">if</span> (input.<span class=\"hljs-title function_\">val</span>() == input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>)) {\n                input.<span class=\"hljs-title function_\">val</span>(<span class=\"hljs-string\">&#x27;&#x27;</span>);\n                input.<span class=\"hljs-title function_\">removeClass</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>);\n            }\n        }).<span class=\"hljs-title function_\">blur</span>(<span class=\"hljs-keyword\">function</span>(<span class=\"hljs-params\"></span>) {\n            <span class=\"hljs-keyword\">var</span> input = $(<span class=\"hljs-variable language_\">this</span>);\n            <span class=\"hljs-keyword\">if</span> (input.<span class=\"hljs-title function_\">val</span>() == <span class=\"hljs-string\">&#x27;&#x27;</span> || input.<span class=\"hljs-title function_\">val</span>() == input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>)) {\n                input.<span class=\"hljs-title function_\">addClass</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>);\n                input.<span class=\"hljs-title function_\">val</span>(input.<span class=\"hljs-title function_\">attr</span>(<span class=\"hljs-string\">&#x27;placeholder&#x27;</span>));\n            }\n        }).<span class=\"hljs-title function_\">blur</span>();\n    };\n})\n<span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">placeholderSupport</span>(<span class=\"hljs-params\"></span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-string\">&#x27;placeholder&#x27;</span> <span class=\"hljs-keyword\">in</span> <span class=\"hljs-variable language_\">document</span>.<span class=\"hljs-title function_\">createElement</span>(<span class=\"hljs-string\">&#x27;input&#x27;</span>);\n}\n</code></pre>\n",
+      "toc": "<ul>\n<li><a href=\"#toc-04a6ee\">什么是placeholder</a></li>\n<li><a href=\"#toc-9c8b5f\">placeholder兼容性解决</a></li>\n</ul>\n",
+      "url": "rang-liu-lan-qi-jian-rong-placeholder",
+      "created_timestamp": 1493499651000,
+      "updated_timestamp": 1493499651000,
+      "symbolsCount": 2383
+    },
+    {
+      "id": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
+      "title": "浏览器指定内核访问",
+      "alias": "",
+      "cover": "",
+      "created_time": "2017-04-29T21:13:03.000Z",
+      "updated_time": "2017-04-29T21:13:03.000Z",
+      "categories": [
+        "notes",
+        "html"
+      ],
+      "tags": [],
+      "excerpt": "360页面默认使用极速内核&lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;页面默认使用ie兼容内核&lt;meta name=&quot;renderer&quot; content=&quot;ie-comp&quo",
+      "published": true,
+      "content": "\n360页面默认使用极速内核\n```html\n<meta name=\"renderer\" content=\"webkit\">\n```\n页面默认使用ie兼容内核\n```html\n<meta name=\"renderer\" content=\"ie-comp\">\n```\n页面默认使用ie标准内核\n```html\n<meta name=\"renderer\" content=\"ie-stand\">\n\n<!-- more -->\n```",
+      "mdContent": "<p>360页面默认使用极速内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;webkit&quot;</span>&gt;</span>\n</code></pre>\n<p>页面默认使用ie兼容内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;ie-comp&quot;</span>&gt;</span>\n</code></pre>\n<p>页面默认使用ie标准内核</p>\n<pre><code class=\"hljs lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">meta</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;renderer&quot;</span> <span class=\"hljs-attr\">content</span>=<span class=\"hljs-string\">&quot;ie-stand&quot;</span>&gt;</span>\n\n<span class=\"hljs-comment\">&lt;!-- more --&gt;</span>\n</code></pre>\n",
+      "toc": "",
+      "url": "liu-lan-qi-zhi-ding-nei-he-fang-wen",
+      "created_timestamp": 1493500383000,
+      "updated_timestamp": 1493500383000,
+      "symbolsCount": 984
+    },
+    {
+      "id": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
+      "title": "短 URL 系统设计",
+      "alias": "",
+      "cover": "",
+      "created_time": "2017-04-29T20:52:14.000Z",
+      "updated_time": "2017-04-29T20:52:14.000Z",
+      "categories": [
+        "notes"
+      ],
+      "tags": [],
+      "excerpt": "原理通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。实现方式将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面通过访问短连接获取到62进制字符串",
+      "published": true,
+      "content": "\n\n\n### 原理\n\n通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。\n\n<!-- more -->\n\n### 实现方式\n\n- 将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面\n- 通过访问短连接获取到62进制字符串，转化为10进制，通过查询获得长链接进行跳转\n\n### 这里有几个问题\n\n- 1、62进制如何用数据库或者KV存储来做\n\n这个问题就不展开了，自行解决\n\n- 2、如何保证同一个长地址，每次转出来都是一样的短地址\n\n上面的发号原理中，是不判断长地址是否已经转过的。同一个长地址，产生多条短地址记录，这明显是浪费空间的。\n目前没有好的解决方法\n\n### 3、跳转用301还是302\n\n301是永久重定向，302是临时重定向。短地址一经生成就不会变化，所以用301是符合http语义的。同时对服务器压力也会有一定减少。\n\n但是如果使用了301，我们就无法统计到短地址被点击的次数了。而这个点击次数是一个非常有意思的大数据分析数据源。能够分析出的东西非常非常多。\n\n对于搜索引擎SEO优化来说301跳转更合适\n\n10进制62进制互转 （php实现）\n\n这里用了php手册中的一个方法，支持任意进制的转换\n点击跳转到php手册\n\n```php\n<?php\nfunction convBase($numberInput, $fromBaseInput, $toBaseInput)\n{\n    if ($fromBaseInput==$toBaseInput) return $numberInput;\n    $fromBase = str_split($fromBaseInput,1);\n    $toBase = str_split($toBaseInput,1);\n    $number = str_split($numberInput,1);\n    $fromLen=strlen($fromBaseInput);\n    $toLen=strlen($toBaseInput);\n    $numberLen=strlen($numberInput);\n    $retval='';\n    if ($toBaseInput == '0123456789')\n    {\n        $retval=0;\n        for ($i = 1;$i <= $numberLen; $i++)\n            $retval = bcadd($retval, bcmul(array_search($number[$i-1], $fromBase),bcpow($fromLen,$numberLen-$i)));\n        return $retval;\n    }\n    if ($fromBaseInput != '0123456789')\n        $base10=convBase($numberInput, $fromBaseInput, '0123456789');\n    else\n        $base10 = $numberInput;\n    if ($base10<strlen($toBaseInput))\n        return $toBase[$base10];\n    while($base10 != '0')\n    {\n        $retval = $toBase[bcmod($base10,$toLen)].$retval;\n        $base10 = bcdiv($base10,$toLen,0);\n    }\n    return $retval;\n}\n?>\n```\n\n### 用法：\n- 1、十进制转62进制\n\n```php\n<?php\necho convBase('1234567890987654321','0123456789','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');\n?>\n```\n- 2、62进制转十进制\n\n```php\n<?php\necho convBase('1tckI2JJZDz','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ','0123456789');\n?>\n```\n这只是一个基本的思路，对于一般的使用也够了",
+      "mdContent": "<h3 id=\"toc-b6724c\">原理</h3>\n<p>通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。</p>\n<!-- more -->\n\n<h3 id=\"toc-3e9100\">实现方式</h3>\n<ul>\n<li>将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面</li>\n<li>通过访问短连接获取到62进制字符串，转化为10进制，通过查询获得长链接进行跳转</li>\n</ul>\n<h3 id=\"toc-afda0a\">这里有几个问题</h3>\n<ul>\n<li>1、62进制如何用数据库或者KV存储来做</li>\n</ul>\n<p>这个问题就不展开了，自行解决</p>\n<ul>\n<li>2、如何保证同一个长地址，每次转出来都是一样的短地址</li>\n</ul>\n<p>上面的发号原理中，是不判断长地址是否已经转过的。同一个长地址，产生多条短地址记录，这明显是浪费空间的。\n目前没有好的解决方法</p>\n<h3 id=\"toc-ff0abc\">3、跳转用301还是302</h3>\n<p>301是永久重定向，302是临时重定向。短地址一经生成就不会变化，所以用301是符合http语义的。同时对服务器压力也会有一定减少。</p>\n<p>但是如果使用了301，我们就无法统计到短地址被点击的次数了。而这个点击次数是一个非常有意思的大数据分析数据源。能够分析出的东西非常非常多。</p>\n<p>对于搜索引擎SEO优化来说301跳转更合适</p>\n<p>10进制62进制互转 （php实现）</p>\n<p>这里用了php手册中的一个方法，支持任意进制的转换\n点击跳转到php手册</p>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">convBase</span>(<span class=\"hljs-params\"><span class=\"hljs-variable\">$numberInput</span>, <span class=\"hljs-variable\">$fromBaseInput</span>, <span class=\"hljs-variable\">$toBaseInput</span></span>)\n</span>{\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$fromBaseInput</span>==<span class=\"hljs-variable\">$toBaseInput</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$numberInput</span>;\n    <span class=\"hljs-variable\">$fromBase</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$fromBaseInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$toBase</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$toBaseInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$number</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$numberInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$fromLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$fromBaseInput</span>);\n    <span class=\"hljs-variable\">$toLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$toBaseInput</span>);\n    <span class=\"hljs-variable\">$numberLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$numberInput</span>);\n    <span class=\"hljs-variable\">$retval</span>=<span class=\"hljs-string\">&#x27;&#x27;</span>;\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$toBaseInput</span> == <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>)\n    {\n        <span class=\"hljs-variable\">$retval</span>=<span class=\"hljs-number\">0</span>;\n        <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-variable\">$i</span> = <span class=\"hljs-number\">1</span>;<span class=\"hljs-variable\">$i</span> &lt;= <span class=\"hljs-variable\">$numberLen</span>; <span class=\"hljs-variable\">$i</span>++)\n            <span class=\"hljs-variable\">$retval</span> = <span class=\"hljs-title function_ invoke__\">bcadd</span>(<span class=\"hljs-variable\">$retval</span>, <span class=\"hljs-title function_ invoke__\">bcmul</span>(<span class=\"hljs-title function_ invoke__\">array_search</span>(<span class=\"hljs-variable\">$number</span>[<span class=\"hljs-variable\">$i</span>-<span class=\"hljs-number\">1</span>], <span class=\"hljs-variable\">$fromBase</span>),<span class=\"hljs-title function_ invoke__\">bcpow</span>(<span class=\"hljs-variable\">$fromLen</span>,<span class=\"hljs-variable\">$numberLen</span>-<span class=\"hljs-variable\">$i</span>)));\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$retval</span>;\n    }\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$fromBaseInput</span> != <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>)\n        <span class=\"hljs-variable\">$base10</span>=<span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-variable\">$numberInput</span>, <span class=\"hljs-variable\">$fromBaseInput</span>, <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>);\n    <span class=\"hljs-keyword\">else</span>\n        <span class=\"hljs-variable\">$base10</span> = <span class=\"hljs-variable\">$numberInput</span>;\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$base10</span>&lt;<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$toBaseInput</span>))\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$toBase</span>[<span class=\"hljs-variable\">$base10</span>];\n    <span class=\"hljs-keyword\">while</span>(<span class=\"hljs-variable\">$base10</span> != <span class=\"hljs-string\">&#x27;0&#x27;</span>)\n    {\n        <span class=\"hljs-variable\">$retval</span> = <span class=\"hljs-variable\">$toBase</span>[<span class=\"hljs-title function_ invoke__\">bcmod</span>(<span class=\"hljs-variable\">$base10</span>,<span class=\"hljs-variable\">$toLen</span>)].<span class=\"hljs-variable\">$retval</span>;\n        <span class=\"hljs-variable\">$base10</span> = <span class=\"hljs-title function_ invoke__\">bcdiv</span>(<span class=\"hljs-variable\">$base10</span>,<span class=\"hljs-variable\">$toLen</span>,<span class=\"hljs-number\">0</span>);\n    }\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$retval</span>;\n}\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<h3 id=\"toc-6c9ae3\">用法：</h3>\n<ul>\n<li>1、十进制转62进制</li>\n</ul>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-keyword\">echo</span> <span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-string\">&#x27;1234567890987654321&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>);\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<ul>\n<li>2、62进制转十进制</li>\n</ul>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-keyword\">echo</span> <span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-string\">&#x27;1tckI2JJZDz&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789&#x27;</span>);\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<p>这只是一个基本的思路，对于一般的使用也够了</p>\n",
+      "toc": "<ul>\n<li><a href=\"#toc-b6724c\">原理</a></li>\n<li><a href=\"#toc-3e9100\">实现方式</a></li>\n<li><a href=\"#toc-afda0a\">这里有几个问题</a></li>\n<li><a href=\"#toc-ff0abc\">3、跳转用301还是302</a></li>\n<li><a href=\"#toc-6c9ae3\">用法：</a></li>\n</ul>\n",
+      "url": "duan-url-xi-tong-she-ji",
+      "created_timestamp": 1493499134000,
+      "updated_timestamp": 1493499134000,
+      "symbolsCount": 6072
+    },
+    {
+      "id": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
+      "title": "X-Frame-Options 响应头",
+      "alias": "",
+      "cover": "",
+      "created_time": "2017-06-06T16:00:14.000Z",
+      "updated_time": "2017-06-06T16:00:14.000Z",
+      "categories": [
+        "notes",
+        "http"
+      ],
+      "tags": [],
+      "excerpt": "做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display ‘XXXX’ in a frame because it set ‘X-Frame-Options’ to ‘de",
+      "published": true,
+      "content": "\n做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display 'XXXX' in a frame because it set 'X-Frame-Options' to 'deny'. 查询了MDN，具体原因如下(MDN上摘录)\n\n<!-- more -->\n\n### X-Frame-Options是什么？\nX-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 `<frame>`, `<iframe>` 或者 `<object>` 中展现的标记。网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，也从而避免了点击劫持 (clickjacking) 的攻击。\n\n### 使用X-Frame-Options\nX-Frame-Options 有三个值:\n- DENY\n  表示该页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。\n- SAMEORIGIN\n  表示该页面可以在相同域名页面的 frame 中展示。\n- ALLOW-FROM uri\n  表示该页面可以在指定来源的 frame 中展示。\n  换一句话说，如果设置为 DENY，不光在别人的网站 frame 嵌入时会无法加载，在同域名页面中同样会无法加载。另一方面，如果设置为 SAMEORIGIN，那么页面就可以在同域名页面的 frame 中嵌套。\n\n### 服务器配置\n- 配置 Apache\n  配置 Apache 在所有页面上发送 X-Frame-Options 响应头，需要把下面这行添加到 'site' 的配置中:\n```\nHeader always append X-Frame-Options SAMEORIGIN\n```\n\n### 配置 nginx\n\n- 配置 nginx\n  发送 X-Frame-Options 响应头，把下面这行添加到 'http', 'server' 或者 'location' 的配置中:\n\n```\nadd_header X-Frame-Options SAMEORIGIN;\n```\n\n### 配置 IIS\n\n- 配置 IIS\n\n发送 X-Frame-Options 响应头，添加下面的配置到 Web.config 文件中:\n\n```\n<system.webServer>\n  ...\n\n  <httpProtocol>\n    <customHeaders>\n      <add name=\"X-Frame-Options\" value=\"SAMEORIGIN\" />\n    </customHeaders>\n  </httpProtocol>\n\n  ...\n</system.webServer>\n```\n\n### 其他\n\n可以直接通过meta标签来设置，不需要放在http头部请求中了。\n\n```\n<meta http-equiv=\"X-Frame-Options\" content=\"deny\">\n```\n",
+      "mdContent": "<p>做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display &#39;XXXX&#39; in a frame because it set &#39;X-Frame-Options&#39; to &#39;deny&#39;. 查询了MDN，具体原因如下(MDN上摘录)</p>\n<!-- more -->\n\n<h3 id=\"toc-00452a\">X-Frame-Options是什么？</h3>\n<p>X-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code> 或者 <code>&lt;object&gt;</code> 中展现的标记。网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，也从而避免了点击劫持 (clickjacking) 的攻击。</p>\n<h3 id=\"toc-3c05a1\">使用X-Frame-Options</h3>\n<p>X-Frame-Options 有三个值:</p>\n<ul>\n<li>DENY\n表示该页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。</li>\n<li>SAMEORIGIN\n表示该页面可以在相同域名页面的 frame 中展示。</li>\n<li>ALLOW-FROM uri\n表示该页面可以在指定来源的 frame 中展示。\n换一句话说，如果设置为 DENY，不光在别人的网站 frame 嵌入时会无法加载，在同域名页面中同样会无法加载。另一方面，如果设置为 SAMEORIGIN，那么页面就可以在同域名页面的 frame 中嵌套。</li>\n</ul>\n<h3 id=\"toc-171f7b\">服务器配置</h3>\n<ul>\n<li>配置 Apache\n配置 Apache 在所有页面上发送 X-Frame-Options 响应头，需要把下面这行添加到 &#39;site&#39; 的配置中:</li>\n</ul>\n<pre><code class=\"hljs lang-pgsql\"><span class=\"hljs-keyword\">Header</span> <span class=\"hljs-keyword\">always</span> append X-Frame-<span class=\"hljs-keyword\">Options</span> SAMEORIGIN\n</code></pre>\n<h3 id=\"toc-5f33f1\">配置 nginx</h3>\n<ul>\n<li>配置 nginx\n发送 X-Frame-Options 响应头，把下面这行添加到 &#39;http&#39;, &#39;server&#39; 或者 &#39;location&#39; 的配置中:</li>\n</ul>\n<pre><code class=\"hljs lang-mathematica\"><span class=\"hljs-type\">add_header</span> <span class=\"hljs-variable\">X</span><span class=\"hljs-operator\">-</span><span class=\"hljs-built_in\">Frame</span><span class=\"hljs-operator\">-</span><span class=\"hljs-built_in\">Options</span> <span class=\"hljs-variable\">SAMEORIGIN</span><span class=\"hljs-operator\">;</span>\n</code></pre>\n<h3 id=\"toc-170914\">配置 IIS</h3>\n<ul>\n<li>配置 IIS</li>\n</ul>\n<p>发送 X-Frame-Options 响应头，添加下面的配置到 Web.config 文件中:</p>\n<pre><code class=\"hljs lang-xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">system.webServer</span>&gt;</span>\n  ...\n\n  <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">httpProtocol</span>&gt;</span>\n    <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">customHeaders</span>&gt;</span>\n      <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">add</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;X-Frame-Options&quot;</span> <span class=\"hljs-attr\">value</span>=<span class=\"hljs-string\">&quot;SAMEORIGIN&quot;</span> /&gt;</span>\n    <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">customHeaders</span>&gt;</span>\n  <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">httpProtocol</span>&gt;</span>\n\n  ...\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">system.webServer</span>&gt;</span>\n</code></pre>\n<h3 id=\"toc-0d98c7\">其他</h3>\n<p>可以直接通过meta标签来设置，不需要放在http头部请求中了。</p>\n<pre><code class=\"hljs lang-routeros\">&lt;meta <span class=\"hljs-attribute\">http-equiv</span>=<span class=\"hljs-string\">&quot;X-Frame-Options&quot;</span> <span class=\"hljs-attribute\">content</span>=<span class=\"hljs-string\">&quot;deny&quot;</span>&gt;\n</code></pre>\n",
+      "toc": "<ul>\n<li><a href=\"#toc-00452a\">X-Frame-Options是什么？</a></li>\n<li><a href=\"#toc-3c05a1\">使用X-Frame-Options</a></li>\n<li><a href=\"#toc-171f7b\">服务器配置</a></li>\n<li><a href=\"#toc-5f33f1\">配置 nginx</a></li>\n<li><a href=\"#toc-170914\">配置 IIS</a></li>\n<li><a href=\"#toc-0d98c7\">其他</a></li>\n</ul>\n",
+      "url": "x-frame-options-xiang-ying-tou",
+      "created_timestamp": 1496764814000,
+      "updated_timestamp": 1496764814000,
+      "symbolsCount": 2777
     },
     {
       "id": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
@@ -839,6 +839,12 @@
       "url": "linux"
     },
     {
+      "id": "0a347cfa-d40a-5cde-816b-6899edf5386f",
+      "title": "javascript",
+      "description": "javascript",
+      "url": "javascript"
+    },
+    {
       "id": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
       "title": "html",
       "description": "html",
@@ -855,12 +861,6 @@
       "title": "http",
       "description": "http",
       "url": "http"
-    },
-    {
-      "id": "0a347cfa-d40a-5cde-816b-6899edf5386f",
-      "title": "javascript",
-      "description": "javascript",
-      "url": "javascript"
     },
     {
       "id": "d22b62a2-d564-576e-96dd-0b8433662e2d",
@@ -913,36 +913,6 @@
       "id": "ee0d41c2-237b-516d-a083-48e1e0216d69"
     },
     {
-      "postId": "1ef3b5d3-d10c-6040-8228-d52499675442",
-      "categoryId": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
-      "id": "9f3d34f1-3c09-5bc3-9726-5f5ad8a4c102"
-    },
-    {
-      "postId": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
-      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
-      "id": "d6ec2c01-63bc-5f06-ab40-c964282bda04"
-    },
-    {
-      "postId": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
-      "categoryId": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
-      "id": "9ffe9bd3-e201-5239-88ca-5128e42f9380"
-    },
-    {
-      "postId": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
-      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
-      "id": "966bf8e5-839d-5685-912e-f1830cc20e9d"
-    },
-    {
-      "postId": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
-      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
-      "id": "df721695-fbe5-5c68-8c84-235b795c76b7"
-    },
-    {
-      "postId": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
-      "categoryId": "fbe30cce-885f-5935-93b1-a721fcaa2bab",
-      "id": "33c470d7-615a-5898-9bb1-830f3c8dd260"
-    },
-    {
       "postId": "1ef3b59b-0a4e-6760-9d78-69ba27cbd20e",
       "categoryId": "0a347cfa-d40a-5cde-816b-6899edf5386f",
       "id": "623af1cc-50a2-59c6-ba07-b35b7fe3c4e4"
@@ -971,6 +941,36 @@
       "postId": "1ef3b5c3-e152-6d60-94dd-7da5eda79cf5",
       "categoryId": "80d82b70-8dd1-5b0e-a576-6d05686610f9",
       "id": "a0683a1c-1508-5ef8-9944-609a3ce43ee9"
+    },
+    {
+      "postId": "1ef3b5d3-d10c-6040-8228-d52499675442",
+      "categoryId": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
+      "id": "9f3d34f1-3c09-5bc3-9726-5f5ad8a4c102"
+    },
+    {
+      "postId": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
+      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
+      "id": "d6ec2c01-63bc-5f06-ab40-c964282bda04"
+    },
+    {
+      "postId": "1ef3b5c6-dba2-6340-9f1a-fbf62a73561b",
+      "categoryId": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
+      "id": "9ffe9bd3-e201-5239-88ca-5128e42f9380"
+    },
+    {
+      "postId": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
+      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
+      "id": "966bf8e5-839d-5685-912e-f1830cc20e9d"
+    },
+    {
+      "postId": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
+      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
+      "id": "df721695-fbe5-5c68-8c84-235b795c76b7"
+    },
+    {
+      "postId": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
+      "categoryId": "fbe30cce-885f-5935-93b1-a721fcaa2bab",
+      "id": "33c470d7-615a-5898-9bb1-830f3c8dd260"
     },
     {
       "postId": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
