@@ -1,7 +1,13 @@
 export const name = 'TagTestUser';
 
 
-import { SysConfigService, nunjucks, NestExpressApplication } from 'uuice-cli'
+import { nunjucks, NestExpressApplication } from 'uuice-cli'
+
+// const  service =  require('uuice-cli/dist/server/core/service')
+import { SysConfigService } from 'uuice-cli'
+
+nunjucks.configure({ autoescape: false });
+
 export function command(app: NestExpressApplication): void {
   // tag with endpoint test
   this.tags = [`${name}`]
@@ -20,8 +26,8 @@ export function command(app: NestExpressApplication): void {
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
   this.run = async function (context: any, args: any, body: any, callback: any) {
-    const sysConfigService: SysConfigService = app.get(SysConfigService)
-    console.log(sysConfigService.getSysConfig())
+    // const sysConfigService: SysConfigService = app.get(SysConfigService)
+    // console.log(sysConfigService.getSysConfig())
     context.ctx.list = [
       {
         id: 1,
