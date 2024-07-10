@@ -1,14 +1,6 @@
 export const name = 'TagTestUser';
-
-
-import { nunjucks, NestExpressApplication } from 'uuice-cli'
-
-// const  service =  require('uuice-cli/dist/server/core/service')
-import { SysConfigService } from 'uuice-cli'
-
-nunjucks.configure({ autoescape: false });
-
-export function command(app: NestExpressApplication): void {
+import { NestExpressApplication, CustomTagOptions } from 'uuice-cli'
+export function command(app: NestExpressApplication, options: CustomTagOptions): void {
   // tag with endpoint test
   this.tags = [`${name}`]
   this.parse = function (parser: any, nodes: any) {
@@ -26,8 +18,14 @@ export function command(app: NestExpressApplication): void {
     return new nodes.CallExtensionAsync(this, 'run', args, [body]) // async
   }
   this.run = async function (context: any, args: any, body: any, callback: any) {
-    // const sysConfigService: SysConfigService = app.get(SysConfigService)
+    // !I don't know why app.get(SysConfigService) doesn't work, return undefined
+    // ! you can use `new SysConfigService` by yourself
+    // const configService = new ConfigService()
+    // const dbService = new DbService(configService)
+    // await dbService.initDb()
+    // const sysConfigService: SysConfigService = new SysConfigService(dbService)
     // console.log(sysConfigService.getSysConfig())
+    console.log(options.sysConfigService.getSysConfig())
     context.ctx.list = [
       {
         id: 1,
@@ -70,7 +68,10 @@ export function command(app: NestExpressApplication): void {
         short: 'H'
       }
     ] // return
-    const result = new nunjucks.runtime.SafeString(body())
+    // const result = new nunjucks.runtime.SafeString(body())
+    // !I don't know why the new nunjucks.runtime.SafeString return HTML does not work
+    // ! so use env instance and get safe method
+    const result = options.env.getFilter('safe')(body())
     return callback(null, result)
   }
 }

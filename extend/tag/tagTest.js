@@ -11,9 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.command = exports.name = void 0;
 exports.name = 'TagTestUser';
-const uuice_cli_1 = require("uuice-cli");
-uuice_cli_1.nunjucks.configure({ autoescape: false });
-function command(app) {
+function command(app, options) {
     this.tags = [`${exports.name}`];
     this.parse = function (parser, nodes) {
         const tok = parser.nextToken();
@@ -28,6 +26,7 @@ function command(app) {
     };
     this.run = function (context, args, body, callback) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(options.sysConfigService.getSysConfig());
             context.ctx.list = [
                 {
                     id: 1,
@@ -70,7 +69,7 @@ function command(app) {
                     short: 'H'
                 }
             ];
-            const result = new uuice_cli_1.nunjucks.runtime.SafeString(body());
+            const result = options.env.getFilter('safe')(body());
             return callback(null, result);
         });
     };
