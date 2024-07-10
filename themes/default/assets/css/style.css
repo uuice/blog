@@ -2320,9 +2320,19 @@ input[type="range"] {
 .widget ol ol {
   list-style: decimal;
 }
+.widget-toc-body a {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .category-link,
 .archive-link,
-.recent-link {
+.recent-link,
+.widget-toc-body a {
   height: 40px;
   display: flex;
   align-items: center;
@@ -2336,14 +2346,16 @@ input[type="range"] {
 }
 .category-link:hover,
 .archive-link:hover,
-.recent-link:hover {
+.recent-link:hover,
+.widget-toc-body a:hover {
   padding-left: 12px;
   background: var(--btn-text-hover);
   color: var(--btn-text-light-text);
 }
 .category-link:active,
 .archive-link:active,
-.recent-link:active {
+.recent-link:active,
+.widget-toc-body a:active {
   background: var(--btn-text-active);
 }
 .category-link .category-count,
