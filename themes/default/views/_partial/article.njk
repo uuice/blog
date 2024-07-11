@@ -29,7 +29,7 @@
               {{ post.excerpt | stripHtml | shorten(500)}}
           </div>
           {% else%}
-          {{ post.mdContent | safe}}
+          {{ post.content | safe}}
           {% endif%}
       </div>
 

@@ -19,4 +19,4 @@ vscode 需要安装 `EditorConfig for VS Code` 插件
 
 ## 其他
 
-后台服务（Nest.js）和后台管理系统（Angular）共用配置
+后台服务（Nest.js）
