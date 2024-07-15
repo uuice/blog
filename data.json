@@ -109,6 +109,49 @@
       "symbolsCount": 246
     },
     {
+      "id": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
+      "title": "短 URL 系统设计",
+      "alias": "",
+      "cover": "",
+      "created_time": "2017-04-29T20:52:14.000Z",
+      "updated_time": "2017-04-29T20:52:14.000Z",
+      "categories": [
+        "notes"
+      ],
+      "tags": [],
+      "excerpt": "原理通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。实现方式将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面通过访问短连接获取到62进制字符串",
+      "published": true,
+      "content": "<h3 id=\"toc-b6724c\">原理</h3>\n<p>通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。</p>\n<!-- more -->\n\n<h3 id=\"toc-3e9100\">实现方式</h3>\n<ul>\n<li>将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面</li>\n<li>通过访问短连接获取到62进制字符串，转化为10进制，通过查询获得长链接进行跳转</li>\n</ul>\n<h3 id=\"toc-afda0a\">这里有几个问题</h3>\n<ul>\n<li>1、62进制如何用数据库或者KV存储来做</li>\n</ul>\n<p>这个问题就不展开了，自行解决</p>\n<ul>\n<li>2、如何保证同一个长地址，每次转出来都是一样的短地址</li>\n</ul>\n<p>上面的发号原理中，是不判断长地址是否已经转过的。同一个长地址，产生多条短地址记录，这明显是浪费空间的。\n目前没有好的解决方法</p>\n<h3 id=\"toc-ff0abc\">3、跳转用301还是302</h3>\n<p>301是永久重定向，302是临时重定向。短地址一经生成就不会变化，所以用301是符合http语义的。同时对服务器压力也会有一定减少。</p>\n<p>但是如果使用了301，我们就无法统计到短地址被点击的次数了。而这个点击次数是一个非常有意思的大数据分析数据源。能够分析出的东西非常非常多。</p>\n<p>对于搜索引擎SEO优化来说301跳转更合适</p>\n<p>10进制62进制互转 （php实现）</p>\n<p>这里用了php手册中的一个方法，支持任意进制的转换\n点击跳转到php手册</p>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">convBase</span>(<span class=\"hljs-params\"><span class=\"hljs-variable\">$numberInput</span>, <span class=\"hljs-variable\">$fromBaseInput</span>, <span class=\"hljs-variable\">$toBaseInput</span></span>)\n</span>{\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$fromBaseInput</span>==<span class=\"hljs-variable\">$toBaseInput</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$numberInput</span>;\n    <span class=\"hljs-variable\">$fromBase</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$fromBaseInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$toBase</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$toBaseInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$number</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$numberInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$fromLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$fromBaseInput</span>);\n    <span class=\"hljs-variable\">$toLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$toBaseInput</span>);\n    <span class=\"hljs-variable\">$numberLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$numberInput</span>);\n    <span class=\"hljs-variable\">$retval</span>=<span class=\"hljs-string\">&#x27;&#x27;</span>;\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$toBaseInput</span> == <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>)\n    {\n        <span class=\"hljs-variable\">$retval</span>=<span class=\"hljs-number\">0</span>;\n        <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-variable\">$i</span> = <span class=\"hljs-number\">1</span>;<span class=\"hljs-variable\">$i</span> &lt;= <span class=\"hljs-variable\">$numberLen</span>; <span class=\"hljs-variable\">$i</span>++)\n            <span class=\"hljs-variable\">$retval</span> = <span class=\"hljs-title function_ invoke__\">bcadd</span>(<span class=\"hljs-variable\">$retval</span>, <span class=\"hljs-title function_ invoke__\">bcmul</span>(<span class=\"hljs-title function_ invoke__\">array_search</span>(<span class=\"hljs-variable\">$number</span>[<span class=\"hljs-variable\">$i</span>-<span class=\"hljs-number\">1</span>], <span class=\"hljs-variable\">$fromBase</span>),<span class=\"hljs-title function_ invoke__\">bcpow</span>(<span class=\"hljs-variable\">$fromLen</span>,<span class=\"hljs-variable\">$numberLen</span>-<span class=\"hljs-variable\">$i</span>)));\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$retval</span>;\n    }\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$fromBaseInput</span> != <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>)\n        <span class=\"hljs-variable\">$base10</span>=<span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-variable\">$numberInput</span>, <span class=\"hljs-variable\">$fromBaseInput</span>, <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>);\n    <span class=\"hljs-keyword\">else</span>\n        <span class=\"hljs-variable\">$base10</span> = <span class=\"hljs-variable\">$numberInput</span>;\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$base10</span>&lt;<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$toBaseInput</span>))\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$toBase</span>[<span class=\"hljs-variable\">$base10</span>];\n    <span class=\"hljs-keyword\">while</span>(<span class=\"hljs-variable\">$base10</span> != <span class=\"hljs-string\">&#x27;0&#x27;</span>)\n    {\n        <span class=\"hljs-variable\">$retval</span> = <span class=\"hljs-variable\">$toBase</span>[<span class=\"hljs-title function_ invoke__\">bcmod</span>(<span class=\"hljs-variable\">$base10</span>,<span class=\"hljs-variable\">$toLen</span>)].<span class=\"hljs-variable\">$retval</span>;\n        <span class=\"hljs-variable\">$base10</span> = <span class=\"hljs-title function_ invoke__\">bcdiv</span>(<span class=\"hljs-variable\">$base10</span>,<span class=\"hljs-variable\">$toLen</span>,<span class=\"hljs-number\">0</span>);\n    }\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$retval</span>;\n}\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<h3 id=\"toc-6c9ae3\">用法：</h3>\n<ul>\n<li>1、十进制转62进制</li>\n</ul>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-keyword\">echo</span> <span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-string\">&#x27;1234567890987654321&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>);\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<ul>\n<li>2、62进制转十进制</li>\n</ul>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-keyword\">echo</span> <span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-string\">&#x27;1tckI2JJZDz&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789&#x27;</span>);\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<p>这只是一个基本的思路，对于一般的使用也够了</p>\n",
+      "mdContent": "\n\n\n### 原理\n\n通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。\n\n<!-- more -->\n\n### 实现方式\n\n- 将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面\n- 通过访问短连接获取到62进制字符串，转化为10进制，通过查询获得长链接进行跳转\n\n### 这里有几个问题\n\n- 1、62进制如何用数据库或者KV存储来做\n\n这个问题就不展开了，自行解决\n\n- 2、如何保证同一个长地址，每次转出来都是一样的短地址\n\n上面的发号原理中，是不判断长地址是否已经转过的。同一个长地址，产生多条短地址记录，这明显是浪费空间的。\n目前没有好的解决方法\n\n### 3、跳转用301还是302\n\n301是永久重定向，302是临时重定向。短地址一经生成就不会变化，所以用301是符合http语义的。同时对服务器压力也会有一定减少。\n\n但是如果使用了301，我们就无法统计到短地址被点击的次数了。而这个点击次数是一个非常有意思的大数据分析数据源。能够分析出的东西非常非常多。\n\n对于搜索引擎SEO优化来说301跳转更合适\n\n10进制62进制互转 （php实现）\n\n这里用了php手册中的一个方法，支持任意进制的转换\n点击跳转到php手册\n\n```php\n<?php\nfunction convBase($numberInput, $fromBaseInput, $toBaseInput)\n{\n    if ($fromBaseInput==$toBaseInput) return $numberInput;\n    $fromBase = str_split($fromBaseInput,1);\n    $toBase = str_split($toBaseInput,1);\n    $number = str_split($numberInput,1);\n    $fromLen=strlen($fromBaseInput);\n    $toLen=strlen($toBaseInput);\n    $numberLen=strlen($numberInput);\n    $retval='';\n    if ($toBaseInput == '0123456789')\n    {\n        $retval=0;\n        for ($i = 1;$i <= $numberLen; $i++)\n            $retval = bcadd($retval, bcmul(array_search($number[$i-1], $fromBase),bcpow($fromLen,$numberLen-$i)));\n        return $retval;\n    }\n    if ($fromBaseInput != '0123456789')\n        $base10=convBase($numberInput, $fromBaseInput, '0123456789');\n    else\n        $base10 = $numberInput;\n    if ($base10<strlen($toBaseInput))\n        return $toBase[$base10];\n    while($base10 != '0')\n    {\n        $retval = $toBase[bcmod($base10,$toLen)].$retval;\n        $base10 = bcdiv($base10,$toLen,0);\n    }\n    return $retval;\n}\n?>\n```\n\n### 用法：\n- 1、十进制转62进制\n\n```php\n<?php\necho convBase('1234567890987654321','0123456789','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');\n?>\n```\n- 2、62进制转十进制\n\n```php\n<?php\necho convBase('1tckI2JJZDz','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ','0123456789');\n?>\n```\n这只是一个基本的思路，对于一般的使用也够了",
+      "toc": "<ul>\n<li><a href=\"#toc-b6724c\">原理</a></li>\n<li><a href=\"#toc-3e9100\">实现方式</a></li>\n<li><a href=\"#toc-afda0a\">这里有几个问题</a></li>\n<li><a href=\"#toc-ff0abc\">3、跳转用301还是302</a></li>\n<li><a href=\"#toc-6c9ae3\">用法：</a></li>\n</ul>\n",
+      "url": "duan-url-xi-tong-she-ji",
+      "created_timestamp": 1493499134000,
+      "updated_timestamp": 1493499134000,
+      "symbolsCount": 1728
+    },
+    {
+      "id": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
+      "title": "X-Frame-Options 响应头",
+      "alias": "",
+      "cover": "",
+      "created_time": "2017-06-06T16:00:14.000Z",
+      "updated_time": "2017-06-06T16:00:14.000Z",
+      "categories": [
+        "notes",
+        "http"
+      ],
+      "tags": [],
+      "excerpt": "做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display ‘XXXX’ in a frame because it set ‘X-Frame-Options’ to ‘de",
+      "published": true,
+      "content": "<p>做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display &#39;XXXX&#39; in a frame because it set &#39;X-Frame-Options&#39; to &#39;deny&#39;. 查询了MDN，具体原因如下(MDN上摘录)</p>\n<!-- more -->\n\n<h3 id=\"toc-00452a\">X-Frame-Options是什么？</h3>\n<p>X-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code> 或者 <code>&lt;object&gt;</code> 中展现的标记。网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，也从而避免了点击劫持 (clickjacking) 的攻击。</p>\n<h3 id=\"toc-3c05a1\">使用X-Frame-Options</h3>\n<p>X-Frame-Options 有三个值:</p>\n<ul>\n<li>DENY\n表示该页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。</li>\n<li>SAMEORIGIN\n表示该页面可以在相同域名页面的 frame 中展示。</li>\n<li>ALLOW-FROM uri\n表示该页面可以在指定来源的 frame 中展示。\n换一句话说，如果设置为 DENY，不光在别人的网站 frame 嵌入时会无法加载，在同域名页面中同样会无法加载。另一方面，如果设置为 SAMEORIGIN，那么页面就可以在同域名页面的 frame 中嵌套。</li>\n</ul>\n<h3 id=\"toc-171f7b\">服务器配置</h3>\n<ul>\n<li>配置 Apache\n配置 Apache 在所有页面上发送 X-Frame-Options 响应头，需要把下面这行添加到 &#39;site&#39; 的配置中:</li>\n</ul>\n<pre><code class=\"hljs lang-pgsql\"><span class=\"hljs-keyword\">Header</span> <span class=\"hljs-keyword\">always</span> append X-Frame-<span class=\"hljs-keyword\">Options</span> SAMEORIGIN\n</code></pre>\n<h3 id=\"toc-5f33f1\">配置 nginx</h3>\n<ul>\n<li>配置 nginx\n发送 X-Frame-Options 响应头，把下面这行添加到 &#39;http&#39;, &#39;server&#39; 或者 &#39;location&#39; 的配置中:</li>\n</ul>\n<pre><code class=\"hljs lang-mathematica\"><span class=\"hljs-type\">add_header</span> <span class=\"hljs-variable\">X</span><span class=\"hljs-operator\">-</span><span class=\"hljs-built_in\">Frame</span><span class=\"hljs-operator\">-</span><span class=\"hljs-built_in\">Options</span> <span class=\"hljs-variable\">SAMEORIGIN</span><span class=\"hljs-operator\">;</span>\n</code></pre>\n<h3 id=\"toc-170914\">配置 IIS</h3>\n<ul>\n<li>配置 IIS</li>\n</ul>\n<p>发送 X-Frame-Options 响应头，添加下面的配置到 Web.config 文件中:</p>\n<pre><code class=\"hljs lang-xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">system.webServer</span>&gt;</span>\n  ...\n\n  <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">httpProtocol</span>&gt;</span>\n    <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">customHeaders</span>&gt;</span>\n      <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">add</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;X-Frame-Options&quot;</span> <span class=\"hljs-attr\">value</span>=<span class=\"hljs-string\">&quot;SAMEORIGIN&quot;</span> /&gt;</span>\n    <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">customHeaders</span>&gt;</span>\n  <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">httpProtocol</span>&gt;</span>\n\n  ...\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">system.webServer</span>&gt;</span>\n</code></pre>\n<h3 id=\"toc-0d98c7\">其他</h3>\n<p>可以直接通过meta标签来设置，不需要放在http头部请求中了。</p>\n<pre><code class=\"hljs lang-routeros\">&lt;meta <span class=\"hljs-attribute\">http-equiv</span>=<span class=\"hljs-string\">&quot;X-Frame-Options&quot;</span> <span class=\"hljs-attribute\">content</span>=<span class=\"hljs-string\">&quot;deny&quot;</span>&gt;\n</code></pre>\n",
+      "mdContent": "\n做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display 'XXXX' in a frame because it set 'X-Frame-Options' to 'deny'. 查询了MDN，具体原因如下(MDN上摘录)\n\n<!-- more -->\n\n### X-Frame-Options是什么？\nX-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 `<frame>`, `<iframe>` 或者 `<object>` 中展现的标记。网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，也从而避免了点击劫持 (clickjacking) 的攻击。\n\n### 使用X-Frame-Options\nX-Frame-Options 有三个值:\n- DENY\n  表示该页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。\n- SAMEORIGIN\n  表示该页面可以在相同域名页面的 frame 中展示。\n- ALLOW-FROM uri\n  表示该页面可以在指定来源的 frame 中展示。\n  换一句话说，如果设置为 DENY，不光在别人的网站 frame 嵌入时会无法加载，在同域名页面中同样会无法加载。另一方面，如果设置为 SAMEORIGIN，那么页面就可以在同域名页面的 frame 中嵌套。\n\n### 服务器配置\n- 配置 Apache\n  配置 Apache 在所有页面上发送 X-Frame-Options 响应头，需要把下面这行添加到 'site' 的配置中:\n```\nHeader always append X-Frame-Options SAMEORIGIN\n```\n\n### 配置 nginx\n\n- 配置 nginx\n  发送 X-Frame-Options 响应头，把下面这行添加到 'http', 'server' 或者 'location' 的配置中:\n\n```\nadd_header X-Frame-Options SAMEORIGIN;\n```\n\n### 配置 IIS\n\n- 配置 IIS\n\n发送 X-Frame-Options 响应头，添加下面的配置到 Web.config 文件中:\n\n```\n<system.webServer>\n  ...\n\n  <httpProtocol>\n    <customHeaders>\n      <add name=\"X-Frame-Options\" value=\"SAMEORIGIN\" />\n    </customHeaders>\n  </httpProtocol>\n\n  ...\n</system.webServer>\n```\n\n### 其他\n\n可以直接通过meta标签来设置，不需要放在http头部请求中了。\n\n```\n<meta http-equiv=\"X-Frame-Options\" content=\"deny\">\n```\n",
+      "toc": "<ul>\n<li><a href=\"#toc-00452a\">X-Frame-Options是什么？</a></li>\n<li><a href=\"#toc-3c05a1\">使用X-Frame-Options</a></li>\n<li><a href=\"#toc-171f7b\">服务器配置</a></li>\n<li><a href=\"#toc-5f33f1\">配置 nginx</a></li>\n<li><a href=\"#toc-170914\">配置 IIS</a></li>\n<li><a href=\"#toc-0d98c7\">其他</a></li>\n</ul>\n",
+      "url": "x-frame-options-xiang-ying-tou",
+      "created_timestamp": 1496764814000,
+      "updated_timestamp": 1496764814000,
+      "symbolsCount": 1229
+    },
+    {
       "id": "1ef3b59b-0a4e-6760-9d78-69ba27cbd20e",
       "title": "通过takeUntil取消订阅可观察对象",
       "alias": "",
@@ -281,73 +324,6 @@
       "symbolsCount": 246
     },
     {
-      "id": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
-      "title": "短 URL 系统设计",
-      "alias": "",
-      "cover": "",
-      "created_time": "2017-04-29T20:52:14.000Z",
-      "updated_time": "2017-04-29T20:52:14.000Z",
-      "categories": [
-        "notes"
-      ],
-      "tags": [],
-      "excerpt": "原理通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。实现方式将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面通过访问短连接获取到62进制字符串",
-      "published": true,
-      "content": "<h3 id=\"toc-b6724c\">原理</h3>\n<p>通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。</p>\n<!-- more -->\n\n<h3 id=\"toc-3e9100\">实现方式</h3>\n<ul>\n<li>将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面</li>\n<li>通过访问短连接获取到62进制字符串，转化为10进制，通过查询获得长链接进行跳转</li>\n</ul>\n<h3 id=\"toc-afda0a\">这里有几个问题</h3>\n<ul>\n<li>1、62进制如何用数据库或者KV存储来做</li>\n</ul>\n<p>这个问题就不展开了，自行解决</p>\n<ul>\n<li>2、如何保证同一个长地址，每次转出来都是一样的短地址</li>\n</ul>\n<p>上面的发号原理中，是不判断长地址是否已经转过的。同一个长地址，产生多条短地址记录，这明显是浪费空间的。\n目前没有好的解决方法</p>\n<h3 id=\"toc-ff0abc\">3、跳转用301还是302</h3>\n<p>301是永久重定向，302是临时重定向。短地址一经生成就不会变化，所以用301是符合http语义的。同时对服务器压力也会有一定减少。</p>\n<p>但是如果使用了301，我们就无法统计到短地址被点击的次数了。而这个点击次数是一个非常有意思的大数据分析数据源。能够分析出的东西非常非常多。</p>\n<p>对于搜索引擎SEO优化来说301跳转更合适</p>\n<p>10进制62进制互转 （php实现）</p>\n<p>这里用了php手册中的一个方法，支持任意进制的转换\n点击跳转到php手册</p>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">convBase</span>(<span class=\"hljs-params\"><span class=\"hljs-variable\">$numberInput</span>, <span class=\"hljs-variable\">$fromBaseInput</span>, <span class=\"hljs-variable\">$toBaseInput</span></span>)\n</span>{\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$fromBaseInput</span>==<span class=\"hljs-variable\">$toBaseInput</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$numberInput</span>;\n    <span class=\"hljs-variable\">$fromBase</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$fromBaseInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$toBase</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$toBaseInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$number</span> = <span class=\"hljs-title function_ invoke__\">str_split</span>(<span class=\"hljs-variable\">$numberInput</span>,<span class=\"hljs-number\">1</span>);\n    <span class=\"hljs-variable\">$fromLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$fromBaseInput</span>);\n    <span class=\"hljs-variable\">$toLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$toBaseInput</span>);\n    <span class=\"hljs-variable\">$numberLen</span>=<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$numberInput</span>);\n    <span class=\"hljs-variable\">$retval</span>=<span class=\"hljs-string\">&#x27;&#x27;</span>;\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$toBaseInput</span> == <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>)\n    {\n        <span class=\"hljs-variable\">$retval</span>=<span class=\"hljs-number\">0</span>;\n        <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-variable\">$i</span> = <span class=\"hljs-number\">1</span>;<span class=\"hljs-variable\">$i</span> &lt;= <span class=\"hljs-variable\">$numberLen</span>; <span class=\"hljs-variable\">$i</span>++)\n            <span class=\"hljs-variable\">$retval</span> = <span class=\"hljs-title function_ invoke__\">bcadd</span>(<span class=\"hljs-variable\">$retval</span>, <span class=\"hljs-title function_ invoke__\">bcmul</span>(<span class=\"hljs-title function_ invoke__\">array_search</span>(<span class=\"hljs-variable\">$number</span>[<span class=\"hljs-variable\">$i</span>-<span class=\"hljs-number\">1</span>], <span class=\"hljs-variable\">$fromBase</span>),<span class=\"hljs-title function_ invoke__\">bcpow</span>(<span class=\"hljs-variable\">$fromLen</span>,<span class=\"hljs-variable\">$numberLen</span>-<span class=\"hljs-variable\">$i</span>)));\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$retval</span>;\n    }\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$fromBaseInput</span> != <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>)\n        <span class=\"hljs-variable\">$base10</span>=<span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-variable\">$numberInput</span>, <span class=\"hljs-variable\">$fromBaseInput</span>, <span class=\"hljs-string\">&#x27;0123456789&#x27;</span>);\n    <span class=\"hljs-keyword\">else</span>\n        <span class=\"hljs-variable\">$base10</span> = <span class=\"hljs-variable\">$numberInput</span>;\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-variable\">$base10</span>&lt;<span class=\"hljs-title function_ invoke__\">strlen</span>(<span class=\"hljs-variable\">$toBaseInput</span>))\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$toBase</span>[<span class=\"hljs-variable\">$base10</span>];\n    <span class=\"hljs-keyword\">while</span>(<span class=\"hljs-variable\">$base10</span> != <span class=\"hljs-string\">&#x27;0&#x27;</span>)\n    {\n        <span class=\"hljs-variable\">$retval</span> = <span class=\"hljs-variable\">$toBase</span>[<span class=\"hljs-title function_ invoke__\">bcmod</span>(<span class=\"hljs-variable\">$base10</span>,<span class=\"hljs-variable\">$toLen</span>)].<span class=\"hljs-variable\">$retval</span>;\n        <span class=\"hljs-variable\">$base10</span> = <span class=\"hljs-title function_ invoke__\">bcdiv</span>(<span class=\"hljs-variable\">$base10</span>,<span class=\"hljs-variable\">$toLen</span>,<span class=\"hljs-number\">0</span>);\n    }\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$retval</span>;\n}\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<h3 id=\"toc-6c9ae3\">用法：</h3>\n<ul>\n<li>1、十进制转62进制</li>\n</ul>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-keyword\">echo</span> <span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-string\">&#x27;1234567890987654321&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>);\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<ul>\n<li>2、62进制转十进制</li>\n</ul>\n<pre><code class=\"hljs lang-php\"><span class=\"hljs-meta\">&lt;?php</span>\n<span class=\"hljs-keyword\">echo</span> <span class=\"hljs-title function_ invoke__\">convBase</span>(<span class=\"hljs-string\">&#x27;1tckI2JJZDz&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>,<span class=\"hljs-string\">&#x27;0123456789&#x27;</span>);\n<span class=\"hljs-meta\">?&gt;</span>\n</code></pre>\n<p>这只是一个基本的思路，对于一般的使用也够了</p>\n",
-      "mdContent": "\n\n\n### 原理\n\n通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。\n\n<!-- more -->\n\n### 实现方式\n\n- 将长连接保存到数据库，获得自增ID，将自增ID转化为62进制，拼接到链接后面\n- 通过访问短连接获取到62进制字符串，转化为10进制，通过查询获得长链接进行跳转\n\n### 这里有几个问题\n\n- 1、62进制如何用数据库或者KV存储来做\n\n这个问题就不展开了，自行解决\n\n- 2、如何保证同一个长地址，每次转出来都是一样的短地址\n\n上面的发号原理中，是不判断长地址是否已经转过的。同一个长地址，产生多条短地址记录，这明显是浪费空间的。\n目前没有好的解决方法\n\n### 3、跳转用301还是302\n\n301是永久重定向，302是临时重定向。短地址一经生成就不会变化，所以用301是符合http语义的。同时对服务器压力也会有一定减少。\n\n但是如果使用了301，我们就无法统计到短地址被点击的次数了。而这个点击次数是一个非常有意思的大数据分析数据源。能够分析出的东西非常非常多。\n\n对于搜索引擎SEO优化来说301跳转更合适\n\n10进制62进制互转 （php实现）\n\n这里用了php手册中的一个方法，支持任意进制的转换\n点击跳转到php手册\n\n```php\n<?php\nfunction convBase($numberInput, $fromBaseInput, $toBaseInput)\n{\n    if ($fromBaseInput==$toBaseInput) return $numberInput;\n    $fromBase = str_split($fromBaseInput,1);\n    $toBase = str_split($toBaseInput,1);\n    $number = str_split($numberInput,1);\n    $fromLen=strlen($fromBaseInput);\n    $toLen=strlen($toBaseInput);\n    $numberLen=strlen($numberInput);\n    $retval='';\n    if ($toBaseInput == '0123456789')\n    {\n        $retval=0;\n        for ($i = 1;$i <= $numberLen; $i++)\n            $retval = bcadd($retval, bcmul(array_search($number[$i-1], $fromBase),bcpow($fromLen,$numberLen-$i)));\n        return $retval;\n    }\n    if ($fromBaseInput != '0123456789')\n        $base10=convBase($numberInput, $fromBaseInput, '0123456789');\n    else\n        $base10 = $numberInput;\n    if ($base10<strlen($toBaseInput))\n        return $toBase[$base10];\n    while($base10 != '0')\n    {\n        $retval = $toBase[bcmod($base10,$toLen)].$retval;\n        $base10 = bcdiv($base10,$toLen,0);\n    }\n    return $retval;\n}\n?>\n```\n\n### 用法：\n- 1、十进制转62进制\n\n```php\n<?php\necho convBase('1234567890987654321','0123456789','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');\n?>\n```\n- 2、62进制转十进制\n\n```php\n<?php\necho convBase('1tckI2JJZDz','0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ','0123456789');\n?>\n```\n这只是一个基本的思路，对于一般的使用也够了",
-      "toc": "<ul>\n<li><a href=\"#toc-b6724c\">原理</a></li>\n<li><a href=\"#toc-3e9100\">实现方式</a></li>\n<li><a href=\"#toc-afda0a\">这里有几个问题</a></li>\n<li><a href=\"#toc-ff0abc\">3、跳转用301还是302</a></li>\n<li><a href=\"#toc-6c9ae3\">用法：</a></li>\n</ul>\n",
-      "url": "duan-url-xi-tong-she-ji",
-      "created_timestamp": 1493499134000,
-      "updated_timestamp": 1493499134000,
-      "symbolsCount": 1728
-    },
-    {
-      "id": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
-      "title": "X-Frame-Options 响应头",
-      "alias": "",
-      "cover": "",
-      "created_time": "2017-06-06T16:00:14.000Z",
-      "updated_time": "2017-06-06T16:00:14.000Z",
-      "categories": [
-        "notes",
-        "http"
-      ],
-      "tags": [],
-      "excerpt": "做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display ‘XXXX’ in a frame because it set ‘X-Frame-Options’ to ‘de",
-      "published": true,
-      "content": "<p>做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display &#39;XXXX&#39; in a frame because it set &#39;X-Frame-Options&#39; to &#39;deny&#39;. 查询了MDN，具体原因如下(MDN上摘录)</p>\n<!-- more -->\n\n<h3 id=\"toc-00452a\">X-Frame-Options是什么？</h3>\n<p>X-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code> 或者 <code>&lt;object&gt;</code> 中展现的标记。网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，也从而避免了点击劫持 (clickjacking) 的攻击。</p>\n<h3 id=\"toc-3c05a1\">使用X-Frame-Options</h3>\n<p>X-Frame-Options 有三个值:</p>\n<ul>\n<li>DENY\n表示该页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。</li>\n<li>SAMEORIGIN\n表示该页面可以在相同域名页面的 frame 中展示。</li>\n<li>ALLOW-FROM uri\n表示该页面可以在指定来源的 frame 中展示。\n换一句话说，如果设置为 DENY，不光在别人的网站 frame 嵌入时会无法加载，在同域名页面中同样会无法加载。另一方面，如果设置为 SAMEORIGIN，那么页面就可以在同域名页面的 frame 中嵌套。</li>\n</ul>\n<h3 id=\"toc-171f7b\">服务器配置</h3>\n<ul>\n<li>配置 Apache\n配置 Apache 在所有页面上发送 X-Frame-Options 响应头，需要把下面这行添加到 &#39;site&#39; 的配置中:</li>\n</ul>\n<pre><code class=\"hljs lang-pgsql\"><span class=\"hljs-keyword\">Header</span> <span class=\"hljs-keyword\">always</span> append X-Frame-<span class=\"hljs-keyword\">Options</span> SAMEORIGIN\n</code></pre>\n<h3 id=\"toc-5f33f1\">配置 nginx</h3>\n<ul>\n<li>配置 nginx\n发送 X-Frame-Options 响应头，把下面这行添加到 &#39;http&#39;, &#39;server&#39; 或者 &#39;location&#39; 的配置中:</li>\n</ul>\n<pre><code class=\"hljs lang-mathematica\"><span class=\"hljs-type\">add_header</span> <span class=\"hljs-variable\">X</span><span class=\"hljs-operator\">-</span><span class=\"hljs-built_in\">Frame</span><span class=\"hljs-operator\">-</span><span class=\"hljs-built_in\">Options</span> <span class=\"hljs-variable\">SAMEORIGIN</span><span class=\"hljs-operator\">;</span>\n</code></pre>\n<h3 id=\"toc-170914\">配置 IIS</h3>\n<ul>\n<li>配置 IIS</li>\n</ul>\n<p>发送 X-Frame-Options 响应头，添加下面的配置到 Web.config 文件中:</p>\n<pre><code class=\"hljs lang-xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">system.webServer</span>&gt;</span>\n  ...\n\n  <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">httpProtocol</span>&gt;</span>\n    <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">customHeaders</span>&gt;</span>\n      <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">add</span> <span class=\"hljs-attr\">name</span>=<span class=\"hljs-string\">&quot;X-Frame-Options&quot;</span> <span class=\"hljs-attr\">value</span>=<span class=\"hljs-string\">&quot;SAMEORIGIN&quot;</span> /&gt;</span>\n    <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">customHeaders</span>&gt;</span>\n  <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">httpProtocol</span>&gt;</span>\n\n  ...\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">system.webServer</span>&gt;</span>\n</code></pre>\n<h3 id=\"toc-0d98c7\">其他</h3>\n<p>可以直接通过meta标签来设置，不需要放在http头部请求中了。</p>\n<pre><code class=\"hljs lang-routeros\">&lt;meta <span class=\"hljs-attribute\">http-equiv</span>=<span class=\"hljs-string\">&quot;X-Frame-Options&quot;</span> <span class=\"hljs-attribute\">content</span>=<span class=\"hljs-string\">&quot;deny&quot;</span>&gt;\n</code></pre>\n",
-      "mdContent": "\n做了一个页面，需要加载一个带分页列表，原本代码中没有ajax分页组件，所以就直接用iframe加载了一个页面进来，结果发现页面无法加载。控制台提示：Refused to display 'XXXX' in a frame because it set 'X-Frame-Options' to 'deny'. 查询了MDN，具体原因如下(MDN上摘录)\n\n<!-- more -->\n\n### X-Frame-Options是什么？\nX-Frame-Options HTTP 响应头是用来给浏览器指示允许一个页面可否在 `<frame>`, `<iframe>` 或者 `<object>` 中展现的标记。网站可以使用此功能，来确保自己网站的内容没有被嵌到别人的网站中去，也从而避免了点击劫持 (clickjacking) 的攻击。\n\n### 使用X-Frame-Options\nX-Frame-Options 有三个值:\n- DENY\n  表示该页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。\n- SAMEORIGIN\n  表示该页面可以在相同域名页面的 frame 中展示。\n- ALLOW-FROM uri\n  表示该页面可以在指定来源的 frame 中展示。\n  换一句话说，如果设置为 DENY，不光在别人的网站 frame 嵌入时会无法加载，在同域名页面中同样会无法加载。另一方面，如果设置为 SAMEORIGIN，那么页面就可以在同域名页面的 frame 中嵌套。\n\n### 服务器配置\n- 配置 Apache\n  配置 Apache 在所有页面上发送 X-Frame-Options 响应头，需要把下面这行添加到 'site' 的配置中:\n```\nHeader always append X-Frame-Options SAMEORIGIN\n```\n\n### 配置 nginx\n\n- 配置 nginx\n  发送 X-Frame-Options 响应头，把下面这行添加到 'http', 'server' 或者 'location' 的配置中:\n\n```\nadd_header X-Frame-Options SAMEORIGIN;\n```\n\n### 配置 IIS\n\n- 配置 IIS\n\n发送 X-Frame-Options 响应头，添加下面的配置到 Web.config 文件中:\n\n```\n<system.webServer>\n  ...\n\n  <httpProtocol>\n    <customHeaders>\n      <add name=\"X-Frame-Options\" value=\"SAMEORIGIN\" />\n    </customHeaders>\n  </httpProtocol>\n\n  ...\n</system.webServer>\n```\n\n### 其他\n\n可以直接通过meta标签来设置，不需要放在http头部请求中了。\n\n```\n<meta http-equiv=\"X-Frame-Options\" content=\"deny\">\n```\n",
-      "toc": "<ul>\n<li><a href=\"#toc-00452a\">X-Frame-Options是什么？</a></li>\n<li><a href=\"#toc-3c05a1\">使用X-Frame-Options</a></li>\n<li><a href=\"#toc-171f7b\">服务器配置</a></li>\n<li><a href=\"#toc-5f33f1\">配置 nginx</a></li>\n<li><a href=\"#toc-170914\">配置 IIS</a></li>\n<li><a href=\"#toc-0d98c7\">其他</a></li>\n</ul>\n",
-      "url": "x-frame-options-xiang-ying-tou",
-      "created_timestamp": 1496764814000,
-      "updated_timestamp": 1496764814000,
-      "symbolsCount": 1229
-    },
-    {
-      "id": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
-      "title": "在Directive中获取组件DOM以及实例",
-      "alias": "",
-      "cover": "",
-      "created_time": "2022-06-29T10:37:52.000Z",
-      "updated_time": "2022-06-29T10:37:52.000Z",
-      "categories": [
-        "angular"
-      ],
-      "tags": [
-        "angular",
-        "directive"
-      ],
-      "excerpt": "在Directive中获取组件DOM以及实例",
-      "published": true,
-      "content": "<h3 id=\"toc-291011\">获取DOM</h3>\n<p>从 <code>@angular/core</code> 导入 <code>ElementRef</code>。<code>ElementRef</code> 的 <code>nativeElement </code>属性会提供对宿主 DOM 元素的直接访问权限。</p>\n<!-- more -->\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">import</span> { <span class=\"hljs-title class_\">Directive</span>, <span class=\"hljs-title class_\">ElementRef</span> } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;@angular/core&#x27;</span>;\n\n@<span class=\"hljs-title class_\">Directive</span>({\n  <span class=\"hljs-attr\">selector</span>: <span class=\"hljs-string\">&#x27;[appTest]&#x27;</span>\n})\n<span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TestDirective</span> {\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\">\n    private el: ElementRef,\n  </span>) {\n    el.<span class=\"hljs-property\">nativeElement</span>.<span class=\"hljs-property\">style</span>.<span class=\"hljs-property\">backgroundColor</span> = <span class=\"hljs-string\">&#x27;yellow&#x27;</span>;\n  }\n}\n</code></pre>\n<h3 id=\"toc-fd30cc\">获取组件实例</h3>\n<blockquote>\n<p>组件已知的情况下，在自定义指令中获取组件实例</p>\n</blockquote>\n<p>直接在<code>constructor</code>中注入对应组件就可以</p>\n<p>如下面代码，通过 <code>this.com</code> 就可以调用组件的属性和事件</p>\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">import</span> { <span class=\"hljs-title class_\">Directive</span> } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;@angular/core&#x27;</span>;\n<span class=\"hljs-keyword\">import</span> { comTest } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;comTest&#x27;</span>;\n@<span class=\"hljs-title class_\">Directive</span>({\n  <span class=\"hljs-attr\">selector</span>: <span class=\"hljs-string\">&#x27;[appTest]&#x27;</span>\n})\n<span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TestDirective</span> {\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\">\n    private com: comTest\n  </span>) {\n    <span class=\"hljs-variable language_\">console</span>.<span class=\"hljs-title function_\">log</span>(<span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">com</span>)\n  }\n}\n</code></pre>\n",
-      "mdContent": "\n### 获取DOM\n\n从 `@angular/core` 导入 `ElementRef`。`ElementRef` 的 `nativeElement `属性会提供对宿主 DOM 元素的直接访问权限。\n\n<!-- more -->\n```javascript\nimport { Directive, ElementRef } from '@angular/core';\n\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private el: ElementRef,\n  ) {\n    el.nativeElement.style.backgroundColor = 'yellow';\n  }\n}\n```\n\n### 获取组件实例\n\n> 组件已知的情况下，在自定义指令中获取组件实例\n\n直接在`constructor`中注入对应组件就可以\n\n如下面代码，通过 `this.com` 就可以调用组件的属性和事件\n\n```javascript\nimport { Directive } from '@angular/core';\nimport { comTest } from 'comTest';\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private com: comTest\n  ) {\n    console.log(this.com)\n  }\n}\n\n```",
-      "toc": "<ul>\n<li><a href=\"#toc-291011\">获取DOM</a></li>\n<li><a href=\"#toc-fd30cc\">获取组件实例</a></li>\n</ul>\n",
-      "url": "zai-directive-zhong-huo-qu-zu-jian-dom-yi-ji-shi-li",
-      "created_timestamp": 1656499072000,
-      "updated_timestamp": 1656499072000,
-      "symbolsCount": 590
-    },
-    {
       "id": "1ef3b5b7-e0bc-6ce0-ac15-c509070dad5f",
       "title": "深入分析css中单位px和em,rem的区别",
       "alias": "",
@@ -472,6 +448,30 @@
       "created_timestamp": 1520680923000,
       "updated_timestamp": 1520680923000,
       "symbolsCount": 4327
+    },
+    {
+      "id": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
+      "title": "在Directive中获取组件DOM以及实例",
+      "alias": "",
+      "cover": "",
+      "created_time": "2022-06-29T10:37:52.000Z",
+      "updated_time": "2022-06-29T10:37:52.000Z",
+      "categories": [
+        "angular"
+      ],
+      "tags": [
+        "angular",
+        "directive"
+      ],
+      "excerpt": "在Directive中获取组件DOM以及实例",
+      "published": true,
+      "content": "<h3 id=\"toc-291011\">获取DOM</h3>\n<p>从 <code>@angular/core</code> 导入 <code>ElementRef</code>。<code>ElementRef</code> 的 <code>nativeElement </code>属性会提供对宿主 DOM 元素的直接访问权限。</p>\n<!-- more -->\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">import</span> { <span class=\"hljs-title class_\">Directive</span>, <span class=\"hljs-title class_\">ElementRef</span> } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;@angular/core&#x27;</span>;\n\n@<span class=\"hljs-title class_\">Directive</span>({\n  <span class=\"hljs-attr\">selector</span>: <span class=\"hljs-string\">&#x27;[appTest]&#x27;</span>\n})\n<span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TestDirective</span> {\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\">\n    private el: ElementRef,\n  </span>) {\n    el.<span class=\"hljs-property\">nativeElement</span>.<span class=\"hljs-property\">style</span>.<span class=\"hljs-property\">backgroundColor</span> = <span class=\"hljs-string\">&#x27;yellow&#x27;</span>;\n  }\n}\n</code></pre>\n<h3 id=\"toc-fd30cc\">获取组件实例</h3>\n<blockquote>\n<p>组件已知的情况下，在自定义指令中获取组件实例</p>\n</blockquote>\n<p>直接在<code>constructor</code>中注入对应组件就可以</p>\n<p>如下面代码，通过 <code>this.com</code> 就可以调用组件的属性和事件</p>\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">import</span> { <span class=\"hljs-title class_\">Directive</span> } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;@angular/core&#x27;</span>;\n<span class=\"hljs-keyword\">import</span> { comTest } <span class=\"hljs-keyword\">from</span> <span class=\"hljs-string\">&#x27;comTest&#x27;</span>;\n@<span class=\"hljs-title class_\">Directive</span>({\n  <span class=\"hljs-attr\">selector</span>: <span class=\"hljs-string\">&#x27;[appTest]&#x27;</span>\n})\n<span class=\"hljs-keyword\">export</span> <span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TestDirective</span> {\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\">\n    private com: comTest\n  </span>) {\n    <span class=\"hljs-variable language_\">console</span>.<span class=\"hljs-title function_\">log</span>(<span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">com</span>)\n  }\n}\n</code></pre>\n",
+      "mdContent": "\n### 获取DOM\n\n从 `@angular/core` 导入 `ElementRef`。`ElementRef` 的 `nativeElement `属性会提供对宿主 DOM 元素的直接访问权限。\n\n<!-- more -->\n```javascript\nimport { Directive, ElementRef } from '@angular/core';\n\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private el: ElementRef,\n  ) {\n    el.nativeElement.style.backgroundColor = 'yellow';\n  }\n}\n```\n\n### 获取组件实例\n\n> 组件已知的情况下，在自定义指令中获取组件实例\n\n直接在`constructor`中注入对应组件就可以\n\n如下面代码，通过 `this.com` 就可以调用组件的属性和事件\n\n```javascript\nimport { Directive } from '@angular/core';\nimport { comTest } from 'comTest';\n@Directive({\n  selector: '[appTest]'\n})\nexport class TestDirective {\n  constructor(\n    private com: comTest\n  ) {\n    console.log(this.com)\n  }\n}\n\n```",
+      "toc": "<ul>\n<li><a href=\"#toc-291011\">获取DOM</a></li>\n<li><a href=\"#toc-fd30cc\">获取组件实例</a></li>\n</ul>\n",
+      "url": "zai-directive-zhong-huo-qu-zu-jian-dom-yi-ji-shi-li",
+      "created_timestamp": 1656499072000,
+      "updated_timestamp": 1656499072000,
+      "symbolsCount": 590
     }
   ],
   "pages": [
@@ -486,8 +486,8 @@
       "tags": [],
       "excerpt": "",
       "published": true,
-      "content": "<h3 id=\"toc-478708\">uuice 文档</h3>\n<ul>\n<li><a href=\"/introduction\" target=\"_blank\">系统介绍</a></li>\n<li><a href=\"/getting-started\" target=\"_blank\">入门</a><ul>\n<li><a href=\"/getting-started#prepare\" target=\"_blank\">写在前面</a></li>\n<li><a href=\"/getting-started#install\" target=\"_blank\">安装部署</a></li>\n<li><a href=\"/getting-started#config\" target=\"_blank\">配置参考</a></li>\n<li><a href=\"/getting-started#upgrade\" target=\"_blank\">版本升级</a></li>\n</ul>\n</li>\n<li><a href=\"/user-guide\" target=\"_blank\">用户指南</a><ul>\n<li><a href=\"/user-guide#index\" target=\"_blank\">操作手册</a></li>\n<li><a href=\"/user-guide#markdown\" target=\"_blank\">Markdown 语法</a></li>\n</ul>\n</li>\n<li><a href=\"/developer-guide\" target=\"_blank\">系统开发</a><ul>\n<li><a href=\"/developer-guide#structure\" target=\"_blank\">系统结构</a></li>\n<li><a href=\"/developer-guide#code-style\" target=\"_blank\">代码风格</a></li>\n<li><a href=\"/developer-guide#rest-api\" target=\"_blank\">Rest Api</a></li>\n</ul>\n</li>\n<li><a href=\"/template-guide\" target=\"_blank\">主题相关</a><ul>\n<li><a href=\"/template-guide#prepare\" target=\"_blank\">准备工作</a></li>\n<li><a href=\"/template-guide#config\" target=\"_blank\">配置文件</a></li>\n<li><a href=\"/template-guide#global-variable\" target=\"_blank\">全局变量</a></li>\n<li><a href=\"/template-guide#global-filter\" target=\"_blank\">全局过滤器</a></li>\n<li><a href=\"/template-guide#global-macro\" target=\"_blank\">全局宏模板</a></li>\n<li><a href=\"/template-guide#global-tag\" target=\"_blank\">全局标签</a></li>\n</ul>\n</li>\n<li><a href=\"/question\" target=\"_blank\">常见问题</a><ul>\n<li><a href=\"/question#system\" target=\"_blank\">系统相关</a></li>\n<li><a href=\"/question#template\" target=\"_blank\">模板相关</a></li>\n</ul>\n</li>\n</ul>\n",
-      "mdContent": "\n### uuice 文档\n\n- <a href=\"/introduction\" target=\"_blank\">系统介绍</a>\n- <a href=\"/getting-started\" target=\"_blank\">入门</a>\n  - <a href=\"/getting-started#prepare\" target=\"_blank\">写在前面</a>\n  - <a href=\"/getting-started#install\" target=\"_blank\">安装部署</a>\n  - <a href=\"/getting-started#config\" target=\"_blank\">配置参考</a>\n  - <a href=\"/getting-started#upgrade\" target=\"_blank\">版本升级</a>\n- <a href=\"/user-guide\" target=\"_blank\">用户指南</a>\n  - <a href=\"/user-guide#index\" target=\"_blank\">操作手册</a>\n  - <a href=\"/user-guide#markdown\" target=\"_blank\">Markdown 语法</a>\n- <a href=\"/developer-guide\" target=\"_blank\">系统开发</a>\n  - <a href=\"/developer-guide#structure\" target=\"_blank\">系统结构</a>\n  - <a href=\"/developer-guide#code-style\" target=\"_blank\">代码风格</a>\n  - <a href=\"/developer-guide#rest-api\" target=\"_blank\">Rest Api</a>\n- <a href=\"/template-guide\" target=\"_blank\">主题相关</a>\n  - <a href=\"/template-guide#prepare\" target=\"_blank\">准备工作</a>\n  - <a href=\"/template-guide#config\" target=\"_blank\">配置文件</a>\n  - <a href=\"/template-guide#global-variable\" target=\"_blank\">全局变量</a>\n  - <a href=\"/template-guide#global-filter\" target=\"_blank\">全局过滤器</a>\n  - <a href=\"/template-guide#global-macro\" target=\"_blank\">全局宏模板</a>\n  - <a href=\"/template-guide#global-tag\" target=\"_blank\">全局标签</a>\n- <a href=\"/question\" target=\"_blank\">常见问题</a>\n  - <a href=\"/question#system\" target=\"_blank\">系统相关</a>\n  - <a href=\"/question#template\" target=\"_blank\">模板相关</a>\n",
+      "content": "<h3 id=\"toc-478708\">uuice 文档</h3>\n<ul>\n<li><a href=\"/introduction\">系统介绍</a></li>\n<li><a href=\"/getting-started\">入门</a><ul>\n<li><a href=\"/getting-started#prepare\">写在前面</a></li>\n<li><a href=\"/getting-started#install\">安装部署</a></li>\n<li><a href=\"/getting-started#config\">配置参考</a></li>\n<li><a href=\"/getting-started#upgrade\">版本升级</a></li>\n</ul>\n</li>\n<li><a href=\"/user-guide\">用户指南</a><ul>\n<li><a href=\"/user-guide#index\">操作手册</a></li>\n<li><a href=\"/user-guide#markdown\">Markdown 语法</a></li>\n</ul>\n</li>\n<li><a href=\"/developer-guide\">系统开发</a><ul>\n<li><a href=\"/developer-guide#structure\">系统结构</a></li>\n<li><a href=\"/developer-guide#code-style\">代码风格</a></li>\n<li><a href=\"/developer-guide#rest-api\">Rest Api</a></li>\n</ul>\n</li>\n<li><a href=\"/template-guide\">主题相关</a><ul>\n<li><a href=\"/template-guide#prepare\">准备工作</a></li>\n<li><a href=\"/template-guide#config\">配置文件</a></li>\n<li><a href=\"/template-guide#global-variable\">全局变量</a></li>\n<li><a href=\"/template-guide#global-filter\">全局过滤器</a></li>\n<li><a href=\"/template-guide#global-macro\">全局宏模板</a></li>\n<li><a href=\"/template-guide#global-tag\">全局标签</a></li>\n</ul>\n</li>\n<li><a href=\"/question\">常见问题</a><ul>\n<li><a href=\"/question#system\">系统相关</a></li>\n<li><a href=\"/question#template\">模板相关</a></li>\n</ul>\n</li>\n</ul>\n",
+      "mdContent": "\n### uuice 文档\n\n- <a href=\"/introduction\">系统介绍</a>\n- <a href=\"/getting-started\">入门</a>\n  - <a href=\"/getting-started#prepare\">写在前面</a>\n  - <a href=\"/getting-started#install\">安装部署</a>\n  - <a href=\"/getting-started#config\">配置参考</a>\n  - <a href=\"/getting-started#upgrade\">版本升级</a>\n- <a href=\"/user-guide\">用户指南</a>\n  - <a href=\"/user-guide#index\">操作手册</a>\n  - <a href=\"/user-guide#markdown\">Markdown 语法</a>\n- <a href=\"/developer-guide\">系统开发</a>\n  - <a href=\"/developer-guide#structure\">系统结构</a>\n  - <a href=\"/developer-guide#code-style\">代码风格</a>\n  - <a href=\"/developer-guide#rest-api\">Rest Api</a>\n- <a href=\"/template-guide\">主题相关</a>\n  - <a href=\"/template-guide#prepare\">准备工作</a>\n  - <a href=\"/template-guide#config\">配置文件</a>\n  - <a href=\"/template-guide#global-variable\">全局变量</a>\n  - <a href=\"/template-guide#global-filter\">全局过滤器</a>\n  - <a href=\"/template-guide#global-macro\">全局宏模板</a>\n  - <a href=\"/template-guide#global-tag\">全局标签</a>\n- <a href=\"/question\">常见问题</a>\n  - <a href=\"/question#system\">系统相关</a>\n  - <a href=\"/question#template\">模板相关</a>\n",
       "toc": "<ul>\n<li><a href=\"#toc-478708\">uuice 文档</a></li>\n</ul>\n",
       "url": "uuice-doc",
       "created_timestamp": 1720309128000,
@@ -552,27 +552,27 @@
       "symbolsCount": 0
     },
     {
-      "id": "",
-      "title": "",
+      "id": "1ef40c70-59f7-62e0-9ae4-8dbc49326259",
+      "title": "标签列表",
       "alias": "",
       "cover": "",
-      "created_time": "",
-      "updated_time": "",
+      "created_time": "2024-07-13T11:21:40.000Z",
+      "updated_time": "2024-07-13T11:21:40.000Z",
       "categories": [],
       "tags": [],
       "excerpt": "",
-      "published": "",
-      "content": "<h1 id=\"toc-d8605e\">模板标签</h1>\n",
-      "mdContent": "# 模板标签\n",
-      "toc": "<ul>\n<li><a href=\"#toc-d8605e\">模板标签</a></li>\n</ul>\n",
-      "url": "",
-      "created_timestamp": 0,
-      "updated_timestamp": 0,
-      "symbolsCount": 4
+      "published": true,
+      "content": "<h2 id=\"toc-af5e64\">Post相关</h2>\n<h3 id=\"toc-7a0091\">post分页列表</h3>\n<p>标签名: PostPageList</p>\n<p>参数</p>\n<p>无</p>\n<p>标签返回变量</p>\n<ul>\n<li>postPageList: POST_PAGE_QUERY</li>\n</ul>\n<h3 id=\"toc-e557cb\">通过分类获取post列表</h3>\n<p>标签名: PostListByCategory</p>\n<p>参数</p>\n<ul>\n<li>id: string 分类id</li>\n<li>title: string 分类title</li>\n<li>url: string 分类url</li>\n</ul>\n<p>标签返回变量</p>\n<ul>\n<li>list: LIST_POST_ITEM[]</li>\n</ul>\n<h3 id=\"toc-db20d0\">通过标签获取post列表</h3>\n<p>标签名: PostListByTag</p>\n<p>参数</p>\n<ul>\n<li>id: string 标签id</li>\n<li>title: string 标签title</li>\n<li>url: string 标签url</li>\n</ul>\n<p>标签返回变量</p>\n<ul>\n<li>list: LIST_POST_ITEM[]</li>\n</ul>\n<h3 id=\"toc-5c91cd\">获取post详情</h3>\n<p>标签名: PostItem</p>\n<p>参数</p>\n<ul>\n<li>id: string Post id</li>\n<li>title: string Post title</li>\n<li>url: string Post url</li>\n</ul>\n<p>标签返回变量</p>\n<ul>\n<li>post: POST | undefined</li>\n</ul>\n<h2 id=\"toc-b6d491\">分类相关</h2>\n<h3 id=\"toc-35a37f\">分类列表</h3>\n<p>标签名: CategoryList</p>\n<p>参数</p>\n<ul>\n<li>withPostNum: boolean 是否返回 postNum</li>\n</ul>\n<p>标签返回变量</p>\n<ul>\n<li>list: CATEGORY_WITH_POST_NUM[] | CATEGORY[]</li>\n</ul>\n<h3 id=\"toc-495616\">分类详情</h3>\n<p>标签名: CategoryItem</p>\n<p>参数</p>\n<ul>\n<li>id: string 分类id</li>\n<li>title: string 分类title</li>\n<li>url: string 分类url</li>\n</ul>\n<p>标签返回变量</p>\n<ul>\n<li>category: CATEGORY | undefined</li>\n</ul>\n<h2 id=\"toc-abd3b7\">标签相关</h2>\n<h3 id=\"toc-e01315\">标签列表</h3>\n<p>标签名: TagList</p>\n<p>参数</p>\n<ul>\n<li>withPostNum: boolean 是否返回 postNum</li>\n</ul>\n<p>标签返回变量</p>\n<ul>\n<li>list: TAG_WITH_POST_NUM[] | TAG[]</li>\n</ul>\n<h3 id=\"toc-1c38fb\">标签详情</h3>\n<p>标签名: TagItem</p>\n<p>参数</p>\n<ul>\n<li>id: string 标签id</li>\n<li>title: string 标签title</li>\n<li>url: string 标签url</li>\n</ul>\n<p>标签返回变量</p>\n<ul>\n<li>tag: TAG | undefined</li>\n</ul>\n<h2 id=\"toc-5b380f\">页面相关</h2>\n<h3 id=\"toc-50fbea\">页面列表</h3>\n<p>标签名: PageList</p>\n<p>参数</p>\n<p>无</p>\n<p>标签返回变量</p>\n<ul>\n<li>list: LIST_PAGE_ITEM[]</li>\n</ul>\n<h3 id=\"toc-cdc39e\">页面详情</h3>\n<p>标签名: PageItem</p>\n<p>参数</p>\n<ul>\n<li>id: string 页面id</li>\n<li>title: string 页面title</li>\n<li>url: string 页面url</li>\n</ul>\n<p>标签返回变量</p>\n<ul>\n<li>page: PAGE | undefined</li>\n</ul>\n<h2 id=\"toc-16f97e\">Json标签相关</h2>\n<p>标签名: JsonConfig</p>\n<p>参数</p>\n<ul>\n<li>alias: string Json标签别名 (文件名)</li>\n</ul>\n<p>标签返回变量</p>\n<p>jsonData: JSON_OBJ | undefined</p>\n<h2 id=\"toc-7b04ee\">Yml标签相关</h2>\n<p>标签名: YmlConfig</p>\n<p>参数</p>\n<ul>\n<li>alias: string Yml标签别名 (文件名)</li>\n</ul>\n<p>标签返回变量</p>\n<p>ymlData: JSON_OBJ | undefined</p>\n<h2 id=\"toc-a0a2d5\">系统配置相关</h2>\n<h3 id=\"toc-cbe8b5\">所有系统配置</h3>\n<p>标签名: SysConfig</p>\n<p>参数</p>\n<p>无</p>\n<p>标签返回变量</p>\n<p>list: JSON_OBJ | undefined</p>\n<h3 id=\"toc-892caa\">单个系统配置</h3>\n<p>标签名: SysConfigItem</p>\n<p>参数</p>\n<ul>\n<li>path: string 系统配置路径</li>\n</ul>\n<p>标签返回变量</p>\n<p>无</p>\n<p>标签直接返回 JSON_OBJ | string | number | boolean | undefined</p>\n",
+      "mdContent": "\n## Post相关\n\n### post分页列表\n\n标签名: PostPageList\n\n参数\n\n无\n\n标签返回变量\n\n- postPageList: POST_PAGE_QUERY\n\n### 通过分类获取post列表\n\n标签名: PostListByCategory\n\n参数\n\n- id: string 分类id\n- title: string 分类title\n- url: string 分类url\n\n标签返回变量\n\n- list: LIST_POST_ITEM[]\n\n### 通过标签获取post列表\n\n标签名: PostListByTag\n\n参数\n\n- id: string 标签id\n- title: string 标签title\n- url: string 标签url\n\n标签返回变量\n\n- list: LIST_POST_ITEM[]\n\n### 获取post详情\n\n标签名: PostItem\n\n参数\n\n- id: string Post id\n- title: string Post title\n- url: string Post url\n\n标签返回变量\n\n- post: POST | undefined\n\n## 分类相关\n\n### 分类列表\n\n标签名: CategoryList\n\n参数\n\n- withPostNum: boolean 是否返回 postNum\n\n标签返回变量\n\n- list: CATEGORY_WITH_POST_NUM[] | CATEGORY[]\n\n### 分类详情\n\n标签名: CategoryItem\n\n参数\n\n- id: string 分类id\n- title: string 分类title\n- url: string 分类url\n\n标签返回变量\n\n- category: CATEGORY | undefined\n\n## 标签相关\n\n### 标签列表\n\n标签名: TagList\n\n参数\n\n- withPostNum: boolean 是否返回 postNum\n\n标签返回变量\n\n- list: TAG_WITH_POST_NUM[] | TAG[]\n\n### 标签详情\n\n标签名: TagItem\n\n参数\n\n- id: string 标签id\n- title: string 标签title\n- url: string 标签url\n\n标签返回变量\n\n- tag: TAG | undefined\n\n## 页面相关\n\n### 页面列表\n\n标签名: PageList\n\n参数\n\n无\n\n标签返回变量\n\n- list: LIST_PAGE_ITEM[]\n\n### 页面详情\n\n标签名: PageItem\n\n参数\n\n- id: string 页面id\n- title: string 页面title\n- url: string 页面url\n\n标签返回变量\n\n- page: PAGE | undefined\n\n## Json标签相关\n\n标签名: JsonConfig\n\n参数\n\n- alias: string Json标签别名 (文件名)\n\n标签返回变量\n\njsonData: JSON_OBJ | undefined\n\n## Yml标签相关\n\n标签名: YmlConfig\n\n参数\n\n- alias: string Yml标签别名 (文件名)\n\n标签返回变量\n\nymlData: JSON_OBJ | undefined\n\n## 系统配置相关\n\n### 所有系统配置\n\n标签名: SysConfig\n\n参数\n\n无\n\n标签返回变量\n\nlist: JSON_OBJ | undefined\n\n### 单个系统配置\n\n标签名: SysConfigItem\n\n参数\n\n- path: string 系统配置路径\n\n标签返回变量\n\n无\n\n标签直接返回 JSON_OBJ | string | number | boolean | undefined\n",
+      "toc": "<ul>\n<li><a href=\"#toc-af5e64\">Post相关</a><ul>\n<li><a href=\"#toc-7a0091\">post分页列表</a></li>\n<li><a href=\"#toc-e557cb\">通过分类获取post列表</a></li>\n<li><a href=\"#toc-db20d0\">通过标签获取post列表</a></li>\n<li><a href=\"#toc-5c91cd\">获取post详情</a></li>\n</ul>\n</li>\n<li><a href=\"#toc-b6d491\">分类相关</a><ul>\n<li><a href=\"#toc-35a37f\">分类列表</a></li>\n<li><a href=\"#toc-495616\">分类详情</a></li>\n</ul>\n</li>\n<li><a href=\"#toc-abd3b7\">标签相关</a><ul>\n<li><a href=\"#toc-e01315\">标签列表</a></li>\n<li><a href=\"#toc-1c38fb\">标签详情</a></li>\n</ul>\n</li>\n<li><a href=\"#toc-5b380f\">页面相关</a><ul>\n<li><a href=\"#toc-50fbea\">页面列表</a></li>\n<li><a href=\"#toc-cdc39e\">页面详情</a></li>\n</ul>\n</li>\n<li><a href=\"#toc-16f97e\">Json标签相关</a></li>\n<li><a href=\"#toc-7b04ee\">Yml标签相关</a></li>\n<li><a href=\"#toc-a0a2d5\">系统配置相关</a><ul>\n<li><a href=\"#toc-cbe8b5\">所有系统配置</a></li>\n<li><a href=\"#toc-892caa\">单个系统配置</a></li>\n</ul>\n</li>\n</ul>\n",
+      "url": "biao-qian-lie-biao",
+      "created_timestamp": 1720869700000,
+      "updated_timestamp": 1720869700000,
+      "symbolsCount": 1212
     },
     {
       "id": "1ef3baae-d324-6af0-b942-3a6175925acc",
-      "title": "prepare",
+      "title": "准备工作",
       "alias": "prepare",
       "cover": "",
       "created_time": "2024-07-06T23:17:58.000Z",
@@ -581,89 +581,89 @@
       "tags": [],
       "excerpt": "",
       "published": true,
-      "content": "<h1 id=\"toc-882108\">准备工作</h1>\n<h2 id=\"toc-1bbbb2\">注意事项</h2>\n<p><code>nunjucks</code>并不是在沙盒中运行的，所以使用用户定义的模板可能存在风险。这可能导致的风险有：在服务器上运行时敏感数据被窃取，或是在客户端运行时遭遇跨站脚本攻击。</p>\n<p>如下代码可以获取到 <code>nodejs</code>的全局变量</p>\n<pre><code class=\"hljs lang-handlebars\"><span class=\"hljs-template-variable\">{{ (<span class=\"hljs-name\">0</span>).toString.constructor(<span class=\"hljs-name\">&quot;return global.process.versions&quot;</span>)() | dump | safe }}</span><span class=\"language-xml\">\n</span></code></pre>\n<p>因此在系统开发中，应该对用户输入的内容进行过滤、转义， 避免直接渲染用户输入的模板代码， 系统底层也已经开启了全局转义</p>\n<h2 id=\"toc-97c418\">模板引擎</h2>\n<p>模板引擎使用了 <code>Nunjucks</code></p>\n<h3 id=\"toc-78cef1\">Nunjucks 文档地址</h3>\n<p><a href=\"https://mozilla.github.io/nunjucks/cn/getting-started.html\" title=\"Nunjucks\" target=\"_blank\">Nunjucks 文档地址</a></p>\n<h3 id=\"toc-eee69f\">文件后缀名</h3>\n<p>文件后缀名默认使用 <code>.njk</code>, 在 vscode 中搜索 <code>Nunjucks</code> 安装对应插件，可以实现代码高亮</p>\n<h3 id=\"toc-ab0f78\">模板调试</h3>\n<p>模板调试主要有两种方式:</p>\n<ul>\n<li>调用自定义的宏模板，系统已经有内置， 具体使用方式查看 <code>全局宏模板 - console</code> 部分 <a href=\"\">传送门</a></li>\n<li>调用自定义的过滤器， 系统已经有内置， 具体使用方式查看 <code>全局过滤器 - console</code> 部分 <a href=\"\">传送门</a></li>\n</ul>\n<h3 id=\"toc-c6057b\">自定义过滤器 （Custom Filters）</h3>\n<p>在 <code>src/server/initView/filter</code> 中添加自定义过滤器， 然后在 <code>src/server/initView/index.ts</code> 中注册</p>\n<p>注册后就可以在模板中使用</p>\n<h4 id=\"toc-cfbfb4\">Custom Filters 相关文档</h4>\n<p><a href=\"https://mozilla.github.io/nunjucks/cn/api#custom-filters\" title=\"Custom Filters\" target=\"_blank\">Custom Filters 文档地址</a></p>\n<h3 id=\"toc-756075\">自定义标签 （Custom Tags）</h3>\n<p>在 <code>src/server/initView/tag</code> 中添加自定义标签， 然后在 <code>src/server/initView/index.ts</code> 中注册</p>\n<h4 id=\"toc-1bbbb2\">注意事项</h4>\n<p>自定义标签可以添加参数多个参数中间用 <code>,</code> 隔开</p>\n<p>如获取分类列表的标签</p>\n<pre><code class=\"hljs lang-handlebars\"><span class=\"language-xml\">{% CategoryList %}\n    <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">ul</span>&gt;</span>\n    {% for cate in list %}\n    </span><span class=\"hljs-template-variable\">{{<span class=\"hljs-name\">cate</span> | dump | console(<span class=\"hljs-name\">&#x27;page&#x27;</span>, <span class=\"hljs-string\">&#x27;log&#x27;</span>) | safe}}</span><span class=\"language-xml\">\n      <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">li</span>&gt;</span>\n        </span><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">cate.id</span> }}</span><span class=\"language-xml\">:</span><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">cate.title</span>}}</span><span class=\"language-xml\">:</span><span class=\"hljs-template-variable\">{{<span class=\"hljs-name\">cate.url</span>}}</span><span class=\"language-xml\">\n      <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">li</span>&gt;</span>\n    {% endfor %}\n  <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">ul</span>&gt;</span>\n    </span><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">list</span> | dump | console(<span class=\"hljs-name\">&#x27;result&#x27;</span>, <span class=\"hljs-string\">&#x27;table&#x27;</span>) | safe}}</span><span class=\"language-xml\">\n{% endCategoryList %}\n</span></code></pre>\n<h4 id=\"toc-23aa32\">有闭合标签</h4>\n<p>可以参考 <code>tagTest.ts</code></p>\n<h4 id=\"toc-a65304\">使用方式</h4>\n<pre><code class=\"hljs lang-django\"><span class=\"hljs-template-tag\">{% <span class=\"hljs-name\">TagTest</span> list=&quot;key1=1,key2=2,key3=3,key4=4&quot; %}</span><span class=\"language-xml\">\n  <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">ul</span>&gt;</span>\n    </span><span class=\"hljs-template-tag\">{% <span class=\"hljs-name\"><span class=\"hljs-name\">for</span></span> val <span class=\"hljs-keyword\">in</span> list %}</span><span class=\"language-xml\">\n      <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">li</span>&gt;</span>\n        </span><span class=\"hljs-template-variable\">{{ val.id }}</span><span class=\"language-xml\">:</span><span class=\"hljs-template-variable\">{{ val.city}}</span><span class=\"language-xml\">\n      <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">li</span>&gt;</span>\n    </span><span class=\"hljs-template-tag\">{% <span class=\"hljs-name\"><span class=\"hljs-name\">endfor</span></span> %}</span><span class=\"language-xml\">\n  <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">ul</span>&gt;</span>\n</span><span class=\"hljs-template-tag\">{% <span class=\"hljs-name\">endTagTest</span> %}</span><span class=\"language-xml\">\n</span></code></pre>\n<h4 id=\"toc-1f18dd\">无闭合标签</h4>\n<p>可以参考 <code>tagTest2.ts</code></p>\n<h4 id=\"toc-a65304\">使用方式</h4>\n<pre><code class=\"hljs lang-twig\"><span class=\"hljs-template-tag\">{%</span> <span class=\"hljs-name\">TagTest</span><span class=\"hljs-number\">2</span> name=<span class=\"hljs-string\">&quot;ddd&quot;</span> <span class=\"hljs-template-tag\">%}</span><span class=\"language-xml\">\n</span></code></pre>\n<h4 id=\"toc-71e319\">Custom Tags 相关文档</h4>\n<p><a href=\"https://mozilla.github.io/nunjucks/cn/api.html#custom-tags\" title=\"Custom Tags\" target=\"_blank\">Custom Tags 文档地址</a></p>\n<h3 id=\"toc-5b4759\">渲染用户自定义模版</h3>\n<h4 id=\"toc-4b6d8f\">获取模版引擎实例</h4>\n<p>模版引擎实例挂载在 res.app 上面</p>\n<pre><code class=\"hljs lang-js\"><span class=\"hljs-keyword\">const</span> viewInstance = res.<span class=\"hljs-property\">app</span>.<span class=\"hljs-title function_\">get</span>(<span class=\"hljs-string\">&#x27;viewInstance&#x27;</span>)res.<span class=\"hljs-property\">app</span>.<span class=\"hljs-title function_\">get</span>(<span class=\"hljs-string\">&#x27;viewInstance&#x27;</span>)\n</code></pre>\n<h4 id=\"toc-fa56c4\">调用 renderString 方法渲染</h4>\n<pre><code class=\"hljs lang-js\">viewInstance.<span class=\"hljs-title function_\">renderString</span>(\n  <span class=\"hljs-string\">`{% TagTest2 name=&quot;ddd&quot; %} &lt;br/&gt; {% TagTest2 name=&quot;aaa&quot; %}Hello {{ username }}\n    {% TagTest list=&quot;key1=1,key2=2,key3=3,key4=4&quot; %}\n    &lt;ul&gt;\n      {% for val in list %}\n    &lt;li&gt;\n      {{ val.id }}:{{ val.city}}\n    &lt;/li&gt;\n    {% endfor %}\n    &lt;/ul&gt;\n    {% endTagTest %}`</span>,\n  { <span class=\"hljs-attr\">username</span>: <span class=\"hljs-string\">&#x27;James&#x27;</span> }\n)\n</code></pre>\n",
-      "mdContent": "\n# 准备工作\n\n## 注意事项\n\n`nunjucks`并不是在沙盒中运行的，所以使用用户定义的模板可能存在风险。这可能导致的风险有：在服务器上运行时敏感数据被窃取，或是在客户端运行时遭遇跨站脚本攻击。\n\n如下代码可以获取到 `nodejs`的全局变量\n\n```\n{{ (0).toString.constructor(\"return global.process.versions\")() | dump | safe }}\n```\n\n因此在系统开发中，应该对用户输入的内容进行过滤、转义， 避免直接渲染用户输入的模板代码， 系统底层也已经开启了全局转义\n\n## 模板引擎\n\n模板引擎使用了 `Nunjucks`\n\n### Nunjucks 文档地址\n\n<a href=\"https://mozilla.github.io/nunjucks/cn/getting-started.html\" title=\"Nunjucks\" target=\"_blank\">Nunjucks 文档地址</a>\n\n### 文件后缀名\n\n文件后缀名默认使用 `.njk`, 在 vscode 中搜索 `Nunjucks` 安装对应插件，可以实现代码高亮\n\n### 模板调试\n\n模板调试主要有两种方式:\n\n- 调用自定义的宏模板，系统已经有内置， 具体使用方式查看 `全局宏模板 - console` 部分 [传送门]()\n- 调用自定义的过滤器， 系统已经有内置， 具体使用方式查看 `全局过滤器 - console` 部分 [传送门]()\n\n### 自定义过滤器 （Custom Filters）\n\n在 `src/server/initView/filter` 中添加自定义过滤器， 然后在 `src/server/initView/index.ts` 中注册\n\n注册后就可以在模板中使用\n\n#### Custom Filters 相关文档\n\n<a href=\"https://mozilla.github.io/nunjucks/cn/api#custom-filters\" title=\"Custom Filters\" target=\"_blank\">Custom Filters 文档地址</a>\n\n### 自定义标签 （Custom Tags）\n\n在 `src/server/initView/tag` 中添加自定义标签， 然后在 `src/server/initView/index.ts` 中注册\n\n#### 注意事项\n\n自定义标签可以添加参数多个参数中间用 `,` 隔开\n\n如获取分类列表的标签\n\n```\n{% CategoryList %}\n    <ul>\n    {% for cate in list %}\n    {{cate | dump | console('page', 'log') | safe}}\n      <li>\n        {{ cate.id }}:{{ cate.title}}:{{cate.url}}\n      </li>\n    {% endfor %}\n  </ul>\n    {{ list | dump | console('result', 'table') | safe}}\n{% endCategoryList %}\n```\n\n#### 有闭合标签\n\n可以参考 `tagTest.ts`\n\n#### 使用方式\n\n```\n{% TagTest list=\"key1=1,key2=2,key3=3,key4=4\" %}\n  <ul>\n    {% for val in list %}\n      <li>\n        {{ val.id }}:{{ val.city}}\n      </li>\n    {% endfor %}\n  </ul>\n{% endTagTest %}\n```\n\n#### 无闭合标签\n\n可以参考 `tagTest2.ts`\n\n#### 使用方式\n\n```\n{% TagTest2 name=\"ddd\" %}\n```\n\n#### Custom Tags 相关文档\n\n<a href=\"https://mozilla.github.io/nunjucks/cn/api.html#custom-tags\" title=\"Custom Tags\" target=\"_blank\">Custom Tags 文档地址</a>\n\n### 渲染用户自定义模版\n\n#### 获取模版引擎实例\n\n模版引擎实例挂载在 res.app 上面\n\n```js\nconst viewInstance = res.app.get('viewInstance')res.app.get('viewInstance')\n```\n\n#### 调用 renderString 方法渲染\n\n```js\nviewInstance.renderString(\n  `{% TagTest2 name=\"ddd\" %} <br/> {% TagTest2 name=\"aaa\" %}Hello {{ username }}\n    {% TagTest list=\"key1=1,key2=2,key3=3,key4=4\" %}\n    <ul>\n      {% for val in list %}\n    <li>\n      {{ val.id }}:{{ val.city}}\n    </li>\n    {% endfor %}\n    </ul>\n    {% endTagTest %}`,\n  { username: 'James' }\n)\n```\n",
-      "toc": "<ul>\n<li><a href=\"#toc-882108\">准备工作</a><ul>\n<li><a href=\"#toc-1bbbb2\">注意事项</a></li>\n<li><a href=\"#toc-97c418\">模板引擎</a><ul>\n<li><a href=\"#toc-78cef1\">Nunjucks 文档地址</a></li>\n<li><a href=\"#toc-eee69f\">文件后缀名</a></li>\n<li><a href=\"#toc-ab0f78\">模板调试</a></li>\n<li><a href=\"#toc-c6057b\">自定义过滤器 （Custom Filters）</a><ul>\n<li><a href=\"#toc-cfbfb4\">Custom Filters 相关文档</a></li>\n</ul>\n</li>\n<li><a href=\"#toc-756075\">自定义标签 （Custom Tags）</a><ul>\n<li><a href=\"#toc-1bbbb2\">注意事项</a></li>\n<li><a href=\"#toc-23aa32\">有闭合标签</a></li>\n<li><a href=\"#toc-a65304\">使用方式</a></li>\n<li><a href=\"#toc-1f18dd\">无闭合标签</a></li>\n<li><a href=\"#toc-a65304\">使用方式</a></li>\n<li><a href=\"#toc-71e319\">Custom Tags 相关文档</a></li>\n</ul>\n</li>\n<li><a href=\"#toc-5b4759\">渲染用户自定义模版</a><ul>\n<li><a href=\"#toc-4b6d8f\">获取模版引擎实例</a></li>\n<li><a href=\"#toc-fa56c4\">调用 renderString 方法渲染</a></li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n",
+      "content": "<h2 id=\"toc-1bbbb2\">注意事项</h2>\n<p><code>nunjucks</code>并不是在沙盒中运行的，所以使用用户定义的模板可能存在风险。这可能导致的风险有：在服务器上运行时敏感数据被窃取，或是在客户端运行时遭遇跨站脚本攻击。</p>\n<p>如下代码可以获取到 <code>nodejs</code>的全局变量</p>\n<pre><code class=\"hljs lang-handlebars\"><span class=\"hljs-template-variable\">{{ (<span class=\"hljs-name\">0</span>).toString.constructor(<span class=\"hljs-name\">&quot;return global.process.versions&quot;</span>)() | dump | safe }}</span><span class=\"language-xml\">\n</span></code></pre>\n<p>因此在系统开发中，应该对用户输入的内容进行过滤、转义， 避免直接渲染用户输入的模板代码， 系统底层也已经开启了全局转义</p>\n<h2 id=\"toc-97c418\">模板引擎</h2>\n<p>模板引擎使用了 <code>Nunjucks</code></p>\n<h3 id=\"toc-78cef1\">Nunjucks 文档地址</h3>\n<p><a href=\"https://mozilla.github.io/nunjucks/cn/getting-started.html\" title=\"Nunjucks\" target=\"_blank\">Nunjucks 文档地址</a></p>\n<h3 id=\"toc-eee69f\">文件后缀名</h3>\n<p>文件后缀名默认使用 <code>.njk</code>, 在 vscode 中搜索 <code>Nunjucks</code> 安装对应插件，可以实现代码高亮</p>\n<h3 id=\"toc-ab0f78\">模板调试</h3>\n<p>模板调试:</p>\n<ul>\n<li>调用自定义的过滤器， 系统已经有内置， 具体使用方式查看 <code>全局过滤器 - console</code> 部分</li>\n</ul>\n<h3 id=\"toc-c6057b\">自定义过滤器 （Custom Filters）</h3>\n<p>在 <code>src/server/initView/filter</code> 中添加自定义过滤器， 然后在 <code>src/server/initView/index.ts</code> 中注册</p>\n<p>注册后就可以在模板中使用</p>\n<h4 id=\"toc-cfbfb4\">Custom Filters 相关文档</h4>\n<p><a href=\"https://mozilla.github.io/nunjucks/cn/api#custom-filters\" title=\"Custom Filters\" target=\"_blank\">Custom Filters 文档地址</a></p>\n<h3 id=\"toc-756075\">自定义标签 （Custom Tags）</h3>\n<p>在 <code>src/server/initView/tag</code> 中添加自定义标签， 然后在 <code>src/server/initView/index.ts</code> 中注册</p>\n<h4 id=\"toc-1bbbb2\">注意事项</h4>\n<p>自定义标签可以添加参数多个参数中间用 <code>,</code> 隔开</p>\n<p>如获取分类列表的标签</p>\n<pre><code class=\"hljs lang-handlebars\"><span class=\"language-xml\">{% CategoryList %}\n    <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">ul</span>&gt;</span>\n    {% for cate in list %}\n    </span><span class=\"hljs-template-variable\">{{<span class=\"hljs-name\">cate</span> | dump | console(<span class=\"hljs-name\">&#x27;page&#x27;</span>, <span class=\"hljs-string\">&#x27;log&#x27;</span>) | safe}}</span><span class=\"language-xml\">\n      <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">li</span>&gt;</span>\n        </span><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">cate.id</span> }}</span><span class=\"language-xml\">:</span><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">cate.title</span>}}</span><span class=\"language-xml\">:</span><span class=\"hljs-template-variable\">{{<span class=\"hljs-name\">cate.url</span>}}</span><span class=\"language-xml\">\n      <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">li</span>&gt;</span>\n    {% endfor %}\n  <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">ul</span>&gt;</span>\n    </span><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">list</span> | dump | console(<span class=\"hljs-name\">&#x27;result&#x27;</span>, <span class=\"hljs-string\">&#x27;table&#x27;</span>) | safe}}</span><span class=\"language-xml\">\n{% endCategoryList %}\n</span></code></pre>\n<h4 id=\"toc-23aa32\">有闭合标签</h4>\n<p>可以参考 <code>tagTest.ts</code></p>\n<h4 id=\"toc-a65304\">使用方式</h4>\n<pre><code class=\"hljs lang-django\"><span class=\"hljs-template-tag\">{% <span class=\"hljs-name\">TagTest</span> list=&quot;key1=1,key2=2,key3=3,key4=4&quot; %}</span><span class=\"language-xml\">\n  <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">ul</span>&gt;</span>\n    </span><span class=\"hljs-template-tag\">{% <span class=\"hljs-name\"><span class=\"hljs-name\">for</span></span> val <span class=\"hljs-keyword\">in</span> list %}</span><span class=\"language-xml\">\n      <span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">li</span>&gt;</span>\n        </span><span class=\"hljs-template-variable\">{{ val.id }}</span><span class=\"language-xml\">:</span><span class=\"hljs-template-variable\">{{ val.city}}</span><span class=\"language-xml\">\n      <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">li</span>&gt;</span>\n    </span><span class=\"hljs-template-tag\">{% <span class=\"hljs-name\"><span class=\"hljs-name\">endfor</span></span> %}</span><span class=\"language-xml\">\n  <span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">ul</span>&gt;</span>\n</span><span class=\"hljs-template-tag\">{% <span class=\"hljs-name\">endTagTest</span> %}</span><span class=\"language-xml\">\n</span></code></pre>\n<h4 id=\"toc-1f18dd\">无闭合标签</h4>\n<p>可以参考 <code>tagTest2.ts</code></p>\n<h4 id=\"toc-a65304\">使用方式</h4>\n<pre><code class=\"hljs lang-twig\"><span class=\"hljs-template-tag\">{%</span> <span class=\"hljs-name\">TagTest</span><span class=\"hljs-number\">2</span> name=<span class=\"hljs-string\">&quot;ddd&quot;</span> <span class=\"hljs-template-tag\">%}</span><span class=\"language-xml\">\n</span></code></pre>\n<h4 id=\"toc-71e319\">Custom Tags 相关文档</h4>\n<p><a href=\"https://mozilla.github.io/nunjucks/cn/api.html#custom-tags\" title=\"Custom Tags\" target=\"_blank\">Custom Tags 文档地址</a></p>\n<h3 id=\"toc-5b4759\">渲染用户自定义模版</h3>\n<h4 id=\"toc-4b6d8f\">获取模版引擎实例</h4>\n<p>模版引擎实例挂载在 res.app 上面</p>\n<pre><code class=\"hljs lang-js\"><span class=\"hljs-keyword\">const</span> viewInstance = res.<span class=\"hljs-property\">app</span>.<span class=\"hljs-title function_\">get</span>(<span class=\"hljs-string\">&#x27;viewInstance&#x27;</span>)res.<span class=\"hljs-property\">app</span>.<span class=\"hljs-title function_\">get</span>(<span class=\"hljs-string\">&#x27;viewInstance&#x27;</span>)\n</code></pre>\n<h4 id=\"toc-fa56c4\">调用 renderString 方法渲染</h4>\n<pre><code class=\"hljs lang-js\">viewInstance.<span class=\"hljs-title function_\">renderString</span>(\n  <span class=\"hljs-string\">`{% TagTest2 name=&quot;ddd&quot; %} &lt;br/&gt; {% TagTest2 name=&quot;aaa&quot; %}Hello {{ username }}\n    {% TagTest list=&quot;key1=1,key2=2,key3=3,key4=4&quot; %}\n    &lt;ul&gt;\n      {% for val in list %}\n    &lt;li&gt;\n      {{ val.id }}:{{ val.city}}\n    &lt;/li&gt;\n    {% endfor %}\n    &lt;/ul&gt;\n    {% endTagTest %}`</span>,\n  { <span class=\"hljs-attr\">username</span>: <span class=\"hljs-string\">&#x27;James&#x27;</span> }\n)\n</code></pre>\n",
+      "mdContent": "\n## 注意事项\n\n`nunjucks`并不是在沙盒中运行的，所以使用用户定义的模板可能存在风险。这可能导致的风险有：在服务器上运行时敏感数据被窃取，或是在客户端运行时遭遇跨站脚本攻击。\n\n如下代码可以获取到 `nodejs`的全局变量\n\n```\n{{ (0).toString.constructor(\"return global.process.versions\")() | dump | safe }}\n```\n\n因此在系统开发中，应该对用户输入的内容进行过滤、转义， 避免直接渲染用户输入的模板代码， 系统底层也已经开启了全局转义\n\n## 模板引擎\n\n模板引擎使用了 `Nunjucks`\n\n### Nunjucks 文档地址\n\n<a href=\"https://mozilla.github.io/nunjucks/cn/getting-started.html\" title=\"Nunjucks\" target=\"_blank\">Nunjucks 文档地址</a>\n\n### 文件后缀名\n\n文件后缀名默认使用 `.njk`, 在 vscode 中搜索 `Nunjucks` 安装对应插件，可以实现代码高亮\n\n### 模板调试\n\n模板调试:\n\n- 调用自定义的过滤器， 系统已经有内置， 具体使用方式查看 `全局过滤器 - console` 部分\n\n### 自定义过滤器 （Custom Filters）\n\n在 `src/server/initView/filter` 中添加自定义过滤器， 然后在 `src/server/initView/index.ts` 中注册\n\n注册后就可以在模板中使用\n\n#### Custom Filters 相关文档\n\n<a href=\"https://mozilla.github.io/nunjucks/cn/api#custom-filters\" title=\"Custom Filters\" target=\"_blank\">Custom Filters 文档地址</a>\n\n### 自定义标签 （Custom Tags）\n\n在 `src/server/initView/tag` 中添加自定义标签， 然后在 `src/server/initView/index.ts` 中注册\n\n#### 注意事项\n\n自定义标签可以添加参数多个参数中间用 `,` 隔开\n\n如获取分类列表的标签\n\n```\n{% CategoryList %}\n    <ul>\n    {% for cate in list %}\n    {{cate | dump | console('page', 'log') | safe}}\n      <li>\n        {{ cate.id }}:{{ cate.title}}:{{cate.url}}\n      </li>\n    {% endfor %}\n  </ul>\n    {{ list | dump | console('result', 'table') | safe}}\n{% endCategoryList %}\n```\n\n#### 有闭合标签\n\n可以参考 `tagTest.ts`\n\n#### 使用方式\n\n```\n{% TagTest list=\"key1=1,key2=2,key3=3,key4=4\" %}\n  <ul>\n    {% for val in list %}\n      <li>\n        {{ val.id }}:{{ val.city}}\n      </li>\n    {% endfor %}\n  </ul>\n{% endTagTest %}\n```\n\n#### 无闭合标签\n\n可以参考 `tagTest2.ts`\n\n#### 使用方式\n\n```\n{% TagTest2 name=\"ddd\" %}\n```\n\n#### Custom Tags 相关文档\n\n<a href=\"https://mozilla.github.io/nunjucks/cn/api.html#custom-tags\" title=\"Custom Tags\" target=\"_blank\">Custom Tags 文档地址</a>\n\n### 渲染用户自定义模版\n\n#### 获取模版引擎实例\n\n模版引擎实例挂载在 res.app 上面\n\n```js\nconst viewInstance = res.app.get('viewInstance')res.app.get('viewInstance')\n```\n\n#### 调用 renderString 方法渲染\n\n```js\nviewInstance.renderString(\n  `{% TagTest2 name=\"ddd\" %} <br/> {% TagTest2 name=\"aaa\" %}Hello {{ username }}\n    {% TagTest list=\"key1=1,key2=2,key3=3,key4=4\" %}\n    <ul>\n      {% for val in list %}\n    <li>\n      {{ val.id }}:{{ val.city}}\n    </li>\n    {% endfor %}\n    </ul>\n    {% endTagTest %}`,\n  { username: 'James' }\n)\n```\n",
+      "toc": "<ul>\n<li><a href=\"#toc-1bbbb2\">注意事项</a></li>\n<li><a href=\"#toc-97c418\">模板引擎</a><ul>\n<li><a href=\"#toc-78cef1\">Nunjucks 文档地址</a></li>\n<li><a href=\"#toc-eee69f\">文件后缀名</a></li>\n<li><a href=\"#toc-ab0f78\">模板调试</a></li>\n<li><a href=\"#toc-c6057b\">自定义过滤器 （Custom Filters）</a><ul>\n<li><a href=\"#toc-cfbfb4\">Custom Filters 相关文档</a></li>\n</ul>\n</li>\n<li><a href=\"#toc-756075\">自定义标签 （Custom Tags）</a><ul>\n<li><a href=\"#toc-1bbbb2\">注意事项</a></li>\n<li><a href=\"#toc-23aa32\">有闭合标签</a></li>\n<li><a href=\"#toc-a65304\">使用方式</a></li>\n<li><a href=\"#toc-1f18dd\">无闭合标签</a></li>\n<li><a href=\"#toc-a65304\">使用方式</a></li>\n<li><a href=\"#toc-71e319\">Custom Tags 相关文档</a></li>\n</ul>\n</li>\n<li><a href=\"#toc-5b4759\">渲染用户自定义模版</a><ul>\n<li><a href=\"#toc-4b6d8f\">获取模版引擎实例</a></li>\n<li><a href=\"#toc-fa56c4\">调用 renderString 方法渲染</a></li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n",
       "url": "prepare",
       "created_timestamp": 1720307878000,
       "updated_timestamp": 1720307878000,
-      "symbolsCount": 1694
+      "symbolsCount": 1636
     },
     {
-      "id": "",
-      "title": "",
+      "id": "1ef40c6f-1f8e-6e60-a857-5d1e734662cc",
+      "title": "全局变量",
       "alias": "",
       "cover": "",
-      "created_time": "",
-      "updated_time": "",
+      "created_time": "2024-07-13T11:21:07.000Z",
+      "updated_time": "2024-07-13T11:21:07.000Z",
       "categories": [],
       "tags": [],
       "excerpt": "",
-      "published": "",
-      "content": "<h1 id=\"toc-fcfffb\">全局变量</h1>\n",
-      "mdContent": "# 全局变量\n",
-      "toc": "<ul>\n<li><a href=\"#toc-fcfffb\">全局变量</a></li>\n</ul>\n",
-      "url": "",
-      "created_timestamp": 0,
-      "updated_timestamp": 0,
-      "symbolsCount": 4
+      "published": true,
+      "content": "<h2 id=\"toc-979a50\">系统变量</h2>\n<h3 id=\"sysconfig\">sysConfig</h3>\n<p>系统变量通过配置文件 config.yml 配置</p>\n<p><code>sysConfig</code> 是一个全局变量，用于存储系统配置信息</p>\n<h3 id=\"toc-0d98c7\">其他</h3>\n<ul>\n<li>isIndex 是否是首页</li>\n<li>isIndexFirstPage 是否是首页第一页</li>\n<li>isPost 是否文章页</li>\n<li>isPage 是否是单页</li>\n<li>isTag 是否是标签页</li>\n<li>isCategory 是否是分类页</li>\n<li>isArchive 是否是归档页</li>\n<li>isLink 是否是友链页</li>\n</ul>\n<h2 id=\"toc-67e4ac\">首页 (分页页面)</h2>\n<ul>\n<li>pageIndex 当前页码 number</li>\n<li>pageCount 页码总数 number</li>\n<li>prevPageIndex 前一个页码 number</li>\n<li>nextPageIndex 后一个页码 number</li>\n<li>pageSize 页码总数 number</li>\n<li>postList 文章列表 LIST_POST_ITEM[]</li>\n</ul>\n<h2 id=\"toc-226fc6\">分类页</h2>\n<ul>\n<li>category 分类内容 CATEGORY</li>\n</ul>\n<h2 id=\"toc-288c38\">标签页</h2>\n<ul>\n<li>tag 标签内容 TAG</li>\n</ul>\n<h2 id=\"toc-04600a\">Page页</h2>\n<ul>\n<li>page 页面内容 PAGE</li>\n</ul>\n<h2 id=\"toc-d2aa0c\">Post页</h2>\n<ul>\n<li>post 页面内容 POST</li>\n<li>prevPost 页面内容 POST</li>\n<li>nextPost 页面内容 POST</li>\n</ul>\n<h2 id=\"toc-2122f5\">友链页</h2>\n<ul>\n<li>linkArchive 友链归档</li>\n</ul>\n<pre><code class=\"hljs lang-css\">{\n      <span class=\"hljs-selector-attr\">[type: string]</span>: {\n        <span class=\"hljs-selector-attr\">[key: string]</span>: string | boolean | number\n      }<span class=\"hljs-selector-attr\">[]</span>\n    }<span class=\"hljs-selector-attr\">[]</span>\n</code></pre>\n",
+      "mdContent": "\n## 系统变量\n\n### sysConfig\n\n系统变量通过配置文件 config.yml 配置\n\n`sysConfig` 是一个全局变量，用于存储系统配置信息\n\n### 其他\n\n- isIndex 是否是首页\n- isIndexFirstPage 是否是首页第一页\n- isPost 是否文章页\n- isPage 是否是单页\n- isTag 是否是标签页\n- isCategory 是否是分类页\n- isArchive 是否是归档页\n- isLink 是否是友链页\n\n## 首页 (分页页面)\n\n- pageIndex 当前页码 number\n- pageCount 页码总数 number\n- prevPageIndex 前一个页码 number\n- nextPageIndex 后一个页码 number\n- pageSize 页码总数 number\n- postList 文章列表 LIST_POST_ITEM[]\n\n## 分类页\n\n- category 分类内容 CATEGORY\n\n## 标签页\n\n- tag 标签内容 TAG\n\n## Page页\n\n- page 页面内容 PAGE\n\n## Post页\n\n- post 页面内容 POST\n- prevPost 页面内容 POST\n- nextPost 页面内容 POST\n\n## 友链页\n\n- linkArchive 友链归档\n\n```\n{\n      [type: string]: {\n        [key: string]: string | boolean | number\n      }[]\n    }[]\n```\n",
+      "toc": "<ul>\n<li><a href=\"#toc-979a50\">系统变量</a><ul>\n<li><a href=\"#sysconfig\">sysConfig</a></li>\n<li><a href=\"#toc-0d98c7\">其他</a></li>\n</ul>\n</li>\n<li><a href=\"#toc-67e4ac\">首页 (分页页面)</a></li>\n<li><a href=\"#toc-226fc6\">分类页</a></li>\n<li><a href=\"#toc-288c38\">标签页</a></li>\n<li><a href=\"#toc-04600a\">Page页</a></li>\n<li><a href=\"#toc-d2aa0c\">Post页</a></li>\n<li><a href=\"#toc-2122f5\">友链页</a></li>\n</ul>\n",
+      "url": "quan-ju-bian-liang",
+      "created_timestamp": 1720869667000,
+      "updated_timestamp": 1720869667000,
+      "symbolsCount": 492
     },
     {
-      "id": "",
-      "title": "",
+      "id": "1ef40cb2-16da-6fb0-92f0-23e4fcf0cad9",
+      "title": "全局函数",
       "alias": "",
       "cover": "",
-      "created_time": "",
-      "updated_time": "",
+      "created_time": "2024-07-13T11:51:05.000Z",
+      "updated_time": "2024-07-13T11:51:05.000Z",
       "categories": [],
       "tags": [],
       "excerpt": "",
-      "published": "",
-      "content": "<h1 id=\"toc-1dd5ab\">全局宏模板</h1>\n<h2 id=\"console\">Console</h2>\n<p>通过添加 script 代码块，打印模板内容到浏览器控制台，主要用于调试</p>\n<p>注意: 仅在开发环境中生效</p>\n<h3 id=\"toc-3d0a2d\">参数</h3>\n<ul>\n<li>data: 属性内容</li>\n<li>key: 属性名</li>\n<li>type: <span>(可选)</span>浏览器 console 的所有方法都可以用，常用的 type 如下:<ul>\n<li>log 打印内容的通用方法 <strong>（默认）</strong></li>\n<li>info 打印资讯类说明信息</li>\n<li>table 将列表型的数据打印成表格</li>\n<li>warn 打印一个警告信息</li>\n<li>error 打印一条错误信息</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"toc-4bde44\">推荐使用方式</h3>\n<p>在 layout.njk 中引入 <code>utils-macro.njk</code>, 然后在需要的地方调用\n列表数据建议用<code>table</code>打印， 输出更直观\n其他可以用 log、info 打印</p>\n<h3 id=\"toc-e7fc50\">引入</h3>\n<pre><code class=\"hljs lang-capnproto\">{% <span class=\"hljs-keyword\">import</span> <span class=\"hljs-string\">&quot;../helper/utils-macro.njk&quot;</span> <span class=\"hljs-keyword\">as</span> utils %}\n</code></pre>\n<h3 id=\"toc-97d29d\">调用</h3>\n<pre><code class=\"hljs lang-handlebars\"><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">utils.console</span>(<span class=\"hljs-name\">message</span>, <span class=\"hljs-string\">&#x27;/message/&#x27;</span>) }}</span><span class=\"language-xml\">\n</span><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">utils.console</span>(<span class=\"hljs-name\">result</span>, <span class=\"hljs-string\">&#x27;/result/&#x27;</span>, <span class=\"hljs-string\">&#x27;table&#x27;</span>) }}</span><span class=\"language-xml\">\n</span></code></pre>\n",
-      "mdContent": "# 全局宏模板\n\n## Console\n\n通过添加 script 代码块，打印模板内容到浏览器控制台，主要用于调试\n\n注意: 仅在开发环境中生效\n\n### 参数\n\n- data: 属性内容\n- key: 属性名\n- type: <span>(可选)</span>浏览器 console 的所有方法都可以用，常用的 type 如下:\n  - log 打印内容的通用方法 **（默认）**\n  - info 打印资讯类说明信息\n  - table 将列表型的数据打印成表格\n  - warn 打印一个警告信息\n  - error 打印一条错误信息\n\n### 推荐使用方式\n\n在 layout.njk 中引入 `utils-macro.njk`, 然后在需要的地方调用\n列表数据建议用`table`打印， 输出更直观\n其他可以用 log、info 打印\n\n### 引入\n\n```\n{% import \"../helper/utils-macro.njk\" as utils %}\n```\n\n### 调用\n\n```\n{{ utils.console(message, '/message/') }}\n{{ utils.console(result, '/result/', 'table') }}\n```\n",
-      "toc": "<ul>\n<li><a href=\"#toc-1dd5ab\">全局宏模板</a><ul>\n<li><a href=\"#console\">Console</a><ul>\n<li><a href=\"#toc-3d0a2d\">参数</a></li>\n<li><a href=\"#toc-4bde44\">推荐使用方式</a></li>\n<li><a href=\"#toc-e7fc50\">引入</a></li>\n<li><a href=\"#toc-97d29d\">调用</a></li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n",
-      "url": "",
-      "created_timestamp": 0,
-      "updated_timestamp": 0,
-      "symbolsCount": 437
+      "published": true,
+      "content": "<h2 id=\"date\">date</h2>\n<p>使用<code>moment</code> 进行时间格式化</p>\n<h3 id=\"toc-3d0a2d\">参数</h3>\n<ul>\n<li>str 时间格式字符串</li>\n<li>format: <strong>(可选)</strong> 格式化字符串，默认为<code>YYYY-MM-DD HH:mm:ss</code></li>\n</ul>\n<h2 id=\"getcolor\">getColor</h2>\n<p>根据 L（明度）、C（色度）和 H（色相）获取 <code>oklch</code> 颜色值</p>\n<h3 id=\"toc-3d0a2d\">参数</h3>\n<ul>\n<li>l（明度）</li>\n<li>c（色度）</li>\n<li>h（色相）</li>\n</ul>\n",
+      "mdContent": "\n## date\n\n使用`moment` 进行时间格式化\n\n### 参数\n\n- str 时间格式字符串\n- format: **(可选)** 格式化字符串，默认为`YYYY-MM-DD HH:mm:ss`\n\n## getColor\n\n根据 L（明度）、C（色度）和 H（色相）获取 `oklch` 颜色值\n\n### 参数\n\n- l（明度）\n- c（色度）\n- h（色相）\n",
+      "toc": "<ul>\n<li><a href=\"#date\">date</a><ul>\n<li><a href=\"#toc-3d0a2d\">参数</a></li>\n</ul>\n</li>\n<li><a href=\"#getcolor\">getColor</a><ul>\n<li><a href=\"#toc-3d0a2d\">参数</a></li>\n</ul>\n</li>\n</ul>\n",
+      "url": "quan-ju-han-shu",
+      "created_timestamp": 1720871465000,
+      "updated_timestamp": 1720871465000,
+      "symbolsCount": 124
     },
     {
-      "id": "",
-      "title": "",
+      "id": "1ef40c6e-d151-69a0-9327-ad1a88221078",
+      "title": "全局过滤器",
       "alias": "",
       "cover": "",
-      "created_time": "",
-      "updated_time": "",
+      "created_time": "2024-07-13T11:20:59.000Z",
+      "updated_time": "2024-07-13T11:20:59.000Z",
       "categories": [],
       "tags": [],
       "excerpt": "",
-      "published": "",
-      "content": "<h1 id=\"toc-3e07a2\">全局过滤器</h1>\n<h2 id=\"console\">Console</h2>\n<p>配合<code>dump</code>、<code>safe</code> 两个过滤器，打印模板内容到浏览器控制台，主要用于调试</p>\n<p>注意: 仅在开发环境中生效</p>\n<h3 id=\"toc-3d0a2d\">参数</h3>\n<ul>\n<li>key: 属性名</li>\n<li>type: <span>(可选)</span>浏览器 console 的所有方法都可以用，常用的 type 如下:<ul>\n<li>log 打印内容的通用方法 <strong>（默认）</strong></li>\n<li>info 打印资讯类说明信息</li>\n<li>table 将列表型的数据打印成表格</li>\n<li>warn 打印一个警告信息</li>\n<li>error 打印一条错误信息</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"toc-4bde44\">推荐使用方式</h3>\n<p><code>Console</code> 默认加载到了系统中， 可以直接使用</p>\n<p>列表数据建议用<code>table</code>打印， 输出更直观</p>\n<p>其他可以用 log、info 打印</p>\n<h3 id=\"toc-97d29d\">调用</h3>\n<pre><code class=\"hljs lang-handlebars\"><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">message</span> | dump | console(<span class=\"hljs-name\">&#x27;message&#x27;</span>) | safe}}</span><span class=\"language-xml\">\n</span><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">result</span> | dump | console(<span class=\"hljs-name\">&#x27;result&#x27;</span>, <span class=\"hljs-string\">&#x27;table&#x27;</span>) | safe}}</span><span class=\"language-xml\">\n</span></code></pre>\n",
-      "mdContent": "# 全局过滤器\n\n## Console\n\n配合`dump`、`safe` 两个过滤器，打印模板内容到浏览器控制台，主要用于调试\n\n注意: 仅在开发环境中生效\n\n### 参数\n\n- key: 属性名\n- type: <span>(可选)</span>浏览器 console 的所有方法都可以用，常用的 type 如下:\n  - log 打印内容的通用方法 **（默认）**\n  - info 打印资讯类说明信息\n  - table 将列表型的数据打印成表格\n  - warn 打印一个警告信息\n  - error 打印一条错误信息\n\n### 推荐使用方式\n\n`Console` 默认加载到了系统中， 可以直接使用\n\n列表数据建议用`table`打印， 输出更直观\n\n其他可以用 log、info 打印\n\n### 调用\n\n```\n{{ message | dump | console('message') | safe}}\n{{ result | dump | console('result', 'table') | safe}}\n```\n",
-      "toc": "<ul>\n<li><a href=\"#toc-3e07a2\">全局过滤器</a><ul>\n<li><a href=\"#console\">Console</a><ul>\n<li><a href=\"#toc-3d0a2d\">参数</a></li>\n<li><a href=\"#toc-4bde44\">推荐使用方式</a></li>\n<li><a href=\"#toc-97d29d\">调用</a></li>\n</ul>\n</li>\n</ul>\n</li>\n</ul>\n",
-      "url": "",
-      "created_timestamp": 0,
-      "updated_timestamp": 0,
-      "symbolsCount": 362
+      "published": true,
+      "content": "<h2 id=\"console\">console</h2>\n<p>配合<code>dump</code>、<code>safe</code> 两个过滤器，打印模板内容到浏览器控制台，主要用于调试</p>\n<h3 id=\"toc-3d0a2d\">参数</h3>\n<ul>\n<li>key: 属性名</li>\n<li>type: <span>(可选)</span>浏览器 console 的所有方法都可以用，常用的 type 如下:<ul>\n<li>log 打印内容的通用方法 <strong>（默认）</strong></li>\n<li>info 打印资讯类说明信息</li>\n<li>table 将列表型的数据打印成表格</li>\n<li>warn 打印一个警告信息</li>\n<li>error 打印一条错误信息</li>\n</ul>\n</li>\n</ul>\n<h3 id=\"toc-4bde44\">推荐使用方式</h3>\n<p><code>Console</code> 默认加载到了系统中， 可以直接使用</p>\n<p>列表数据建议用<code>table</code>打印， 输出更直观</p>\n<p>其他可以用 log、info 打印</p>\n<h3 id=\"toc-97d29d\">调用</h3>\n<pre><code class=\"hljs lang-handlebars\"><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">message</span> | dump | console(<span class=\"hljs-name\">&#x27;message&#x27;</span>) | safe}}</span><span class=\"language-xml\">\n</span><span class=\"hljs-template-variable\">{{ <span class=\"hljs-name\">result</span> | dump | console(<span class=\"hljs-name\">&#x27;result&#x27;</span>, <span class=\"hljs-string\">&#x27;table&#x27;</span>) | safe}}</span><span class=\"language-xml\">\n</span></code></pre>\n<h2 id=\"date\">date</h2>\n<p>使用<code>moment</code> 进行时间格式化</p>\n<h3 id=\"toc-3d0a2d\">参数</h3>\n<ul>\n<li>format: <strong>(可选)</strong> 格式化字符串，默认为<code>YYYY-MM-DD HH:mm:ss</code></li>\n</ul>\n<h3 id=\"toc-21dd74\">推荐格式</h3>\n<ul>\n<li>年月日 时分 <code>YYYY-MM-DD HH:mm:ss</code></li>\n<li>年月日 <code>YYYY-MM-DD</code></li>\n</ul>\n<h2 id=\"shorten\">shorten</h2>\n<p>字符串截取</p>\n<h3 id=\"toc-3d0a2d\">参数</h3>\n<ul>\n<li>count <strong>(可选)</strong> 截取长度，默认为 5</li>\n</ul>\n<h2 id=\"striphtml\">stripHtml</h2>\n<p>用空字符串替换所有HTML标签</p>\n<h2 id=\"symbolscount\">symbolsCount</h2>\n<p>统计字符串中符号的数量, 不包括html标签和所有不可见字符</p>\n<h2 id=\"titletourl\">titleToUrl</h2>\n<p>将标题转换为 URL</p>\n",
+      "mdContent": "\n## console\n\n配合`dump`、`safe` 两个过滤器，打印模板内容到浏览器控制台，主要用于调试\n\n### 参数\n\n- key: 属性名\n- type: <span>(可选)</span>浏览器 console 的所有方法都可以用，常用的 type 如下:\n  - log 打印内容的通用方法 **（默认）**\n  - info 打印资讯类说明信息\n  - table 将列表型的数据打印成表格\n  - warn 打印一个警告信息\n  - error 打印一条错误信息\n\n### 推荐使用方式\n\n`Console` 默认加载到了系统中， 可以直接使用\n\n列表数据建议用`table`打印， 输出更直观\n\n其他可以用 log、info 打印\n\n### 调用\n\n```\n{{ message | dump | console('message') | safe}}\n{{ result | dump | console('result', 'table') | safe}}\n```\n\n## date\n\n使用`moment` 进行时间格式化\n\n### 参数\n\n- format: **(可选)** 格式化字符串，默认为`YYYY-MM-DD HH:mm:ss`\n\n### 推荐格式\n\n- 年月日 时分 `YYYY-MM-DD HH:mm:ss`\n- 年月日 `YYYY-MM-DD`\n\n## shorten\n\n字符串截取\n\n### 参数\n\n- count **(可选)** 截取长度，默认为 5\n\n## stripHtml\n\n用空字符串替换所有HTML标签\n\n## symbolsCount\n\n统计字符串中符号的数量, 不包括html标签和所有不可见字符\n\n## titleToUrl\n\n将标题转换为 URL\n",
+      "toc": "<ul>\n<li><a href=\"#console\">console</a><ul>\n<li><a href=\"#toc-3d0a2d\">参数</a></li>\n<li><a href=\"#toc-4bde44\">推荐使用方式</a></li>\n<li><a href=\"#toc-97d29d\">调用</a></li>\n</ul>\n</li>\n<li><a href=\"#date\">date</a><ul>\n<li><a href=\"#toc-3d0a2d\">参数</a></li>\n<li><a href=\"#toc-21dd74\">推荐格式</a></li>\n</ul>\n</li>\n<li><a href=\"#shorten\">shorten</a><ul>\n<li><a href=\"#toc-3d0a2d\">参数</a></li>\n</ul>\n</li>\n<li><a href=\"#striphtml\">stripHtml</a></li>\n<li><a href=\"#symbolscount\">symbolsCount</a></li>\n<li><a href=\"#titletourl\">titleToUrl</a></li>\n</ul>\n",
+      "url": "quan-ju-guo-lv-qi",
+      "created_timestamp": 1720869659000,
+      "updated_timestamp": 1720869659000,
+      "symbolsCount": 561
     },
     {
-      "id": "",
-      "title": "",
+      "id": "1ef40c6e-2391-69f0-95c4-9d0c25401eb5",
+      "title": "系统配置",
       "alias": "",
       "cover": "",
-      "created_time": "",
-      "updated_time": "",
+      "created_time": "2024-07-13T11:20:41.000Z",
+      "updated_time": "2024-07-13T11:20:41.000Z",
       "categories": [],
       "tags": [],
       "excerpt": "",
-      "published": "",
-      "content": "",
-      "mdContent": "",
-      "toc": "",
-      "url": "",
-      "created_timestamp": 0,
-      "updated_timestamp": 0,
-      "symbolsCount": 0
+      "published": true,
+      "content": "<h2 id=\"toc-787fdc\">系统配置</h2>\n<p>系统配置位于用户根目录<code>config.yml</code></p>\n<h3 id=\"toc-ed3bfd\">获取方式</h3>\n<ul>\n<li>在模版中可以通过全局变量获取</li>\n</ul>\n<p><code>{{ sysConfig.key }}</code></p>\n<ul>\n<li><p>通过 <code>SysConfigItem</code> 模版标签获取</p>\n<ul>\n<li>path: 变量路径</li>\n</ul>\n</li>\n</ul>\n<pre><code class=\"hljs lang-abnf\"> {%  SysConfigItem path<span class=\"hljs-operator\">=</span><span class=\"hljs-string\">&quot;key&quot;</span> %}\n</code></pre>\n",
+      "mdContent": "\n## 系统配置\n\n系统配置位于用户根目录`config.yml`\n\n### 获取方式\n\n- 在模版中可以通过全局变量获取\n\n`{{ sysConfig.key }}`\n\n- 通过 `SysConfigItem` 模版标签获取\n\n  - path: 变量路径\n\n```\n {%  SysConfigItem path=\"key\" %}\n```\n",
+      "toc": "<ul>\n<li><a href=\"#toc-787fdc\">系统配置</a><ul>\n<li><a href=\"#toc-ed3bfd\">获取方式</a></li>\n</ul>\n</li>\n</ul>\n",
+      "url": "xi-tong-pei-zhi",
+      "created_timestamp": 1720869641000,
+      "updated_timestamp": 1720869641000,
+      "symbolsCount": 127
     },
     {
       "id": "",
@@ -839,18 +839,6 @@
       "url": "linux"
     },
     {
-      "id": "0a347cfa-d40a-5cde-816b-6899edf5386f",
-      "title": "javascript",
-      "description": "javascript",
-      "url": "javascript"
-    },
-    {
-      "id": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
-      "title": "html",
-      "description": "html",
-      "url": "html"
-    },
-    {
       "id": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
       "title": "notes",
       "description": "notes",
@@ -863,10 +851,16 @@
       "url": "http"
     },
     {
-      "id": "d22b62a2-d564-576e-96dd-0b8433662e2d",
-      "title": "angular",
-      "description": "angular",
-      "url": "angular"
+      "id": "0a347cfa-d40a-5cde-816b-6899edf5386f",
+      "title": "javascript",
+      "description": "javascript",
+      "url": "javascript"
+    },
+    {
+      "id": "db987ebd-5794-596c-a53b-37b8f9c5c93c",
+      "title": "html",
+      "description": "html",
+      "url": "html"
     },
     {
       "id": "d37f4904-cd43-5471-b39d-5d159141c14a",
@@ -879,6 +873,12 @@
       "title": "canvas",
       "description": "canvas",
       "url": "canvas"
+    },
+    {
+      "id": "d22b62a2-d564-576e-96dd-0b8433662e2d",
+      "title": "angular",
+      "description": "angular",
+      "url": "angular"
     }
   ],
   "postCategories": [
@@ -911,6 +911,21 @@
       "postId": "1ef3b5ae-4c0c-69f0-aa92-08c2005ee788",
       "categoryId": "80d82b70-8dd1-5b0e-a576-6d05686610f9",
       "id": "ee0d41c2-237b-516d-a083-48e1e0216d69"
+    },
+    {
+      "postId": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
+      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
+      "id": "966bf8e5-839d-5685-912e-f1830cc20e9d"
+    },
+    {
+      "postId": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
+      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
+      "id": "df721695-fbe5-5c68-8c84-235b795c76b7"
+    },
+    {
+      "postId": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
+      "categoryId": "fbe30cce-885f-5935-93b1-a721fcaa2bab",
+      "id": "33c470d7-615a-5898-9bb1-830f3c8dd260"
     },
     {
       "postId": "1ef3b59b-0a4e-6760-9d78-69ba27cbd20e",
@@ -958,26 +973,6 @@
       "id": "9ffe9bd3-e201-5239-88ca-5128e42f9380"
     },
     {
-      "postId": "1ef3b5e4-51b0-6ce0-b727-e8921436fadf",
-      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
-      "id": "966bf8e5-839d-5685-912e-f1830cc20e9d"
-    },
-    {
-      "postId": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
-      "categoryId": "7eda8bb5-6a8f-59c0-9954-45091dc66b21",
-      "id": "df721695-fbe5-5c68-8c84-235b795c76b7"
-    },
-    {
-      "postId": "1ef3b5be-561c-6f70-a98e-1d4fbfc5d1c2",
-      "categoryId": "fbe30cce-885f-5935-93b1-a721fcaa2bab",
-      "id": "33c470d7-615a-5898-9bb1-830f3c8dd260"
-    },
-    {
-      "postId": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
-      "categoryId": "d22b62a2-d564-576e-96dd-0b8433662e2d",
-      "id": "ada65018-4243-5d36-87d8-cf355667f1a0"
-    },
-    {
       "postId": "1ef3b5b7-e0bc-6ce0-ac15-c509070dad5f",
       "categoryId": "d37f4904-cd43-5471-b39d-5d159141c14a",
       "id": "1d9f499f-bcd6-5821-b880-5b8ca1e11c3b"
@@ -1006,6 +1001,11 @@
       "postId": "1ef3b5cb-5325-6760-803d-418bab754735",
       "categoryId": "6bd59eb3-0b90-5a8a-9138-24dd6bf586b7",
       "id": "9a394756-7f9c-5f0a-b0ed-fd56ab9dab67"
+    },
+    {
+      "postId": "1ef3b5a7-26a0-61a0-aeca-5e11b525f15e",
+      "categoryId": "d22b62a2-d564-576e-96dd-0b8433662e2d",
+      "id": "ada65018-4243-5d36-87d8-cf355667f1a0"
     }
   ],
   "postTags": [

@@ -1,10 +1,19 @@
-# 全局过滤器
+---
+id: 1ef40c6e-d151-69a0-9327-ad1a88221078
+title: 全局过滤器
+alias:
+cover:
+created_time: 2024-07-13 11:20:59
+updated_time: 2024-07-13 11:20:59
+categories:
+tags:
+excerpt:
+published: true
+---
 
-## Console
+## console
 
 配合`dump`、`safe` 两个过滤器，打印模板内容到浏览器控制台，主要用于调试
-
-注意: 仅在开发环境中生效
 
 ### 参数
 
@@ -30,3 +39,36 @@
 {{ message | dump | console('message') | safe}}
 {{ result | dump | console('result', 'table') | safe}}
 ```
+
+## date
+
+使用`moment` 进行时间格式化
+
+### 参数
+
+- format: **(可选)** 格式化字符串，默认为`YYYY-MM-DD HH:mm:ss`
+
+### 推荐格式
+
+- 年月日 时分 `YYYY-MM-DD HH:mm:ss`
+- 年月日 `YYYY-MM-DD`
+
+## shorten
+
+字符串截取
+
+### 参数
+
+- count **(可选)** 截取长度，默认为 5
+
+## stripHtml
+
+用空字符串替换所有HTML标签
+
+## symbolsCount
+
+统计字符串中符号的数量, 不包括html标签和所有不可见字符
+
+## titleToUrl
+
+将标题转换为 URL

@@ -1,6 +1,6 @@
 ---
 id: 1ef3baae-d324-6af0-b942-3a6175925acc
-title: prepare
+title: 准备工作
 alias: prepare
 cover:
 created_time: 2024-07-06 23:17:58
@@ -10,8 +10,6 @@ tags:
 excerpt:
 published: true
 ---
-
-# 准备工作
 
 ## 注意事项
 
@@ -39,10 +37,9 @@ published: true
 
 ### 模板调试
 
-模板调试主要有两种方式:
+模板调试:
 
-- 调用自定义的宏模板，系统已经有内置， 具体使用方式查看 `全局宏模板 - console` 部分 [传送门]()
-- 调用自定义的过滤器， 系统已经有内置， 具体使用方式查看 `全局过滤器 - console` 部分 [传送门]()
+- 调用自定义的过滤器， 系统已经有内置， 具体使用方式查看 `全局过滤器 - console` 部分
 
 ### 自定义过滤器 （Custom Filters）
 
