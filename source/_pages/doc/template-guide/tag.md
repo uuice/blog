@@ -23,7 +23,7 @@ published: true
 
 标签返回变量
 
-- postPageList: POST_PAGE_QUERY
+- postPageList: `POST_PAGE_QUERY`
 
 ### 通过分类获取post列表
 
@@ -31,13 +31,13 @@ published: true
 
 参数
 
-- id: string 分类id
-- title: string 分类title
-- url: string 分类url
+- id: `string` 分类id
+- title: `string` 分类title
+- url: `string` 分类url
 
 标签返回变量
 
-- list: LIST_POST_ITEM[]
+- list: `LIST_POST_ITEM[]`
 
 ### 通过标签获取post列表
 
@@ -45,13 +45,13 @@ published: true
 
 参数
 
-- id: string 标签id
-- title: string 标签title
-- url: string 标签url
+- id: `string` 标签id
+- title: `string` 标签title
+- url: `string` 标签url
 
 标签返回变量
 
-- list: LIST_POST_ITEM[]
+- list: `LIST_POST_ITEM[]`
 
 ### 获取post详情
 
@@ -59,13 +59,13 @@ published: true
 
 参数
 
-- id: string Post id
-- title: string Post title
-- url: string Post url
+- id: `string` Post id
+- title: `string` Post title
+- url: `string` Post url
 
 标签返回变量
 
-- post: POST | undefined
+- post: `POST | undefined`
 
 ## 分类相关
 
@@ -75,11 +75,11 @@ published: true
 
 参数
 
-- withPostNum: boolean 是否返回 postNum
+- withPostNum: `boolean` 是否返回 postNum
 
 标签返回变量
 
-- list: CATEGORY_WITH_POST_NUM[] | CATEGORY[]
+- list: `CATEGORY_WITH_POST_NUM[] | CATEGORY[]`
 
 ### 分类详情
 
@@ -87,13 +87,13 @@ published: true
 
 参数
 
-- id: string 分类id
-- title: string 分类title
-- url: string 分类url
+- id: `string` 分类id
+- title: `string` 分类title
+- url: `string` 分类url
 
 标签返回变量
 
-- category: CATEGORY | undefined
+- category: `CATEGORY | undefined`
 
 ## 标签相关
 
@@ -103,11 +103,11 @@ published: true
 
 参数
 
-- withPostNum: boolean 是否返回 postNum
+- withPostNum: `boolean` 是否返回 postNum
 
 标签返回变量
 
-- list: TAG_WITH_POST_NUM[] | TAG[]
+- list: `TAG_WITH_POST_NUM[] | TAG[]`
 
 ### 标签详情
 
@@ -115,13 +115,13 @@ published: true
 
 参数
 
-- id: string 标签id
-- title: string 标签title
-- url: string 标签url
+- id: `string` 标签id
+- title: `string` 标签title
+- url: `string` 标签url
 
 标签返回变量
 
-- tag: TAG | undefined
+- tag: `TAG | undefined`
 
 ## 页面相关
 
@@ -135,7 +135,7 @@ published: true
 
 标签返回变量
 
-- list: LIST_PAGE_ITEM[]
+- list: `LIST_PAGE_ITEM[]`
 
 ### 页面详情
 
@@ -143,13 +143,13 @@ published: true
 
 参数
 
-- id: string 页面id
-- title: string 页面title
-- url: string 页面url
+- id: `string` 页面id
+- title: `string` 页面title
+- url: `string` 页面url
 
 标签返回变量
 
-- page: PAGE | undefined
+- page: `PAGE | undefined`
 
 ## Json标签相关
 
@@ -157,11 +157,11 @@ published: true
 
 参数
 
-- alias: string Json标签别名 (文件名)
+- alias: `string` Json标签别名 (文件名)
 
 标签返回变量
 
-jsonData: JSON_OBJ | undefined
+jsonData: `JSON_OBJ | undefined`
 
 ## Yml标签相关
 
@@ -169,11 +169,11 @@ jsonData: JSON_OBJ | undefined
 
 参数
 
-- alias: string Yml标签别名 (文件名)
+- alias: `string` Yml标签别名 (文件名)
 
 标签返回变量
 
-ymlData: JSON_OBJ | undefined
+ymlData: `JSON_OBJ | undefined`
 
 ## 系统配置相关
 
@@ -187,7 +187,7 @@ ymlData: JSON_OBJ | undefined
 
 标签返回变量
 
-list: JSON_OBJ | undefined
+list: `JSON_OBJ | undefined`
 
 ### 单个系统配置
 
@@ -195,10 +195,10 @@ list: JSON_OBJ | undefined
 
 参数
 
-- path: string 系统配置路径
+- path: `string` 系统配置路径
 
 标签返回变量
 
 无
 
-标签直接返回 JSON_OBJ | string | number | boolean | undefined
+标签直接返回 `JSON_OBJ | string | number | boolean | undefined`
