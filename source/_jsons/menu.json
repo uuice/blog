@@ -22,5 +22,11 @@
     "icon": "",
     "url": "/about",
     "target": "_self"
+  },
+  {
+    "title": "uuice doc",
+    "icon": "",
+    "url": "/uuice-doc",
+    "target": "_target"
   }
 ]
