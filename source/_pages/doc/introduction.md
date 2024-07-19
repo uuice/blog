@@ -1,7 +1,7 @@
 ---
 id: 1ef39ae2-3873-6150-b043-893f5d187aa3
 title: introduction
-alias: introduction
+alias: doc-introduction
 cover:
 created_time: 2024-07-04 10:35:55
 updated_time: 2024-07-04 10:35:55
@@ -15,13 +15,11 @@ published: true
 
 ### 为什么会有这个项目
 
-原有的博客使用的是 Halo，但由于 Halo 是使用 Java 编写的，我对 Java 开发不熟悉，因此无法进行二次开发。此外，Halo 的主题开发也相对不太方便。因此，我决定寻找一个新的博客系统。
+原有的博客使用的是 Halo，但由于 Halo 是使用 Java 编写的，我对 Java 开发不熟悉，因此无法方便的进行二次开发。此外，Halo 的主题开发也相对不太方便。因此，我决定寻找一个新的博客系统。
 
 在对比了 WordPress 和 Hexo 等博客系统之后，我发现 WordPress 的复杂度过高，而 Hexo 虽然简单，但灵活性又不够。因此，我决定自己开发一个博客系统。
 
 我参考了 Hexo 的思路，根据 Markdown 文件生成了一个 data.json 文件，并使用 Node.js 实时检索数据，并将其渲染为 HTML。我还封装了一些常用的模板标签和 API，以提供更便捷的使用方式。
-
-通过这个项目，我希望能够完善和美化博客系统，使其更符合我的需求和审美。这样，我就能够更自由地表达和展示我的想法和内容了。
 
 ### 开发这个系统要达到什么目标
 

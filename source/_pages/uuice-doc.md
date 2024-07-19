@@ -13,26 +13,19 @@ published: true
 
 ### uuice 文档
 
-- <a href="/introduction">系统介绍</a>
-- <a href="/getting-started">入门</a>
-  - <a href="/getting-started#prepare">写在前面</a>
-  - <a href="/getting-started#install">安装部署</a>
-  - <a href="/getting-started#config">配置参考</a>
-  - <a href="/getting-started#upgrade">版本升级</a>
-- <a href="/user-guide">用户指南</a>
-  - <a href="/user-guide#index">操作手册</a>
-  - <a href="/user-guide#markdown">Markdown 语法</a>
-- <a href="/developer-guide">系统开发</a>
-  - <a href="/developer-guide#structure">系统结构</a>
-  - <a href="/developer-guide#code-style">代码风格</a>
-  - <a href="/developer-guide#rest-api">Rest Api</a>
-- <a href="/template-guide">主题相关</a>
-  - <a href="/template-guide#prepare">准备工作</a>
-  - <a href="/template-guide#config">配置文件</a>
-  - <a href="/template-guide#global-variable">全局变量</a>
-  - <a href="/template-guide#global-filter">全局过滤器</a>
-  - <a href="/template-guide#global-macro">全局宏模板</a>
-  - <a href="/template-guide#global-tag">全局标签</a>
-- <a href="/question">常见问题</a>
-  - <a href="/question#system">系统相关</a>
-  - <a href="/question#template">模板相关</a>
+- <a href="/doc-introduction">系统介绍</a>
+- <a href="/doc-user-guide">Cli</a>
+- <a href="/doc-ts-types">数据定义</a>
+- <a>开发相关</a>
+  - <a href="/doc-development">系统开发</a>
+  - <a href="/doc/api">Rest Api</a>
+- <a>主题相关</a>
+  - <a href="/doc-template-guide-prepare">准备工作</a>
+  - <a href="/doc-template-guide-config">配置文件</a>
+  - <a href="/doc-template-guide-global-variable">全局变量</a>
+  - <a href="/doc-template-guide-global-function">全局函数</a>
+  - <a href="/doc-template-guide-global-filter">全局过滤器</a>
+  - <a href="/doc-template-guide-global-tag">全局标签</a>
+  - <a>用户自定义标签(懒得写了，因为没人用)</a>
+  - <a>用户自定义函数(懒得写了，因为没人用)</a>
+  - <a>用户自定义过滤器(懒得写了，因为没人用)</a>

@@ -1,7 +1,7 @@
 ---
 id: 1ef40cb2-16da-6fb0-92f0-23e4fcf0cad9
 title: 全局函数
-alias:
+alias: doc-template-guide-global-function
 cover:
 created_time: 2024-07-13 11:51:05
 updated_time: 2024-07-13 11:51:05

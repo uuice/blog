@@ -1,7 +1,7 @@
 ---
 id: 1ef3baae-d324-6af0-b942-3a6175925acc
 title: 准备工作
-alias: prepare
+alias: doc-template-guide-prepare
 cover:
 created_time: 2024-07-06 23:17:58
 updated_time: 2024-07-06 23:17:58

@@ -1,7 +1,7 @@
 ---
 id: 1ef40c6e-2391-69f0-95c4-9d0c25401eb5
 title: 系统配置
-alias:
+alias: doc-template-guide-config
 cover:
 created_time: 2024-07-13 11:20:41
 updated_time: 2024-07-13 11:20:41

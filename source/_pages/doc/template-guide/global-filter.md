@@ -1,7 +1,7 @@
 ---
 id: 1ef40c6e-d151-69a0-9327-ad1a88221078
 title: 全局过滤器
-alias:
+alias: doc-template-guide-global-filter
 cover:
 created_time: 2024-07-13 11:20:59
 updated_time: 2024-07-13 11:20:59

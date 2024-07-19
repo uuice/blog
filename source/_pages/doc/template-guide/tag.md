@@ -1,7 +1,7 @@
 ---
 id: 1ef40c70-59f7-62e0-9ae4-8dbc49326259
 title: 标签列表
-alias:
+alias: doc-template-guide-global-tag
 cover:
 created_time: 2024-07-13 11:21:40
 updated_time: 2024-07-13 11:21:40
