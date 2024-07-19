@@ -19,6 +19,7 @@ published: true
 
 ## 新建 文章、页面
 
+```
 uuice new 命令
 
 eg: uuice new page -p "path/path2" "title"
@@ -34,9 +35,11 @@ title title
 Options:
 -p, --path <path> md file path (default: "")
 -h, --help display help for command
+```
 
 ## 生成 data.json 数据
 
+```
 Usage: uuice-cli gen [options]
 
 generate data json
@@ -44,9 +47,11 @@ generate data json
 Options:
 -w, --watch Listen to the source file directory
 -h, --help display help for command
+```
 
 ## 启动服务
 
+```
 Usage: uuice-cli server [options]
 
 nestjs server
@@ -55,3 +60,4 @@ Options:
 -p, --port <port> server port (default: "3000")
 -w --watch Listen to data.json and reload db
 -h, --help display help for command
+```
