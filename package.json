@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "nunjucks": "^3.2.4",
-    "uuice-cli": "^0.0.22"
+    "uuice-cli": "^0.0.29"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
